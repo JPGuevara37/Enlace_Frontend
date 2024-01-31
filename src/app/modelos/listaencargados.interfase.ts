@@ -5,4 +5,5 @@ export interface IListaEcargados{
     direccion:string;
     email:string;
     telefono:string;
+    token?:any;
 }

@@ -4,7 +4,9 @@ import { IResponse } from '../../modelos/response.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 import { IEncargado } from '../../modelos/encargado.interfase';
 import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { format } from 'path';
+import e from 'express';
 
 
 @Injectable({
@@ -31,14 +33,12 @@ export class ApiService {
     return this.http.get<IEncargado>(direccion);
   }
 
-  putEncargado(form:IEncargado):Observable<IResponse>{
-    let direccion = this.url + "/api/encargados/{id}";
+
+  putEncargado(form: any): Observable<IResponse> {
+    let direccion = this.url + "/api/encargados/" + form.encargadoId;
     return this.http.put<IResponse>(direccion, form);
   }
 
-  /*putEncargado(encargadoId: string, form: IEncargado): Observable<IResponse> {
-    const direccion = `${this.url}/api/encargados/${encargadoId}`;
-    return this.http.put<IResponse>(direccion, form);
-  }*/
+
 
 }

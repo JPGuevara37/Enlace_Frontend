@@ -8,7 +8,7 @@ import { FormGroup,FormControl,Validators } from '@angular/forms';
 @Component({
   selector: 'app-editar',
   templateUrl: './editar.component.html',
-  styleUrl: './editar.component.css'
+  styleUrls: ['./editar.component.css']
 })
 
 export class EditarComponent implements OnInit{
@@ -23,8 +23,8 @@ export class EditarComponent implements OnInit{
     direccion: new FormControl(''),
     email: new FormControl(''),
     telefono: new FormControl(''),
-    token: new FormControl(''),
-    encargadoID: new FormControl("string")
+    //token: new FormControl(''),
+    encargadoId: new FormControl('')
 });
 
   ngOnInit(): void {
@@ -38,8 +38,8 @@ export class EditarComponent implements OnInit{
           'direccion': this.datosEncargado.direccion ?? '',
           'email': this.datosEncargado.email ?? '',
           'telefono': this.datosEncargado.telefono ?? '',
-          'token': token ?? '',
-          'encargadoID': this.datosEncargado.encargadoId ?? ''
+          //'token': token ?? '',
+          'encargadoId': this.datosEncargado.encargadoId ?? ''
         })
     })
   }
@@ -52,21 +52,16 @@ export class EditarComponent implements OnInit{
       return null;
     }
   }
+  
+  
+  postForm(form: IEncargado) {
 
-  postForm(form:IEncargado){
     this.api.putEncargado(form).subscribe( data =>{
       console.log(data)
     })
-  }
+     
   
-  /*postForm(form: IEncargado) {
-    if (form.encargadoId) {
-      this.api.putEncargado(form.encargadoId, form).subscribe(data => {
-        console.log(data);
-      });
-    } else {
-      console.error('ID del encargado no válido');
-    }*/
   }
+}
 
 
