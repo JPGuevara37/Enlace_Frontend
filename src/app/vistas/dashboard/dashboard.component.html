@@ -20,8 +20,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let encargado of encargados" (click)="editarEncargados(encargado.encargadoId)">
-        <th scope="row">1</th>
+      <tr *ngFor="let encargado of encargados; let i = index" (click)="editarEncargados(encargado.encargadoId)">
+        <th scope="row">{{ i + 1}}</th>
         <td>{{ encargado.nombre}}</td>
         <td>{{ encargado.apellido}}</td>
         <td>{{ encargado.direccion}}</td>

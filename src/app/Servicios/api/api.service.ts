@@ -39,6 +39,22 @@ export class ApiService {
     return this.http.put<IResponse>(direccion, form);
   }
 
+  deleteEncargado(form: IEncargado):Observable<IResponse>{
+    let direccion = this.url + "/api/encargados/" + form.encargadoId;
+    let Options = {
+      headers : new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: form
+    }
+    return this.http.delete<IResponse>(direccion);
+  }
+
+  postEncargado(form:IEncargado):Observable<IResponse>{
+    let direccion = this.url + "/api/encargados";
+    return this.http.post<IResponse>(direccion, form);
+  }
+
 
 
 }

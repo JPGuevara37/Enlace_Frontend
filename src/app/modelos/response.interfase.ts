@@ -1,5 +1,5 @@
 export interface IResponse{
-    status?:any;
+    status:any;
     result?:{ token: any, error_msj:string };
     
 }

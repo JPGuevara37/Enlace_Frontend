@@ -1,1 +1,44 @@
-<p>nuevo works!</p>
+<app-header></app-header>
+<div class="container">
+    <div class="row justify-content-center">
+      <h1>Padres de familia</h1>
+    </div>
+  </div>
+  
+  <div class="container">
+      <form [formGroup]="nuevoForm" (ngSubmit)="postForm(nuevoForm.value)">
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" class="form-control" placeholder="Nombre del encargado" formControlName="nombre">
+        </div>
+    
+        <div class="form-group">   
+          <label for="apellido">Apellido</label>
+          <input type="text" class="form-control" placeholder="Apellido del encargado" formControlName="apellido">
+        </div>
+    
+        <div class="form-group row">
+          <div class="col">
+            <label for="direccion">Dirección</label>
+            <input type="text" class="form-control" placeholder="Dirección del encargado" formControlName="direccion">
+          </div>
+    
+          <div class="col">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" placeholder="Email del encargado" formControlName="email">
+          </div>
+    
+          <div class="col">
+            <label for="telefono">Teléfono</label>
+            <input type="text" class="form-control" placeholder="Teléfono del encargado" formControlName="telefono">
+          </div>
+      </div>
+        <br><br>
+        <!-- Agrega otros campos según sea necesario -->
+    
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-dark" (click)="salir()">Atras</button>
+      </form>
+    </div>
+<app-footer></app-footer>

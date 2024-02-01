@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IResponse } from '../../modelos/response.interfase';
 import { IEncargado } from '../../modelos/encargado.interfase';
+import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 
@@ -13,7 +15,7 @@ import { FormGroup,FormControl,Validators } from '@angular/forms';
 
 export class EditarComponent implements OnInit{
 
-  constructor(private activerouter:ActivatedRoute, private router:Router, private api:ApiService){ }
+  constructor(private activerouter:ActivatedRoute, private router:Router, private api:ApiService, private alertas:AlertasService){ }
 
   datosEncargado:IEncargado | undefined;
 
@@ -53,15 +55,36 @@ export class EditarComponent implements OnInit{
     }
   }
   
-  
   postForm(form: IEncargado) {
 
     this.api.putEncargado(form).subscribe( data =>{
+      let respuesta : IResponse = data;
       console.log(data)
+      if(respuesta.status == "ok"){
+        this.alertas.showSuccess('Datos modificados','Hecho')
+      }else{
+        this.alertas.showError(respuesta.result?.error_msj,'Error');
+      }
     })
-     
-  
   }
+
+  delete(){
+    let datos:IEncargado = this.editarForm.value;
+    this.api.deleteEncargado(datos).subscribe( data =>{
+      let respuesta : IResponse = data;
+      if(respuesta.status == "ok"){
+        this.alertas.showSuccess('Datos eliminados','Hecho')
+        this.router.navigate(['dashboard']);
+      }else{
+        this.alertas.showError(respuesta.result?.error_msj,'Error');
+      }
+    })
+  }
+
+  salir(){
+    this.router.navigate(['dashboard']);
+  }
+
 }
 
 

@@ -1,6 +1,12 @@
 <app-header></app-header>
 
 <div class="container">
+  <div class="row justify-content-center">
+    <h1>Padres de familia</h1>
+  </div>
+</div>
+
+<div class="container">
     <form [formGroup]="editarForm" (ngSubmit)="postForm(editarForm.value)">
       <div class="form-group">
         <label for="nombre">Nombre</label>
@@ -33,6 +39,8 @@
   
       <!-- Botón de envío -->
       <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-danger" (click)="delete()">Eliminar</button>
+      <button type="button" class="btn btn-dark" (click)="salir()">Atras</button>
     </form>
   </div>
   
