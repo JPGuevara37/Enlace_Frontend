@@ -74,7 +74,7 @@ export class EditarComponent implements OnInit{
       let respuesta : IResponse = data;
       if(respuesta.status == "ok"){
         this.alertas.showSuccess('Datos eliminados','Hecho')
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['encargados']);
       }else{
         this.alertas.showError(respuesta.result?.error_msj,'Error');
       }

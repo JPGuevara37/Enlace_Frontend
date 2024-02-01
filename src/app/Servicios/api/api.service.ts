@@ -17,12 +17,12 @@ export class ApiService {
   url:string = "http://localhost:5066";
 
   constructor(private http:HttpClient) { }
-
-    LoginByEmail(form:ILogin):Observable<IResponse>{
+//servicio de login.
+  LoginByEmail(form:ILogin):Observable<IResponse>{
     let direccion = this.url + "/api/autenticar";
     return this.http.post<Response>(direccion,form);
   }
-  
+//servicio de para encargados.
   getAllEncargados(page:number):Observable<IListaEcargados[]>{
     let direccion = this.url + "/api/encargados";
     return this.http.get<IListaEcargados[]>(direccion);
@@ -32,7 +32,6 @@ export class ApiService {
     let direccion = this.url + "/api/encargados/" + id;
     return this.http.get<IEncargado>(direccion);
   }
-
 
   putEncargado(form: any): Observable<IResponse> {
     let direccion = this.url + "/api/encargados/" + form.encargadoId;
@@ -54,7 +53,4 @@ export class ApiService {
     let direccion = this.url + "/api/encargados";
     return this.http.post<IResponse>(direccion, form);
   }
-
-
-
 }

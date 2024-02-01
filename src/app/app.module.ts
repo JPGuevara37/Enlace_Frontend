@@ -11,13 +11,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ToastrModule } from 'ngx-toastr';
+import { EncargadosComponent } from './vistas/encargados/encargados.component';
+import { LoguotComponent } from './plantillas/loguot/loguot.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    rountingComponents
+    rountingComponents,
+    EncargadosComponent,
+    LoguotComponent
   ],
   imports: [
     BrowserModule,

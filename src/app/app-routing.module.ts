@@ -4,13 +4,15 @@ import { LoginComponent } from './vistas/login/login.component';
 import { NuevoComponent } from './vistas/nuevo/nuevo.component';
 import { EditarComponent } from './vistas/editar/editar.component';
 import { DashboardComponent } from './vistas/dashboard/dashboard.component';
+import { EncargadosComponent } from './vistas/encargados/encargados.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'login' , pathMatch : 'full'},
   { path : 'login' , component:LoginComponent },
   { path : 'dashboard' , component:DashboardComponent },
   { path : 'nuevo' , component:NuevoComponent },
-  { path : 'editar/:id' , component:EditarComponent }
+  { path : 'editar/:id' , component:EditarComponent },
+  { path: 'encargados', component: EncargadosComponent }
 
 ];
 

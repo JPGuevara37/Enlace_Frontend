@@ -1,35 +1,14 @@
 <app-header></app-header>
 
-<div class="container">
-
-    <h3>Lista de encargados</h3><br>
-
-    <button type="button" class="btn btn-primary" (click)="nuevoEncargado()">Agregar Encargado</button>
-
-<table class="table">
-    <caption>Lista de Encargados</caption>
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">direccion</th>
-        <th scope="col">email</th>
-        <th scope="col">telefono</th>
-        <th scope="col">codigo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let encargado of encargados; let i = index" (click)="editarEncargados(encargado.encargadoId)">
-        <th scope="row">{{ i + 1}}</th>
-        <td>{{ encargado.nombre}}</td>
-        <td>{{ encargado.apellido}}</td>
-        <td>{{ encargado.direccion}}</td>
-        <td>{{ encargado.email}}</td>
-        <td>{{ encargado.telefono}}</td>
-        <td>{{ encargado.encargadoId}}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="menu">
+      <button type="button" class="btn btn-primary" (click)="encargados()">Padres</button>
+      <button type="button" class="btn btn-primary" (click)="encargados()">Alumnos</button>
+      <button type="button" class="btn btn-primary" (click)="encargados()">Profesores</button>
+      <button type="button" class="btn btn-primary" (click)="encargados()">Recurso</button>
+      <nav>
+        <button (click)="confirmLogout()">Cerrar Sesión</button>
+      </nav>
 </div>
+
+
 <app-footer></app-footer>
