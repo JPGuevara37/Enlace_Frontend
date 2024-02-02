@@ -13,6 +13,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { EncargadosComponent } from './vistas/encargados/encargados.component';
 import { LoguotComponent } from './plantillas/loguot/loguot.component';
+import { NuevoEncargadosComponent } from './vistas/nuevo-encargados/nuevo-encargados.component';
+import { EditarEncargadosComponent } from './vistas/editar-encargados/editar-encargados.component';
+import { AlumnosComponent } from './vistas/alumnos/alumnos.component';
+import { EditarAlumnosComponent } from './vistas/editar-alumnos/editar-alumnos.component';
+import { NuevoAlumnosComponent } from './vistas/nuevo-alumnos/nuevo-alumnos.component';
+import { ProfesoresComponent } from './vistas/profesores/profesores.component';
+import { EditarProfesoresComponent } from './vistas/editar-profesores/editar-profesores.component';
+import { NuevoProfesoresComponent } from './vistas/nuevo-profesores/nuevo-profesores.component';
+import { RecursosComponent } from './vistas/recursos/recursos.component';
+import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
+import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
+
 
 @NgModule({
   declarations: [
@@ -21,7 +33,18 @@ import { LoguotComponent } from './plantillas/loguot/loguot.component';
     FooterComponent,
     rountingComponents,
     EncargadosComponent,
-    LoguotComponent
+    LoguotComponent,
+    NuevoEncargadosComponent,
+    EditarEncargadosComponent,
+    AlumnosComponent,
+    EditarAlumnosComponent,
+    NuevoAlumnosComponent,
+    ProfesoresComponent,
+    EditarProfesoresComponent,
+    NuevoProfesoresComponent,
+    RecursosComponent,
+    EditarRecursosComponent,
+    NuevoRecursosComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +53,7 @@ import { LoguotComponent } from './plantillas/loguot/loguot.component';
     HttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
+    FormsModule,
   ],
   providers: [
     provideClientHydration()

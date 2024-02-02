@@ -44,6 +44,7 @@ export class NuevoComponent {
       console.log(data)
       if(respuesta.status == "ok"){
         this.alertas.showSuccess('Nuevo encargado insertado','Hecho')
+        this.router.navigate(['encargados']);
       }else{
         this.alertas.showError(respuesta.result?.error_msj,'Error');
       }
@@ -52,7 +53,7 @@ export class NuevoComponent {
   }
 
   salir(){
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['encargados']);
   }
 
 }

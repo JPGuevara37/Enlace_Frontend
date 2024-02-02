@@ -1,13 +1,21 @@
 <app-header></app-header>
 
-<div class="menu">
-      <button type="button" class="btn btn-primary" (click)="encargados()">Padres</button>
-      <button type="button" class="btn btn-primary" (click)="encargados()">Alumnos</button>
-      <button type="button" class="btn btn-primary" (click)="encargados()">Profesores</button>
-      <button type="button" class="btn btn-primary" (click)="encargados()">Recurso</button>
+<div class="options-container">
+  <h3>Elige una opción</h3>
+  <div class="options">
+    <button class="option-button" (click)="encargados()">Padres</button>
+    <button class="option-button">Alumnos</button>
+    <button class="option-button">Profesores</button>
+    <button class="option-button">Recursos</button>
+  </div>
+</div>
+
+<div class="d-flex justify-content-end align-items-center mb-3 position-absolute" style="top: 10px; right: 10px;">
+    <div class="input-group">
       <nav>
-        <button (click)="confirmLogout()">Cerrar Sesión</button>
+        <button class="btn btn-danger" (click)="confirmLogout()">Cerrar Sesión</button>
       </nav>
+    </div>
 </div>
 
 

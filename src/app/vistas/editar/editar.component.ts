@@ -82,7 +82,7 @@ export class EditarComponent implements OnInit{
   }
 
   salir(){
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['encargados']);
   }
 
 }

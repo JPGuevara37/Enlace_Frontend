@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -32,4 +32,7 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem('token');
     this.router.navigate(['login']);
   }
+
+
+  
 }
