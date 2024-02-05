@@ -70,15 +70,19 @@ export class EditarComponent implements OnInit{
 
   delete(){
     let datos:IEncargado = this.editarForm.value;
-    this.api.deleteEncargado(datos).subscribe( data =>{
+    let isConfirmed = window.confirm('¿Estás seguro que quieres eliminar el usuario')
+
+    if (isConfirmed) {
+      this.api.deleteEncargado(datos).subscribe( data =>{
       let respuesta : IResponse = data;
-      if(respuesta.status == "ok"){
-        this.alertas.showSuccess('Datos eliminados','Hecho')
-        this.router.navigate(['encargados']);
-      }else{
-        this.alertas.showError(respuesta.result?.error_msj,'Error');
-      }
-    })
+        if(respuesta.status == "ok"){
+          this.alertas.showSuccess('Datos eliminados','Hecho')
+          this.router.navigate(['profesores']);
+        }else{
+          this.alertas.showError(respuesta.result?.error_msj,'Error');
+        }
+      })
+    }
   }
 
   salir(){

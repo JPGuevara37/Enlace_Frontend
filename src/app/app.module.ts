@@ -24,6 +24,7 @@ import { NuevoProfesoresComponent } from './vistas/nuevo-profesores/nuevo-profes
 import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
+import { MenuComponent } from './plantillas/menu/menu.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.c
     NuevoProfesoresComponent,
     RecursosComponent,
     EditarRecursosComponent,
-    NuevoRecursosComponent
+    NuevoRecursosComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

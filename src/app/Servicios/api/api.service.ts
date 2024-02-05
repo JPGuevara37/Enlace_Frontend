@@ -6,7 +6,12 @@ import { IEncargado } from '../../modelos/encargado.interfase';
 import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { format } from 'path';
-import e from 'express';
+import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
+import { IProfesores } from '../../modelos/profesores.interfase';
+import { IAlumnos } from '../../modelos/alumnos.interfase';
+import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
+import { IListaRecursos } from '../../modelos/listarecursos.interfase';
+import { IRecursos } from '../../modelos/recursos.interfase';
 
 
 @Injectable({
@@ -53,4 +58,100 @@ export class ApiService {
     let direccion = this.url + "/api/encargados";
     return this.http.post<IResponse>(direccion, form);
   }
+
+//servicio de para Alumnos
+  getAllAlumnos(page:number):Observable<IListaAlumnos[]>{
+    let direccion = this.url + "/api/alumnos";
+    return this.http.get<IListaAlumnos[]>(direccion);
+  }
+
+  getSingleAlumno(id: any):Observable<IAlumnos>{
+    let direccion = this.url + "/api/alumnos/" + id;
+    return this.http.get<IAlumnos>(direccion);
+  }
+
+  putAlumnos(form: any): Observable<IResponse> {
+    let direccion = this.url + "/api/alumnos/" + form.alumnoId;
+    return this.http.put<IResponse>(direccion, form);
+  }
+
+  deleteAlumnos(form: IAlumnos):Observable<IResponse>{
+    let direccion = this.url + "/api/alumnos/" + form.alumnoId;
+    let Options = {
+      headers : new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: form
+    }
+    return this.http.delete<IResponse>(direccion);
+  }
+
+  postAlumno(form:IAlumnos):Observable<IResponse>{
+    let direccion = this.url + "/api/alumnos";
+    return this.http.post<IResponse>(direccion, form);
+  }  
+
+  //servicio para Profesores
+    getAllProfesores(page:number):Observable<IListaProfesores[]>{
+      let direccion = this.url + "/api/profesores";
+      return this.http.get<IListaProfesores[]>(direccion);
+    }
+
+    getSingleProfesor(id: any):Observable<IEncargado>{
+      let direccion = this.url + "/api/profesores/" + id;
+      return this.http.get<IProfesores>(direccion);
+    }
+
+    putProfesores(form: any): Observable<IResponse> {
+      let direccion = this.url + "/api/profesores/" + form.profesorId;
+      return this.http.put<IResponse>(direccion, form);
+    }
+
+    deleteProfesor(form: IProfesores):Observable<IResponse>{
+      let direccion = this.url + "/api/profesores/" + form.profesorId;
+      let Options = {
+        headers : new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        body: form
+      }
+      return this.http.delete<IResponse>(direccion);
+    }
+
+    postProfesor(form:IProfesores):Observable<IResponse>{
+      let direccion = this.url + "/api/profesores";
+      return this.http.post<IResponse>(direccion, form);
+    }  
+
+    //Servicio de Recursos
+    getAllRecursos(page:number):Observable<IListaRecursos[]>{
+      let direccion = this.url + "/api/recursos";
+      return this.http.get<IListaRecursos[]>(direccion);
+    }
+
+    getSingleRecurso(id: any):Observable<IRecursos>{
+      let direccion = this.url + "/api/recursos/" + id;
+      return this.http.get<IRecursos>(direccion);
+    }
+
+    putRecursos(form: any): Observable<IResponse> {
+      let direccion = this.url + "/api/recursos/" + form.recursosId;
+      return this.http.put<IResponse>(direccion, form);
+    }
+
+    deleteRecurso(form: IRecursos):Observable<IResponse>{
+      let direccion = this.url + "/api/recursos/" + form.recursosId;
+      let Options = {
+        headers : new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        body: form
+      }
+      return this.http.delete<IResponse>(direccion);
+    }
+
+    postRecurso(form:IRecursos):Observable<IResponse>{
+      let direccion = this.url + "/api/recursos";
+      return this.http.post<IResponse>(direccion, form);
+    }  
 }

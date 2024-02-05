@@ -24,8 +24,20 @@ export class DashboardComponent implements OnInit {
     }
   }
   // Método para navegar a la ruta 'encargados'
-  encargados() {
+  encargadosPage() {
     this.router.navigate(['/encargados']); // Asegúrate de usar el prefijo '/'
+  }
+
+  alumnosPage() {
+    this.router.navigate(['/alumnos']); // Asegúrate de usar el prefijo '/'
+  }
+
+  profesoresPage() {
+    this.router.navigate(['/profesores']); // Asegúrate de usar el prefijo '/'
+  }
+
+  recursosPage() {
+    this.router.navigate(['/recursos']); // Asegúrate de usar el prefijo '/'
   }
 
   logout() {
