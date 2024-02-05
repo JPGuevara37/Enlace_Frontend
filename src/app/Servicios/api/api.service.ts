@@ -19,7 +19,7 @@ import { IRecursos } from '../../modelos/recursos.interfase';
 })
 export class ApiService {
 
-  url:string = "http://localhost:5066";
+  url:string = "http://enlace-backend.azurewebsites.net";
 
   constructor(private http:HttpClient) { }
 //servicio de login.
