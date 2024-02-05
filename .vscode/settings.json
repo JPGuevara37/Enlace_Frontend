@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/9d5a789c-b8f3-4514-a93c-2f60d9bcaf72/resourceGroups/carrillo/providers/Microsoft.Web/sites/enlace-ibmsa",
+    "appService.deploySubpath": "."
+}
