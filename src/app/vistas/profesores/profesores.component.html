@@ -1,0 +1,48 @@
+
+
+<app-header></app-header>
+
+<app-menu></app-menu>
+
+<div class="container">
+
+    <h3>Lista de Profesores</h3><br>
+
+    <button type="button" class="btn btn-primary" (click)="nuevoProfesores()">Agregar profesores</button>
+    
+    <div class="d-flex justify-content-end align-items-center mb-3 position-absolute" style="top: 220px; right: 50px;">
+      <div class="input-group">
+          <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar por nombre o apellido" (keyup.enter)="filtrar()" />
+          <button class="btn btn-primary" (click)="filtrar()">Buscar</button>
+      </div>
+  </div>
+
+  
+<table class="table">
+    <caption>Lista de Profesores</caption>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Código</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let profesor of profesores; let i = index">
+        <th scope="row">{{ i + 1}}</th>
+        <td>{{ profesor.nombre}}</td>
+        <td>{{ profesor.apellido}}</td>
+        <td>{{ profesor.email}}</td>
+        <td>{{ profesor.telefono}}</td>
+        <td>{{ profesor.profesorId}}</td>
+        <td>
+            <button class="btn btn-outline-secondary" (click)="editarProfesores(profesor.profesorId)">Editar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<app-footer></app-footer>

@@ -1,0 +1,77 @@
+<app-header></app-header>
+
+<div class="container">
+  <div class="row justify-content-center">
+    <h1>Alumnos</h1>
+  </div>
+</div>
+
+<div class="container">
+    <form [formGroup]="editarForm" (ngSubmit)="postForm(editarForm.value)">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" placeholder="Nombre del encargado" formControlName="nombre">
+      </div>
+  
+      <div class="form-group">   
+        <label for="apellido">Apellido</label>
+        <input type="text" class="form-control" placeholder="Apellido del encargado" formControlName="apellido">
+      </div>
+  
+      <div class="form-group row">
+        <div class="col">
+            <label for="fechaNacimiento">Fecha de Nacimiento</label>
+            <input type="text" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento">
+          </div>
+
+        <div class="col">
+          <label for="direccion">Dirección</label>
+          <input type="text" class="form-control" placeholder="Dirección del encargado" formControlName="direccion">
+        </div>
+  
+        <div class="col">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" placeholder="Email del encargado" formControlName="email">
+        </div>
+  
+        <div class="col">
+          <label for="telefono">Teléfono</label>
+          <input type="text" class="form-control" placeholder="Teléfono del encargado" formControlName="telefono">
+        </div>
+
+        <!---<div class="col">
+            <label for="encargadoID">encargadoID</label>
+            <input type="text" class="form-control" placeholder="encargadoID" formControlName="encargadoID">
+        </div>
+        
+        <div class="col">
+            <label for="edadID">edadID</label>
+            <input type="text" class="form-control" placeholder="edadID" formControlName="edadID">
+        </div>-->
+
+
+    </div>
+    
+    <div class="col">
+        <label for="encargadoId">Padre</label>
+        <input type="text" class="form-control" placeholder="Info Padre" formControlName="encargadoId">
+    </div>
+
+    <div class="col">
+        <label for="edadId">Rango de Edad</label>
+        <input type="text" class="form-control" placeholder="Info de Edad" formControlName="edadId">
+      </div>
+    
+      <br><br>
+      <!-- Agrega otros campos según sea necesario -->
+  
+      <!-- Botón de envío -->
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-danger" (click)="delete()">Eliminar</button>
+      <button type="button" class="btn btn-dark" (click)="salir()">Atras</button>
+    </form>
+  </div>
+  
+
+<app-footer></app-footer>
+
