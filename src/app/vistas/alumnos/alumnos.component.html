@@ -1,54 +1,60 @@
-
-
 <app-header></app-header>
 
 <app-menu></app-menu>
 
-
 <div class="container">
-
+    <br>
     <h3>Lista de Alumnos</h3><br>
 
-    <button class="btn btn-success" (click)="exportToExcel()">Exportar a Excel</button>
+    <div class="d-flex mb-3">
+        <div id="btnNuevo">
+            <button type="button" class="btn btn-primary" (click)="nuevoAlumnos()">Agregar Alumnos</button>
+        </div>
 
-    <button type="button" class="btn btn-primary" (click)="nuevoAlumnos()">Agregar Alumnos</button>
-    
-    <div class="d-flex justify-content-end align-items-center mb-3 position-absolute" style="top: 220px; right: 50px;">
-      <div class="input-group">
-          <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar por nombre o apellido" (keyup.enter)="filtrar()" />
-          <button class="btn btn-primary" (click)="filtrar()">Buscar</button>
-      </div>
-  </div>
+        <div id="btnExport" class="ml-2">
+            <button class="btn btn-custom" (click)="exportToExcel()">Exportar a Excel</button>
+        </div>
+    </div>
 
-  
-<table class="table">
-    <caption>Lista de Alumnos</caption>
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Fecha Nacimiento</th>
-        <th scope="col">Teléfono</th>
-        <th scope="col">Padre</th>
-        <th scope="col">Clase</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let alumno of alumnos; let i = index">
-        <th scope="row">{{ i + 1}}</th>
-        <td>{{ alumno.nombre}}</td>
-        <td>{{ alumno.apellido}}</td>
-        <td>{{ formatDateEs(alumno.fechaNacimiento) }}</td>
-        <td>{{ getTelefonoEncargado(alumno.encargadoId)}}</td>
-        <td>{{ getNombreEncargado(alumno.encargadoId) }}</td>
-        <td>{{ getEdadClase(alumno.edadId) }}</td>
-        <td>
-          <button class="btn btn-outline-secondary" (click)="editarAlumnos(alumno.alumnoId)">Editar</button>
-      </td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="d-flex justify-content-end align-items-center position-absolute" style="top: 220px; right: 150px;">
+        <div class="input-group">
+            <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar por nombre o apellido" (keyup.enter)="filtrar()" />
+            <div class="input-group-append">
+                <button class="btn btn-primary" (click)="filtrar()">Buscar</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <caption>Lista de Alumnos</caption>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Fecha Nacimiento</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Padre</th>
+                <th scope="col">Clase</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let alumno of alumnos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; let i = index">
+                <th scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1}}</th>
+                <td>{{ alumno.nombre}}</td>
+                <td>{{ alumno.apellido}}</td>
+                <td>{{ formatDateEs(alumno.fechaNacimiento) }}</td>
+                <td>{{ getTelefonoEncargado(alumno.encargadoId)}}</td>
+                <td>{{ getNombreEncargado(alumno.encargadoId) }}</td>
+                <td>{{ getEdadClase(alumno.edadId) }}</td>
+                <td>
+                    <button class="btn btn-outline-secondary" (click)="editarAlumnos(alumno.alumnoId)">Editar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
 </div>
-<app-footer></app-footer>
 
+<app-footer></app-footer>

@@ -7,7 +7,7 @@
 
 
 <div class="container">
-
+    <br>
     <h3>Lista de Padres</h3><br>
 
     <button type="button" class="btn btn-primary" (click)="nuevoEncargado()">Agregar Encargado</button>
@@ -34,8 +34,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let encargado of encargados; let i = index">
-        <th scope="row">{{ i + 1}}</th>
+      <tr *ngFor="let encargado of encargados | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; let i = index">
+        <th scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1}}</th>
         <td>{{ encargado.nombre}}</td>
         <td>{{ encargado.apellido}}</td>
         <td>{{ encargado.direccion}}</td>
@@ -48,5 +48,6 @@
       </tr>
     </tbody>
   </table>
+  <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
 </div>
 <app-footer></app-footer>

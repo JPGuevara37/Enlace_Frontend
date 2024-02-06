@@ -25,6 +25,8 @@ import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
 import { MenuComponent } from './plantillas/menu/menu.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 @NgModule({
@@ -56,10 +58,13 @@ import { MenuComponent } from './plantillas/menu/menu.component';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     provideClientHydration()
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
