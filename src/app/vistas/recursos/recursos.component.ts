@@ -20,7 +20,6 @@ export class RecursosComponent {
   ngOnInit(): void{
     this.api.getAllRecursos(1).subscribe(data =>{
       this.recursos = data;
-      
     })
   }
 

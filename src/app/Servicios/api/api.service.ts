@@ -12,6 +12,8 @@ import { IAlumnos } from '../../modelos/alumnos.interfase';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
 import { IRecursos } from '../../modelos/recursos.interfase';
+import { IListaEdades } from '../../modelos/listaedades.interfase';
+import { IEdades } from '../../modelos/Edades.interfase';
 
 
 @Injectable({
@@ -19,7 +21,7 @@ import { IRecursos } from '../../modelos/recursos.interfase';
 })
 export class ApiService {
 
-  url:string = "http://enlace-backend.azurewebsites.net";
+  url:string = "http://localhost:5066";
 
   constructor(private http:HttpClient) { }
 //servicio de login.
@@ -154,4 +156,39 @@ export class ApiService {
       let direccion = this.url + "/api/recursos";
       return this.http.post<IResponse>(direccion, form);
     }  
+
+    //servicio para Edades
+
+    getAllEdades(page:number):Observable<IListaEdades[]>{
+      let direccion = this.url + "/api/edad";
+      return this.http.get<IListaEdades[]>(direccion);
+    }
+
+    getSingleEdad(id: any):Observable<IEdades>{
+      let direccion = this.url + "/api/edad/" + id;
+      return this.http.get<IEdades>(direccion);
+    }
+
+    putEdades(form: any): Observable<IResponse> {
+      let direccion = this.url + "/api/edad/" + form.edadId;
+      return this.http.put<IResponse>(direccion, form);
+    }
+
+    deleteEdad(form: IEdades):Observable<IResponse>{
+      let direccion = this.url + "/api/edad/" + form.edadId;
+      let Options = {
+        headers : new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        body: form
+      }
+      return this.http.delete<IResponse>(direccion);
+    }
+
+    postEdad(form:IRecursos):Observable<IResponse>{
+      let direccion = this.url + "/api/edad";
+      return this.http.post<IResponse>(direccion, form);
+    } 
+
+
 }

@@ -20,23 +20,8 @@
   
       <div class="form-group row">
         <div class="col">
-            <label for="fechaNacimiento">Fecha de Nacimiento</label>
-            <input type="text" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento">
-          </div>
-
-        <div class="col">
-          <label for="direccion">Dirección</label>
-          <input type="text" class="form-control" placeholder="Dirección del encargado" formControlName="direccion">
-        </div>
-  
-        <div class="col">
-          <label for="email">Email</label>
-          <input type="text" class="form-control" placeholder="Email del encargado" formControlName="email">
-        </div>
-  
-        <div class="col">
-          <label for="telefono">Teléfono</label>
-          <input type="text" class="form-control" placeholder="Teléfono del encargado" formControlName="telefono">
+          <label for="fechaNacimiento">Fecha de Nacimiento</label>
+          <input type="datetime-local" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento" [value]="editarForm.get('fechaNacimiento')?.value ?? ''">
         </div>
 
         <!---<div class="col">
@@ -53,14 +38,20 @@
     </div>
     
     <div class="col">
-        <label for="encargadoId">Padre</label>
-        <input type="text" class="form-control" placeholder="Info Padre" formControlName="encargadoId">
+      <label for="encargadoId">Padre</label>
+      <select class="form-control" formControlName="encargadoId">
+        <option *ngFor="let encargado of encargados" [value]="encargado.encargadoId">
+          {{ encargado.nombre + ' ' + encargado.apellido }}
+        </option>
+      </select>
     </div>
-
+    
     <div class="col">
-        <label for="edadId">Rango de Edad</label>
-        <input type="text" class="form-control" placeholder="Info de Edad" formControlName="edadId">
-      </div>
+      <label for="edadId">Rango de Edad</label>
+      <select class="form-control" formControlName="edadId">
+        <option *ngFor="let edad of edades" [value]="edad.edadId">{{ edad.rangoEdad }}</option>
+      </select>
+    </div>
     
       <br><br>
       <!-- Agrega otros campos según sea necesario -->

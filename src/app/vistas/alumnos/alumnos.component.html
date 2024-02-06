@@ -9,6 +9,8 @@
 
     <h3>Lista de Alumnos</h3><br>
 
+    <button class="btn btn-success" (click)="exportToExcel()">Exportar a Excel</button>
+
     <button type="button" class="btn btn-primary" (click)="nuevoAlumnos()">Agregar Alumnos</button>
     
     <div class="d-flex justify-content-end align-items-center mb-3 position-absolute" style="top: 220px; right: 50px;">
@@ -27,9 +29,9 @@
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
         <th scope="col">Fecha Nacimiento</th>
-        <th scope="col">E-mail</th>
         <th scope="col">Teléfono</th>
         <th scope="col">Padre</th>
+        <th scope="col">Clase</th>
       </tr>
     </thead>
     <tbody>
@@ -37,10 +39,10 @@
         <th scope="row">{{ i + 1}}</th>
         <td>{{ alumno.nombre}}</td>
         <td>{{ alumno.apellido}}</td>
-        <td>{{ alumno.fechaNacimiento }}</td>
-        <td>{{ alumno.email}}</td>
-        <td>{{ alumno.telefono}}</td>
+        <td>{{ formatDateEs(alumno.fechaNacimiento) }}</td>
+        <td>{{ getTelefonoEncargado(alumno.encargadoId)}}</td>
         <td>{{ getNombreEncargado(alumno.encargadoId) }}</td>
+        <td>{{ getEdadClase(alumno.edadId) }}</td>
         <td>
           <button class="btn btn-outline-secondary" (click)="editarAlumnos(alumno.alumnoId)">Editar</button>
       </td>

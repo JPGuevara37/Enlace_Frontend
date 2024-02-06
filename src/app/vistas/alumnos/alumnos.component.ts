@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, LOCALE_ID, OnInit } from '@angular/core';
 import { ApiService } from '../../Servicios/api/api.service';
 import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
@@ -6,17 +6,27 @@ import { DatePipe } from '@angular/common';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 
+import * as XLSX from 'xlsx';
+
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+import { IListaEdades } from '../../modelos/listaedades.interfase';
+
+registerLocaleData(localeEs);
+
 @Component({
   selector: 'app-alumnos',
   templateUrl: './alumnos.component.html',
-  styleUrl: './alumnos.component.css'
+  styleUrls: ['./alumnos.component.css'],
+  providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es' }]
 })
+
 export class AlumnosComponent {
 
 
   alumnos:IListaAlumnos[] | undefined;
   encargados:IListaEcargados[] | undefined;
-  edades: any[] = [];
+  edades: IListaEdades[] | undefined;
   filtroNombre: string = '';
 
 
@@ -40,9 +50,9 @@ export class AlumnosComponent {
       this.filtrarEncargados();
     });
 
-    /*this.api.getAllEdades(1).subscribe(data => {
+    this.api.getAllEdades(1).subscribe(data => {
       this.edades = data;
-    });*/
+    });
   }
 
   filtrarEncargados() {
@@ -74,7 +84,7 @@ export class AlumnosComponent {
         this.quitarTildes(encargado.apellido.toLowerCase()).includes(filtroSinTildes)
       );
     });
-}
+  }
 
   quitarTildes(texto: string): string {
       return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -88,5 +98,48 @@ export class AlumnosComponent {
     const encargado = this.encargados?.find(e => e.encargadoId === encargadoId);
     return encargado ? `${encargado.nombre} ${encargado.apellido}` : '';
   }
+
+  getTelefonoEncargado(encargadoId: string): string {
+    const encargado = this.encargados?.find(e => e.encargadoId === encargadoId);
+    return encargado ? `${encargado.telefono}` : '';
+  }
+
+  getEdadClase(edadId: string): string {
+    const edades = this.edades?.find(e => e.edadId === edadId);
+    return edades ? `${edades.rangoEdad}` : '';
+  }
+
+
+  // Fotmatos de fecha a mostrar.
+  formatDate(fecha: string): string {
+    return this.datePipe.transform(fecha, 'dd/MM/yyyy') || '';
+  }
+  
+  formatDateEs(fecha: string): string {
+    return this.datePipe.transform(fecha, 'dd \'de\' MMMM \'del\' yyyy') || '';
+  }
+  //Exportar a excel.
+  exportToExcel(): void {
+    if (this.alumnos && this.alumnos.length > 0) {
+      // Crear un nuevo arreglo con los campos deseados
+      const dataToExport = this.alumnos.map(alumno => ({
+        Nombre: alumno.nombre,
+        Apellido: alumno.apellido,
+        FechaNacimiento: this.formatDate(alumno.fechaNacimiento), // Formatear la fecha
+        Direccion: alumno.direccion,
+        Email: alumno.email,
+        Telefono: alumno.telefono,
+        Padre: this.getNombreEncargado(alumno.encargadoId)
+      }));
+  
+      // Crear la hoja de cálculo y guardarla como archivo Excel
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Alumnos');
+      XLSX.writeFile(wb, 'alumnos.xlsx');
+    }
+  }
+  
+
 }
 
