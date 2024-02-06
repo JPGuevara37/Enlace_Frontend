@@ -1,10 +1,6 @@
-
-
 <app-header></app-header>
 
 <app-menu></app-menu>
-
-
 
 <div class="container">
     <br>
@@ -19,8 +15,14 @@
       </div>
   </div>
 
-  
-<table class="table">
+  <div class="d-flex justify-content-end align-items-center mb-3">
+    <!-- Mover el elemento a la derecha con ml-auto -->
+    <div class="ml-auto" id="navPages">
+      <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
+    </div>
+  </div>
+
+  <table class="table">
     <caption>Lista de Encargados</caption>
     <thead>
       <tr>
@@ -44,10 +46,17 @@
         <td>{{ encargado.encargadoId}}</td>
         <td>
           <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)">Editar</button>
-      </td>
+        </td>
       </tr>
     </tbody>
   </table>
-  <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
+  
+  <div class="d-flex justify-content-end align-items-center">
+    <!-- Mover el elemento a la derecha con ml-auto -->
+    <div class="ml-auto" id="navPages">
+      <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
+    </div>
+  </div>
 </div>
+
 <app-footer></app-footer>
