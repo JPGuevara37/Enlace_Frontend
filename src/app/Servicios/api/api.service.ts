@@ -189,6 +189,10 @@ export class ApiService {
       let direccion = this.url + "/api/edad";
       return this.http.post<IResponse>(direccion, form);
     } 
+    
+    getEdadById(edadId: string): Observable<IEdades> {
+      const direccion = `${this.url}/api/edad/${edadId}`;
+      return this.http.get<IEdades>(direccion);
+    }
+  }
 
-
-}

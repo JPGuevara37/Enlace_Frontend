@@ -29,6 +29,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +59,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot(), // ToastrModule added
     FormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   providers: [
     provideClientHydration()

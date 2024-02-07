@@ -38,3 +38,8 @@
     margin: 5px;
   }
 }
+
+div[role="region"] {
+  max-width: 600px;
+  margin: 20px auto;
+}

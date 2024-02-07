@@ -5,6 +5,10 @@ import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IAlumnos } from '../../modelos/alumnos.interfase';
+import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
+import { IListaEdades } from '../../modelos/listaedades.interfase';
+
+
 
 @Component({
   selector: 'app-nuevo-alumnos',
@@ -12,6 +16,12 @@ import { IAlumnos } from '../../modelos/alumnos.interfase';
   styleUrl: './nuevo-alumnos.component.css'
 })
 export class NuevoAlumnosComponent {
+
+  datePipe: any;
+  alumnos: IListaAlumnos[] | undefined;
+  encargados: IListaAlumnos[] | undefined;
+  edades: IListaEdades[] | undefined;
+  filtroNombre: string = '';
 
   nuevoForm = new FormGroup({
     nombre: new FormControl(''),
@@ -24,6 +34,7 @@ export class NuevoAlumnosComponent {
     encargadoId: new FormControl(''),
     edadId: new FormControl(''),
 });
+
 
   constructor(private api:ApiService, private router:Router, private alertas:AlertasService){}
 
@@ -39,6 +50,7 @@ export class NuevoAlumnosComponent {
       console.warn('No se puede acceder a localStorage en este entorno.');
     }
   }
+  
 
   postForm(form:IAlumnos){
     this.api.postAlumno(form).subscribe( data => {
