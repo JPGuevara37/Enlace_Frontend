@@ -60,9 +60,9 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-    workingDirectory: '$(Build.ArtifactStagingDirectory)/dist'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/dist'
     app_location: '/'
     skip_app_build: true
     skip_api_build: true
     is_static_export: true
-    azure_static_web_apps_api_token: 'SWAToken'
+    azure_static_web_apps_api_token: 'myToken'
