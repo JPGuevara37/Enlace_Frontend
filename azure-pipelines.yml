@@ -32,8 +32,11 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    Contents: 'build/**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    SourceFolder: 'dist'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/dist'
+  displayName: 'Copy files to artifact staging directory'
+
 
 - task: ArchiveFiles@2
   inputs:
