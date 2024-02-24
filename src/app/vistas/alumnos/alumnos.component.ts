@@ -27,6 +27,7 @@ export class AlumnosComponent implements OnInit {
   alumnos: IListaAlumnos[] = [];
   encargados: IListaEcargados[] | undefined;
   edades: IListaEdades[] | undefined;
+
   filtroNombre: string = '';
   itemsPerPage: number = 10;
   currentPage: number = 1;
@@ -88,9 +89,9 @@ export class AlumnosComponent implements OnInit {
     this.api.getAllAlumnos(1).subscribe(data => {
       const filtroSinTildes = this.quitarTildes(this.filtroNombre.toLowerCase());
 
-      this.alumnos = data.filter(encargado =>
-        this.quitarTildes(encargado.nombre.toLowerCase()).includes(filtroSinTildes) ||
-        this.quitarTildes(encargado.apellido.toLowerCase()).includes(filtroSinTildes)
+      this.alumnos = data.filter(alumno =>
+        this.quitarTildes(alumno.nombre.toLowerCase()).includes(filtroSinTildes) ||
+        this.quitarTildes(alumno.apellido.toLowerCase()).includes(filtroSinTildes)
       );
     });
   }
@@ -172,6 +173,7 @@ export class AlumnosComponent implements OnInit {
 
   pageChanged(event: any): void {
     this.currentPage = event;
+    this.alumnos;
   }
   
 }

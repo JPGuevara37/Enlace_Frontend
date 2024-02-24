@@ -12,8 +12,12 @@ import { IListaRecursos } from '../../modelos/listarecursos.interfase';
 })
 export class RecursosComponent {
 
-  recursos:IListaRecursos[] | undefined;
+  recursos:IListaRecursos[] = [];
   filtroNombre: string = '';
+  itemsPerPage: number = 10;
+  currentPage: number = 1;
+  maxSize: number = 50; // Puedes ajustar el tamaño máximo de la paginación aquí
+  totalItems: number = 0;
 
   constructor(private api:ApiService, private router:Router){}
 
@@ -42,8 +46,14 @@ export class RecursosComponent {
     });
 }
 
+
   quitarTildes(texto: string): string {
       return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  pageChanged(event: any): void {
+    this.currentPage = event;
+    this.recursos;
   }
 
   salir(){

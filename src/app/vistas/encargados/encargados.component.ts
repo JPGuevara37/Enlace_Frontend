@@ -53,6 +53,7 @@ quitarTildes(texto: string): string {
 
 pageChanged(event: any): void {
   this.currentPage = event;
+  this.encargados;
 }
 
 salir(){
