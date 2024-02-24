@@ -46,7 +46,6 @@ steps:
     archiveType: zip
     archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
     replaceExistingArchive: true
-
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
@@ -58,3 +57,12 @@ steps:
     destinationFolder: '$(Build.ArtifactStagingDirectory)/dist'
     cleanDestinationFolder: true
     overwriteExistingFiles: true
+
+- task: AzureStaticWebApp@0
+  inputs:
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/dist'
+    app_location: '/'
+    skip_app_build: true
+    skip_api_build: true
+    is_static_export: true
+    azure_static_web_apps_api_token: 'SWAToken'
