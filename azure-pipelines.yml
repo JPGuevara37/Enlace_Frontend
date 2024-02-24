@@ -65,4 +65,4 @@ steps:
     skip_app_build: true
     skip_api_build: true
     is_static_export: true
-    azure_static_web_apps_api_token: 'myToken'
+    azure_static_web_apps_api_token: 'b74d57c30f76ac5becbcb50546edea6c8f81400e8e04df7051524f0b3c854ba64-b19ca967-af07-4c65-b285-cdf3ef5a99ed010333666'
