@@ -27,6 +27,9 @@ steps:
 - script: node -v
   displayName: 'Display Node.js version'
 
+- script: ls
+  displayName: 'List contents of working directory'
+
 - task: CopyFiles@2
   inputs:
     Contents: 'build/**'
