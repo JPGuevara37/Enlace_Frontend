@@ -39,9 +39,13 @@
       <!-- Agrega otros campos según sea necesario -->
   
       <!-- Botón de envío -->
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-danger" (click)="delete()">Eliminar</button>
-      <button type="button" class="btn btn-dark" (click)="salir()">Atras</button>
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary mx-2">Guardar</button>
+        <div>
+          <button type="button" class="btn btn-danger mx-2" (click)="delete()">Eliminar</button>
+        </div>
+        <button type="button" class="btn btn-dark mx-2" (click)="salir()">Atrás</button>
+      </div>
     </form>
   </div>
   

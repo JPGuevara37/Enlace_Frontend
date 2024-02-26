@@ -1,0 +1,13 @@
+#navPages ul.pagination {
+    margin: 0; /* Ajusta el margen según sea necesario */
+}
+
+#navPages ul.pagination li.page-item {
+    margin: 0 2px; /* Espacio entre los elementos de la paginación */
+}
+
+#navPages ul.pagination li.page-item.active span {
+    background-color: #007BFF; /* Color de fondo del número de página activa */
+    border-color: #007BFF; /* Color del borde del número de página activa */
+    color: #fff; /* Color del texto del número de página activa */
+}

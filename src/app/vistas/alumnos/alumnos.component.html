@@ -19,9 +19,11 @@
     <h3>Lista de Alumnos</h3><br>
 
     <div class="d-flex mb-3">
-        <div id="btnNuevo">
-            <button type="button" class="btn btn-primary" (click)="nuevoAlumnos()">Agregar Alumnos</button>
-        </div>
+        <div>
+          <button type="button" class="btn btn-primary mb-2" (click)="nuevoAlumnos()">
+              <i class="fas fa-chalkboard-teacher"></i> Agregar Alumnos
+          </button>
+      </div>
 
         <div id="btnExport" class="ml-2">
             <button class="btn btn-custom" (click)="exportToExcel()">Exportar a Excel</button>

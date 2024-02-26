@@ -22,26 +22,23 @@
                 <label for="fechaNacimiento">fechanacimiento</label>
                 <input type="date" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento">
             </div>
+            
+          <div class="col">
+            <label for="encargadoId">Padre</label>
+            <select class="form-control" formControlName="encargadoId">
+              <option *ngFor="let encargado of encargados" [value]="encargado.encargadoId">
+                {{ encargado.nombre + ' ' + encargado.apellido }}
+              </option>
+            </select>
+          </div>
+          
+          <div class="col">
+            <label for="edadId">Rango de Edad</label>
+            <select class="form-control" formControlName="edadId">
+              <option *ngFor="let edad of edades" [value]="edad.edadId">{{ edad.rangoEdad }}</option>
+            </select>
+          </div>
 
-          <div class="col">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" placeholder="Email del profe" formControlName="email">
-          </div>
-    
-          <div class="col">
-            <label for="telefono">Teléfono</label>
-            <input type="text" class="form-control" placeholder="Teléfono del profe" formControlName="telefono">
-          </div>
-
-        <div class="col">
-            <label for="encargadoId">Padres</label>
-            <input type="text" class="form-control" placeholder="Encargado" formControlName="encargadoId">
-          </div>
-  
-          <div class="col">
-            <label for="">Edad</label>
-            <input type="text" class="form-control" placeholder="edadID" formControlName="edadId">
-          </div>
       </div>
         <br><br>
         <!-- Agrega otros campos según sea necesario -->

@@ -33,7 +33,7 @@ export class AlumnosComponent implements OnInit {
   filtroNombre: string = '';
   itemsPerPage: number = 10;
   currentPage: number = 1;
-  maxSize: number = 50; // Puedes ajustar el tamaño máximo de la paginación aquí
+  maxSize: number = 3; // Puedes ajustar el tamaño máximo de la paginación aquí
   totalItems: number = 0; // Esta se actualizará con el total de elementos
 
 

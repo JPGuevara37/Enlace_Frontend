@@ -21,7 +21,7 @@ import { IEdades } from '../../modelos/Edades.interfase';
 })
 export class ApiService {
 
-  url:string = "https://api-enlace.azurewebsites.net";
+  url:string = "http://localhost:5066";
 
   constructor(private http:HttpClient) { }
 //servicio de login.
