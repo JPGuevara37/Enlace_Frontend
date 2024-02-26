@@ -1,0 +1,190 @@
+[33mcommit da0a1062db118b3eadb65f038b22abffc6f8f981[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 25 17:34:17 2024 -0600
+
+    Version.0.19
+
+[33mcommit bb56cb78fad8e31677ffec0d4221698c1f19f327[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sat Feb 24 00:17:38 2024 -0600
+
+    Update azure-pipelines.yml for Azure Pipelines
+
+[33mcommit 86e793459aad2439412b9b2b791648235ba286c2[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sat Feb 24 00:14:38 2024 -0600
+
+    Update azure-pipelines.yml for Azure Pipelines
+
+[33mcommit e32663201c8e2a085d02f6e566855f6766cbf550[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Fri Feb 23 23:57:07 2024 -0600
+
+    Version.0.17
+
+[33mcommit 0c5b8e114936e15e82c6ad37b0ef7f20f85897ca[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Fri Feb 23 22:32:46 2024 -0600
+
+    Version.0.15
+
+[33mcommit 7ead709c93cc4bcd397beb35d5529f5767a67922[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Thu Feb 15 22:49:19 2024 -0600
+
+    ci: add Azure Static Web Apps workflow file
+    on-behalf-of: @Azure opensource@microsoft.com
+
+[33mcommit 4677dd20d42718bc8a9b2695f7f90deaf46891db[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Thu Feb 15 18:55:41 2024 -0600
+
+    Update azure-pipelines.yml for Azure Pipelines
+
+[33mcommit 9a7fc14c23ee355a9959c6b3c5df3acc7da1e551[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Thu Feb 15 18:07:33 2024 -0600
+
+    Set up CI with Azure Pipelines
+    
+    Se estara implementado en Azure pipelines. [skip ci]
+
+[33mcommit 6957ef248ccd0f06fb281f0f7be0291fb794c157[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Thu Feb 15 17:49:48 2024 -0600
+
+    Version.0.14
+
+[33mcommit f772e62b43197ecbd7dd367ad1d4f10e5a1eb4fc[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Wed Feb 7 09:18:22 2024 -0600
+
+    Version.0.13
+
+[33mcommit 4d3c8dfb43746c8e2fe127a9cf90417b01ab8056[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Tue Feb 6 09:22:41 2024 -0600
+
+    Version.0.12
+
+[33mcommit 873d0a81fa332668d33ee788d1518fe55a99d8ab[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Tue Feb 6 09:05:22 2024 -0600
+
+    Version.0.11
+
+[33mcommit 78e8154b0907686507b7c2ff11764e1f92797f12[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Tue Feb 6 00:28:13 2024 -0600
+
+    Version.0.10
+
+[33mcommit 513527338c431335f5f3be421f6051121103c862[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Mon Feb 5 00:33:49 2024 -0600
+
+    Delete .github/workflows/main_enlace-ibmsa.yml
+
+[33mcommit f6b85cc76dea9ccd521ad35e261e2f8853cd42fe[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Mon Feb 5 00:33:40 2024 -0600
+
+    Delete .github/workflows/main_enlace-frontend.yml
+
+[33mcommit 0effeb46652e6cc2f8a3a47aee99abf5538e2638[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:55:10 2024 -0600
+
+    Version.0.6
+
+[33mcommit ef08d2cc06ea437d5e3b1c4d1b9a87a375618540[m
+Merge: a30c7ac 8f706d7
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:31:07 2024 -0600
+
+    Merge branch 'main' of https://github.com/JPGuevara37/Enlace_Frontend
+
+[33mcommit a30c7acd5e3c53a14706e0d3299d347c080deb6f[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:31:00 2024 -0600
+
+    Version.0.5
+
+[33mcommit 8f706d730742e48dc4544aac9e107b916bae9ca8[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:19:54 2024 -0600
+
+    Add or update the Azure App Service build and deployment workflow config
+
+[33mcommit 047f6718519bde4da6297f1949eebf374dfc1287[m
+Merge: bcf48a2 7fa32ae
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:17:55 2024 -0600
+
+    Merge branch 'main' of https://github.com/JPGuevara37/Enlace_Frontend
+
+[33mcommit bcf48a278bca1f3c11997737eec741e93d8f8103[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:15:11 2024 -0600
+
+    Version.0.4
+
+[33mcommit 7fa32aee1a893e9c6ccf6c3ac6229093f8c2c2e6[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 23:00:17 2024 -0600
+
+    Add or update the Azure App Service build and deployment workflow config
+
+[33mcommit 21be947f9e2c1cbd6dfdc89cee555d0ab65cf8e6[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 22:51:10 2024 -0600
+
+    Add or update the Azure App Service build and deployment workflow config
+
+[33mcommit f7fcf2067069c1bd722a1e192f71e10ad6d1017a[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 18:51:10 2024 -0600
+
+    Version.0.2
+
+[33mcommit a737b1176c6e361f3608da9c82f7945efd15c94e[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Sun Feb 4 18:50:15 2024 -0600
+
+    Version.0.1
+
+[33mcommit 747e9b19adbd7972ac2f2a15e0324e62c578c121[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Fri Feb 2 09:19:32 2024 -0600
+
+    Se Agregaron modulos,Alumnos, profesores y recursos
+
+[33mcommit 07c528915e248c603bc0595b9a889c951bd78d81[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Thu Feb 1 03:06:04 2024 -0600
+
+    Pantallas dashboard
+
+[33mcommit ab530c46d34ce272b46819e508c7d9bbca798df5[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Thu Feb 1 01:24:38 2024 -0600
+
+    Pantalla de encargados terminado
+
+[33mcommit 9698bed6af7af992d4d3102ea037cb6ed4d4f78c[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Wed Jan 31 15:37:31 2024 -0600
+
+    Aplicacion de Edicion a encargados
+
+[33mcommit 1046cc015bccc34d0b408f2e93e8e652f238b032[m
+Author: jose.guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Wed Jan 31 11:39:28 2024 -0600
+
+    Cambio de carpeta
+
+[33mcommit c40baa8577f19598dfdb87d44c8858409c3f9e7f[m
+Author: Jose Guevara <134351019+JPGuevara37@users.noreply.github.com>
+Date:   Wed Jan 31 10:18:45 2024 -0600
+
+    Initial commit

@@ -1,9 +1,16 @@
 
-    <div class="menu">
-        <span class="menu-item" (click)="encargadosPage()">Padres</span>
-        <span class="menu-item" (click)="alumnosPage()">Alumnos</span>
-        <span class="menu-item" (click)="profesoresPage()">Profesores</span>
-        <span class="menu-item" (click)="recursosPage()">Recurso</span>
-        <span class="menu-item" (click)="salir()">Dashboard</span>
-    </div>
+
+<button class="burger-menu" (click)="toggleMenu()">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+</button>
+
+<div class="menu-container" [class.show]="isMenuOpen">
+    <span class="menu-item" (click)="encargadosPage()">Padres</span>
+    <span class="menu-item" (click)="alumnosPage()">Alumnos</span>
+    <span class="menu-item" (click)="profesoresPage()">Profesores</span>
+    <span class="menu-item" (click)="recursosPage()">Recurso</span>
+    <span class="menu-item" (click)="salir()">Dashboard</span>
+</div>
 

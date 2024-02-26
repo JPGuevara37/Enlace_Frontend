@@ -7,8 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
-
+  isMenuOpen: boolean = false;
+  
   constructor(private router: Router) {}
+  
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 
   encargadosPage() {
     this.router.navigate(['/encargados']); // Asegúrate de usar el prefijo '/'

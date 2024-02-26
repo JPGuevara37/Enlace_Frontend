@@ -14,7 +14,7 @@ export class ProfesoresComponent {
   filtroNombre: string = '';
   itemsPerPage: number = 5;
   currentPage: number = 1;
-  maxSize: number = 50; // Puedes ajustar el tamaño máximo de la paginación aquí
+  maxSize: number = 50; 
   totalItems: number = 0;
   
 

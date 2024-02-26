@@ -8,12 +8,6 @@
 
     <button type="button" class="btn btn-primary" (click)="nuevoEncargado()">Agregar Encargado</button>
     
-    <div class="d-flex justify-content-end align-items-center mb-3 position-absolute" style="top: 220px; right: 50px;">
-      <div class="input-group">
-          <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar por nombre o apellido" (keyup.enter)="filtrar()" />
-          <button class="btn btn-primary" (click)="filtrar()">Buscar</button>
-      </div>
-  </div>
 
   <div class="d-flex justify-content-end align-items-center mb-3">
     <!-- Mover el elemento a la derecha con ml-auto -->
@@ -22,6 +16,7 @@
     </div>
   </div>
 
+<div class="table-responsive">
   <table class="table">
     <caption>Lista de Encargados</caption>
     <thead>
@@ -45,7 +40,7 @@
         <td>{{ encargado.telefono}}</td>
         <td>{{ encargado.encargadoId}}</td>
         <td>
-          <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)">Editar</button>
+          <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)"><i class="fas fa-edit"></i> Editar</button>
         </td>
       </tr>
     </tbody>
@@ -57,6 +52,17 @@
       <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
     </div>
   </div>
+
+  
+  <div class="d-flex justify-content-end align-items-center position-absolute" style="top: 105px; right: 10px;">
+    <div class="input-group">
+      <input type="text" [(ngModel)]="filtroNombre" class="form-control" style="width: 150px;" placeholder="Buscar" (keyup.enter)="filtrar()" />
+      <button class="btn btn-primary" style="padding: 0.25rem 0.5rem;" (click)="filtrar()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+</div>
 </div>
 
 <app-footer></app-footer>

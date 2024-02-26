@@ -1,6 +1,8 @@
 header{
     background-color: #161F30;
-    padding: 0px 0px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 .navbar{
     background-color: #161F30;

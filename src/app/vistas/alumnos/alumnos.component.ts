@@ -11,6 +11,8 @@ import * as XLSX from 'xlsx';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
+import { FormsModule } from '@angular/forms';
+
 import { PaginatePipe } from 'ngx-pagination';
 
 
