@@ -54,5 +54,15 @@ export class LoginComponent {
       
     });
   }
+  resetPassword(email: string) {
+    this.api.resetearContrasena(email).subscribe(response => {
+      // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario.
+      console.log(response);
+    });
+  }
 
+  onResetPassword(email: string) {
+    this.resetPassword(email);
+    
+  } 
 }

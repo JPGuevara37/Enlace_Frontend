@@ -194,5 +194,12 @@ export class ApiService {
       const direccion = `${this.url}/api/edad/${edadId}`;
       return this.http.get<IEdades>(direccion);
     }
+
+    resetearContrasena(email: string): Observable<any> {
+      const resetPasswordRequest = { email: email };
+      const direccion = `${this.url}/api/reset-password`;
+      return this.http.post<any>(direccion, resetPasswordRequest);
+    }
+
   }
 

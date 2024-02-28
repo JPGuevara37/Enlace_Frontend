@@ -40,7 +40,6 @@
         <th scope="col">Direccion</th>
         <th scope="col">E-mail</th>
         <th scope="col">Teléfono</th>
-        <th scope="col">Código</th>
       </tr>
     </thead>
     <tbody>
@@ -51,7 +50,6 @@
         <td>{{ encargado.direccion}}</td>
         <td>{{ encargado.email}}</td>
         <td>{{ encargado.telefono}}</td>
-        <td>{{ encargado.encargadoId}}</td>
         <td>
           <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)"><i class="fas fa-edit"></i> Editar</button>
         </td>
