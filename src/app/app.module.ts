@@ -27,6 +27,7 @@ import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.c
 import { MenuComponent } from './plantillas/menu/menu.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { SignupComponent } from './vistas/signup/signup.component';
 
 
 
@@ -49,7 +50,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     RecursosComponent,
     EditarRecursosComponent,
     NuevoRecursosComponent,
-    MenuComponent
+    MenuComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

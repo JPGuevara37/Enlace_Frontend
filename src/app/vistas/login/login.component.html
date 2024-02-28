@@ -1,23 +1,43 @@
-<div class="wrapper">
-  <div id="formContent">
-    <div class="first">
-      <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="5px" />
-    </div>
-
-    <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm.value)">
-      <input type="text" id="login" class="second" placeholder="login" formControlName="usuario" />
-      <input type="password" id="password" class="third" placeholder="password" formControlName="password" />
-      <input type="submit" class="fourth" value="Log In" />
-    </form>
-
-    <!-- Mostrar enlace para restablecer contraseña -->
-    <div id="formFooter">
-      <a class="underlineHover" routerLink="/reset-password">Forgot Password?</a>
-    </div>
-
-    <!-- Mostrar mensajes de error -->
-    <div [ngClass]="{'alert': errorStatus, 'alert-danger': errorStatus}">
-      <p>{{ errorMsj }}</p>
+<div class="outer">
+  <div class="container">
+    <div class="row">
+      <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+        <div class="panel border bg-white">
+          <div class="panel-heading">
+            <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
+          </div>
+          <div class="panel-body p-3">
+            <form [formGroup]="loginForm">
+              <div class="form-group pt-3">
+                <div class="input-field">
+                  <span class="fa fa-user p-2"></span>
+                  <input formControlName="username" type="text" placeholder="Usuario">
+                </div>
+              </div>
+              <small *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required','username')" class="text-danger">*Usuario requerido</small>
+              <div class="form-group pt-3">
+                <div class="input-field">
+                  <span class="fa fa-lock p-2"></span>
+                  <input formControlName="password" [type]="type" placeholder="Contrasena">
+                  <span (click)="hideshowPass()" class="fa {{eyeIcon}}"></span>
+                </div>
+              </div>
+              <small *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required','password')" class="text-danger">*Contrasena requerida</small>
+              <div class="form-inline fr mt-4">
+                  <a id="forget" class="font-weight-bold">Olvidé Contrasena</a>
+              </div>
+              <button (click)="onSumit()" [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block mt4 w-100">Login</button>
+              <div class="text-center pt-4 text-muted">No tienes cuenta?<a id="forget" routerLink="/signup">Registrar</a></div>
+            </form>
+          </div>
+          <div class="mx-3 my-2 py-2 bordert">
+            <div class="text-center py-3">
+              <a href="https://www.facebook.com" target="_blank" class="px-2"><img id="img" src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""></a>
+                <a href="https://google.com" target="_blank" class="px-2"><img id="img" src="assets/google-logo-9824.png" alt=""></a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

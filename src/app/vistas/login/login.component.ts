@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { FormGroup,FormControl,Validators } from '@angular/forms';
+import { FormGroup,FormControl,Validators, FormBuilder, Validator } from '@angular/forms';
 import { ApiService } from '../../Servicios/api/api.service';
 import { ILogin } from '../../modelos/login.interfase';
 import { IResponse } from '../../modelos/response.interfase';
@@ -15,54 +15,44 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
+  type:string = "password"
+  isText: boolean = false;
+  eyeIcon: string = "fa-eye-slash"
+  loginForm!: FormGroup;
 
-  loginForm = new FormGroup({
-    usuario : new FormControl('',Validators.required),
-    password : new FormControl('',Validators.required)
-  })
-
-  constructor(private api:ApiService, private router: Router) {}
-
-  errorStatus:boolean = false;
-  errorMsj:any = "";
-  
+  constructor(private fb: FormBuilder, private api:ApiService, private router: Router) {}
 
   ngOnInit() : void {
-    this.checkLocalStorage();
+    this.loginForm = this.fb.group({
+      username : ['',Validators.required],
+      password : ['',Validators.required]
+    })
   }
 
-  checkLocalStorage() {
-    if (typeof localStorage !== 'undefined' && localStorage.getItem('token')) {
-      this.router.navigate(['dashboard']);
+  hideshowPass(){
+    this.isText = !this.isText;
+    this.isText ? this.eyeIcon = "fa-eye" : this.eyeIcon = "fa-eye-slash";
+    this.isText ? this.type = "text" : this.type = "password";
+  }
+
+  onSumit(){
+    if(this.loginForm.valid){
+      console.log(this.loginForm.value)
+    }else{
+
+      this.validateAllFormFileds(this.loginForm);
+      alert("Tu form es invalido")
     }
   }
-  
 
-  onLogin(form:ILogin){
-    this.api.LoginByEmail(form).subscribe(data =>{
-      let dataResponse:IResponse = data;
-      console.log(dataResponse);
-      if(dataResponse.status === "ok" && dataResponse.result){
-        localStorage.setItem("token", dataResponse.result.token);
-        this.router.navigate(['dashboard']);
+  private validateAllFormFileds(FormGroup:FormGroup){
+    Object.keys(FormGroup.controls).forEach(field=>{
+      const control = FormGroup.get(field);
+      if(control instanceof FormControl){
+        control.markAsDirty({onlySelf:true});
+      } else if(control instanceof FormGroup){
+        this.validateAllFormFileds(control)
       }
-      else if (dataResponse.result?.error_msj){
-        this.errorStatus = true;
-        this.errorMsj = dataResponse.result.error_msj;
-        
-      }
-      
-    });
+    })
   }
-  resetPassword(email: string) {
-    this.api.resetearContrasena(email).subscribe(response => {
-      // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje al usuario.
-      console.log(response);
-    });
-  }
-
-  onResetPassword(email: string) {
-    this.resetPassword(email);
-    
-  } 
 }

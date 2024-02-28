@@ -26,6 +26,7 @@ import { EditarProfesoresComponent } from './vistas/editar-profesores/editar-pro
 import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
+import { SignupComponent } from './vistas/signup/signup.component';
 
 const routes: Routes = [
   { path : '' , redirectTo : 'login' , pathMatch : 'full'},
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path : 'dashboard' , component:DashboardComponent },
   { path : 'nuevo' , component:NuevoComponent },
   { path : 'editar/:id' , component:EditarComponent },
+  { path: 'signup', component:SignupComponent},
   
   //rutas para encargados
   { path: 'encargados', component:EncargadosComponent },
