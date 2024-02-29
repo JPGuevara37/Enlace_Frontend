@@ -21,14 +21,37 @@ import { IEdades } from '../../modelos/Edades.interfase';
 })
 export class ApiService {
 
-  url:string = "https://api-enlace.azurewebsites.net";
+  private url:string = "https://api-enlace.azurewebsites.net";
+
+  //http://localhost:5066
+  //https://api-enlace.azurewebsites.net
 
   constructor(private http:HttpClient) { }
 //servicio de login.
-  LoginByEmail(form:ILogin):Observable<IResponse>{
-    let direccion = this.url + "/api/autenticar";
-    return this.http.post<Response>(direccion,form);
+  login(loginObj:any){
+    let direccion = this.url + "/api/autenticar/authenticate";
+    return this.http.post<any>(direccion, loginObj)
   }
+  //servicio de registro
+  singUP(usuarioObj:any){
+    let direccion = this.url + "/api/autenticar/register";
+    return this.http.post<any>(direccion, usuarioObj)
+  }
+  //servicio de guards Token
+  storeToken(tokenValue: string){
+    localStorage.setItem('token', tokenValue)
+  }
+
+  getToken(){
+    return localStorage.getItem('roken')
+  }
+
+  isloggedIn(): boolean{
+    return !! localStorage.getItem('token')
+  }
+
+
+
 //servicio de para encargados.
   getAllEncargados(page:number):Observable<IListaEcargados[]>{
     let direccion = this.url + "/api/encargados";

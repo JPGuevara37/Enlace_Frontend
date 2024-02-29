@@ -1,4 +1,4 @@
 export interface ILogin{
-    usuario?: any;
+    Usuario_Cuenta?: any;
     password? : any;
 }

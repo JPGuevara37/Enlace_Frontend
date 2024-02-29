@@ -28,6 +28,8 @@ import { MenuComponent } from './plantillas/menu/menu.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SignupComponent } from './vistas/signup/signup.component';
+import { LoginComponent } from './vistas/login/login.component';
+import { NgToastModule } from 'ng-angular-popup';
 
 
 
@@ -51,7 +53,8 @@ import { SignupComponent } from './vistas/signup/signup.component';
     EditarRecursosComponent,
     NuevoRecursosComponent,
     MenuComponent,
-    SignupComponent
+    SignupComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +65,7 @@ import { SignupComponent } from './vistas/signup/signup.component';
     ToastrModule.forRoot(), // ToastrModule added
     FormsModule,
     NgxPaginationModule,
+    NgToastModule,
   ],
   providers: [
     provideClientHydration()

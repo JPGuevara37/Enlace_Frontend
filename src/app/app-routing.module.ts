@@ -28,10 +28,13 @@ import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.c
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 import { SignupComponent } from './vistas/signup/signup.component';
 
+//Guards
+import { AuthGuard } from './guards/auth.guard';
+
 const routes: Routes = [
   { path : '' , redirectTo : 'login' , pathMatch : 'full'},
   { path : 'login' , component:LoginComponent },
-  { path : 'dashboard' , component:DashboardComponent },
+  { path : 'dashboard' , component:DashboardComponent, canActivate:[AuthGuard]},
   { path : 'nuevo' , component:NuevoComponent },
   { path : 'editar/:id' , component:EditarComponent },
   { path: 'signup', component:SignupComponent},
@@ -56,6 +59,7 @@ const routes: Routes = [
   { path: 'recursos' ,  component:RecursosComponent},
   { path: 'editar-recursos/:id', component:EditarRecursosComponent},
   { path: 'nuevo-recursos' , component:NuevoRecursosComponent},
+
 
 ];
 

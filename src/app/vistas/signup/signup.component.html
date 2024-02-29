@@ -7,44 +7,45 @@
               <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
             </div>
             <div class="panel-body p-3">
-              <form>
+              <form [formGroup]="signUpForm">
                 <div class="form-group pt-3">
-                  <div class="input-field">
+                  <div class="input-field" [class.error]="signUpForm.controls['Nombre'].dirty && signUpForm.hasError('required','Nombre')">
                     <span class="fa fa-user p-2"></span>
-                    <input type="text" placeholder="Nombre">
+                    <input formControlName="Nombre" type="text" placeholder="Nombre">
                   </div>
                 </div>
-
+                <small *ngIf="signUpForm.controls['Nombre'].dirty && signUpForm.hasError('required','Nombre')" class="text-danger">*Nombre requerido.</small>
                 <div class="form-group pt-3">
-                    <div class="input-field">
+                    <div class="input-field" [class.error]="signUpForm.controls['Apellido'].dirty && signUpForm.hasError('required','Apellido')">
                       <span class="fa fa-user p-2"></span>
-                      <input type="text" placeholder="Apellido">
+                      <input formControlName="Apellido" type="text" placeholder="Apellido">
                     </div>
                   </div>
-
+                  <small *ngIf="signUpForm.controls['Apellido'].dirty && signUpForm.hasError('required','Apellido')" class="text-danger">*Apellido requerido.</small>
                   <div class="form-group pt-3">
-                    <div class="input-field">
+                    <div class="input-field"[class.error]="signUpForm.controls['Email'].dirty && signUpForm.hasError('required','Email')">
                       <span class="fa fa-user p-2"></span>
-                      <input type="text" placeholder="Email">
+                      <input formControlName="Email" type="text" placeholder="Email">
                     </div>
                   </div>
-
+                  <small *ngIf="signUpForm.controls['Email'].dirty && signUpForm.hasError('required','Email')" class="text-danger">*Correo requerido.</small>
                   <div class="form-group pt-3">
-                    <div class="input-field">
+                    <div class="input-field" [class.error]="signUpForm.controls['Usuario_Cuenta'].dirty && signUpForm.hasError('required','Usuario_Cuenta')">
                       <span class="fa fa-user p-2"></span>
-                      <input type="text" placeholder="Usuario">
+                      <input formControlName="Usuario_Cuenta" type="text" placeholder="Usuario">
                     </div>
                   </div>
-
-                <div class="form-group pt-3">
-                  <div class="input-field">
+                  <small *ngIf="signUpForm.controls['Usuario_Cuenta'].dirty && signUpForm.hasError('required','Usuario_Cuenta')" class="text-danger">*Nombre de usuario requerido</small>
+                  <div class="form-group pt-3">
+                    <div class="input-field" [class.error]="signUpForm.controls['Usuario_Cuenta'].dirty && signUpForm.hasError('required','Usuario_Cuenta')">
                     <span class="fa fa-lock p-2"></span>
-                    <input [type]="type" placeholder="Contrasena">
+                    <input formControlName="Password" [type]="type" placeholder="Contrasena">
                     <span (click)="hideshowPass()" class="fa {{eyeIcon}}"></span>
                   </div>
-
                 </div>
-                <button type="submit" class="btn btn-primary btn-block mt4 w-100">Registrar</button>
+                <small *ngIf="signUpForm.controls['Password'].dirty && signUpForm.hasError('required','Password')" class="text-danger">*Contrasena requerida.</small>
+
+                <button type="submit" class="btn btn-primary btn-block mt4 w-100" (click)="onSignup()">Registrar</button>
                 <div class="text-center pt-4 text-muted">Tienes cuenta?<a id="forget" routerLink="/login">Entrar</a></div>
               </form>
             </div>
