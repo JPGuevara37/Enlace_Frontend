@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../Servicios/api/api.service';
 import { Router } from '@angular/router';
 
-
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
+
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-recursos',
@@ -44,7 +45,30 @@ export class RecursosComponent {
         this.quitarTildes(encargado.articulo.toLowerCase()).includes(filtroSinTildes)
       );
     });
-}
+  }
+
+
+  // Exportar la lista de alumnos a un archivo Excel
+  exportToExcel(): void {
+    if (this.recursos && this.recursos.length > 0) {
+      // Crear un nuevo arreglo con los campos deseados
+      const currentDate = new Date();
+      const formattedDate = currentDate.toISOString().slice(0, 10).replace(/-/g, '');
+
+      const dataToExport = this.recursos.map(recurso => ({
+        Artículo: recurso.articulo,
+        Cantidad: recurso.cantidad,
+        Numero_Locker: recurso.numero_Locker,
+        Descripción: recurso.descripcion,
+      }));
+
+      // Crear la hoja de cálculo y guardarla como archivo Excel
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Alumnos');
+      XLSX.writeFile(wb, `recursos_en_lockers${formattedDate}.xlsx`);
+    }
+  }
 
 
   quitarTildes(texto: string): string {

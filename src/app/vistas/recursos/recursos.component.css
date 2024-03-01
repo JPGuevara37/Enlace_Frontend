@@ -11,3 +11,18 @@
     border-color: #007BFF; /* Color del borde del número de página activa */
     color: #fff; /* Color del texto del número de página activa */
 }
+
+.btn-custom {
+    background-color: #84B026;
+    color: #ffffff; /* Cambiar el color del texto según sea necesario */
+    margin-left: 20px;
+  }
+  
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+    overflow: auto;
+  }
