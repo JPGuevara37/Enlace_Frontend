@@ -60,6 +60,11 @@ salir(){
   this.router.navigate(['dashboard']);
 }
 
+logout() {
+  localStorage.removeItem('token');
+  this.router.navigate(['login']);
+}
+
 
 
 }

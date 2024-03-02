@@ -26,7 +26,11 @@ import { EditarProfesoresComponent } from './vistas/editar-profesores/editar-pro
 import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
+
+//Sistema de Login
 import { SignupComponent } from './vistas/signup/signup.component';
+import { LoguotComponent } from './plantillas/loguot/loguot.component';
+
 
 //Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -35,30 +39,31 @@ const routes: Routes = [
   { path : '' , redirectTo : 'login' , pathMatch : 'full'},
   { path : 'login' , component:LoginComponent },
   { path : 'dashboard' , component:DashboardComponent, canActivate:[AuthGuard]},
-  { path : 'nuevo' , component:NuevoComponent },
-  { path : 'editar/:id' , component:EditarComponent },
-  { path: 'signup', component:SignupComponent},
+  { path : 'nuevo' , component:NuevoComponent, canActivate:[AuthGuard] },
+  { path : 'editar/:id' , component:EditarComponent, canActivate:[AuthGuard] },
+  { path: 'signup', component:SignupComponent, canActivate:[AuthGuard]},
+  { path: 'logout', component:LoguotComponent, canActivate:[AuthGuard] },
   
   //rutas para encargados
-  { path: 'encargados', component:EncargadosComponent },
-  { path: 'editar-encargados/:id' , component:EditarEncargadosComponent },
-  { path: 'nuevo-encargados' , component:NuevoEncargadosComponent },
+  { path: 'encargados', component:EncargadosComponent, canActivate:[AuthGuard] },
+  { path: 'editar-encargados/:id' , component:EditarEncargadosComponent, canActivate:[AuthGuard] },
+  { path: 'nuevo-encargados' , component:NuevoEncargadosComponent, canActivate:[AuthGuard] },
 
   //rutas para Alumnos
-  { path: 'alumnos', component:AlumnosComponent},
-  { path: 'editar-alumnos/:id', component:EditarAlumnosComponent},
-  { path: 'nuevo-alumnos' , component : NuevoAlumnosComponent},
+  { path: 'alumnos', component:AlumnosComponent, canActivate:[AuthGuard]},
+  { path: 'editar-alumnos/:id', component:EditarAlumnosComponent, canActivate:[AuthGuard]},
+  { path: 'nuevo-alumnos' , component : NuevoAlumnosComponent, canActivate:[AuthGuard]},
 
   //rutos para Profesores
 
-  { path: 'profesores' ,  component:ProfesoresComponent},
-  { path: 'editar-profesores/:id', component:EditarProfesoresComponent},
-  { path: 'nuevo-profesores' , component:NuevoProfesoresComponent},
+  { path: 'profesores' ,  component:ProfesoresComponent, canActivate:[AuthGuard]},
+  { path: 'editar-profesores/:id', component:EditarProfesoresComponent, canActivate:[AuthGuard]},
+  { path: 'nuevo-profesores' , component:NuevoProfesoresComponent, canActivate:[AuthGuard]},
 
   //rutas para Recursos
-  { path: 'recursos' ,  component:RecursosComponent},
-  { path: 'editar-recursos/:id', component:EditarRecursosComponent},
-  { path: 'nuevo-recursos' , component:NuevoRecursosComponent},
+  { path: 'recursos' ,  component:RecursosComponent, canActivate:[AuthGuard]},
+  { path: 'editar-recursos/:id', component:EditarRecursosComponent, canActivate:[AuthGuard]},
+  { path: 'nuevo-recursos' , component:NuevoRecursosComponent, canActivate:[AuthGuard]},
 
 
 ];

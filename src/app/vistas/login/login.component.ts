@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { FormGroup,FormControl,Validators, FormBuilder, Validator } from '@angular/forms';
 import { ApiService } from '../../Servicios/api/api.service';
+import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
+
 import { ILogin } from '../../modelos/login.interfase';
 import { IResponse } from '../../modelos/response.interfase';
 
@@ -13,21 +15,13 @@ import { Input } from '@angular/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  animations: [
-    trigger('fallingConfeti', [
-      state('start', style({ opacity: 0, transform: 'translateY(-100vh)' })),
-      state('end', style({ opacity: 1, transform: 'translateY(100vh)' })),
-      transition('start => end', animate('3000ms', keyframes([
-        style({ opacity: 0, transform: 'translateY(-100vh)', offset: 0 }),
-        style({ opacity: 1, transform: 'translateY(50vh)', offset: 0.5 }),
-        style({ opacity: 1, transform: 'translateY(100vh)', offset: 1 }),
-      ]))),
-    ]),
-  ],
+
 })
 
 export class LoginComponent {
@@ -61,30 +55,42 @@ export class LoginComponent {
     this.isText ? this.type = "text" : this.type = "password";
   }
 
-  onLogin(){
-    if(this.loginForm.valid){
-      console.log(this.loginForm.value)
-
+  onLogin() {
+    if (this.loginForm.valid) {
+      console.log(this.loginForm.value);
+  
       this.api.login(this.loginForm.value).subscribe({
-        next:(res) =>{
+        next: (res) => {
           alert(res.message);
-          this.loginForm.reset();
+  
+          // Almacenar el token en localStorage
           this.api.storeToken(res.token);
-          this.toast.success({detail:"Acceso permitido", summary:res.message, duration: 5000});
-          this.confetiState = 'end';
-          this.router.navigate(['dashboard'])
+  
+          // Establecer la fecha de expiración del token en localStorage
+          const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000); // 60 minutos
+          window.localStorage.setItem('tokenExpiration', expirationDate.toLocaleString());
+  
+          console.log('Token expiration set:', expirationDate.toLocaleString());
+  
+          this.loginForm.reset();
+          this.toast.success({ detail: "Acceso permitido", summary: res.message, duration: 5000 });
+          this.router.navigate(['dashboard']);
         },
-        error:(err) =>{
-          this.toast.error({detail:"Error", summary:"Algo salió mal!!!", duration: 5000});
+        error: (err) => {
+          this.toast.error({ detail: "Error", summary: "Algo salió mal!!!", duration: 5000 });
         }
       });
-
-    }else{
-
+  
+    } else {
       this.validateAllFormFileds(this.loginForm);
-      alert("Tu form es invalido")
+      alert("Tu formulario es inválido");
     }
+  
+    // Imprimir información relevante en la consola
+    console.log('Token expiration in localStorage:', localStorage.getItem('tokenExpiration'));
+    console.log('Is token expired?', this.isTokenExpired());
   }
+  
 
   private validateAllFormFileds(formGroup: FormGroup){
     Object.keys(formGroup.controls).forEach(field=>{
@@ -107,9 +113,22 @@ export class LoginComponent {
   confirmToSend(){
     if(this.checkValidEmail(this.resetPasswordEmail))
     console.log(this.resetPasswordEmail);
-
-    
-
   }
+
+  isTokenExpired(): boolean {
+    const tokenExpirationString = localStorage.getItem('tokenExpiration');
+  
+    if (!tokenExpirationString) {
+      // No hay fecha de expiración almacenada, el token se considera expirado
+      return true;
+    }
+  
+    const tokenExpiration = new Date(tokenExpirationString);
+    const currentDateTime = new Date();
+  
+    // Verificar si la fecha de expiración es anterior a la fecha y hora actuales
+    return tokenExpiration < currentDateTime;
+  }
+
 }
 

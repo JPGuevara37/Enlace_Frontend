@@ -6,6 +6,7 @@ import { ChartType, ChartOptions } from 'chart.js';
 
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

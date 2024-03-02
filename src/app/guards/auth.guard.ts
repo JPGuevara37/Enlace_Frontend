@@ -6,10 +6,11 @@ import { NgToastService } from 'ng-angular-popup';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+  export class AuthGuard implements CanActivate {
   constructor(private api: ApiService, private router: Router, private toast: NgToastService){
 
   }
+  
   canActivate():boolean{
     if(this.api.isloggedIn()){
       return true

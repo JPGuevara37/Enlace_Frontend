@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../Servicios/api/api.service';
 import { Router } from '@angular/router';
+import { PaginationInstance } from 'ngx-pagination';
 
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
 
@@ -17,8 +18,13 @@ export class RecursosComponent {
   filtroNombre: string = '';
   itemsPerPage: number = 10;
   currentPage: number = 1;
-  maxSize: number = 4; // Puedes ajustar el tamaño máximo de la paginación aquí
+  maxSize: number = 5; // Puedes ajustar el tamaño máximo de la paginación aquí
   totalItems: number = 0;
+  disablePrevious: boolean | undefined;
+  disableNext: boolean | undefined;
+  totalPages: number | undefined;
+  hidePageNumbers: boolean = true; 
+  pageRange: 2 | undefined;
 
   constructor(private api:ApiService, private router:Router){}
 
@@ -75,9 +81,17 @@ export class RecursosComponent {
       return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 
+  // paginacion
   pageChanged(event: any): void {
-    this.currentPage = event;
+    this.currentPage = event
     this.recursos;
+    this.deshabilitarBotonesSegunPagina();
+  }
+
+  deshabilitarBotonesSegunPagina(): void {
+    this.disablePrevious = this.currentPage === 1;
+    this.disableNext = this.currentPage === this.totalPages;
+    
   }
 
   salir(){

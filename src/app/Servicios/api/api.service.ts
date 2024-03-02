@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject } from '@angular/core';
 import { ILogin } from '../../modelos/login.interfase';
 import { IResponse } from '../../modelos/response.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
@@ -14,20 +14,20 @@ import { IListaRecursos } from '../../modelos/listarecursos.interfase';
 import { IRecursos } from '../../modelos/recursos.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
 import { IEdades } from '../../modelos/Edades.interfase';
-
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private url:string = "https://api-enlace.azurewebsites.net";
+  private url:string = "http://localhost:5066";
 
   //http://localhost:5066
   //https://api-enlace.azurewebsites.net
 
-  constructor(private http:HttpClient) { }
-//servicio de login.
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+  //servicio de login.
   login(loginObj:any){
     let direccion = this.url + "/api/autenticar/authenticate";
     return this.http.post<any>(direccion, loginObj)
@@ -43,14 +43,16 @@ export class ApiService {
   }
 
   getToken(){
-    return localStorage.getItem('roken')
+    return localStorage.getItem('token');
   }
 
-  isloggedIn(): boolean{
-    return !! localStorage.getItem('token')
+  isloggedIn(): boolean {
+    // Verificar si se está ejecutando en el navegador antes de acceder a localStorage
+    if (isPlatformBrowser(this.platformId)) {
+      return !!localStorage.getItem('token');
+    }
+    return false;
   }
-
-
 
 //servicio de para encargados.
   getAllEncargados(page:number):Observable<IListaEcargados[]>{
