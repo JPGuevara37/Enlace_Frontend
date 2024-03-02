@@ -21,7 +21,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ApiService {
 
-  private url:string = "http://localhost:5066";
+  private url:string = "https://api-enlace.azurewebsites.net";
 
   //http://localhost:5066
   //https://api-enlace.azurewebsites.net
