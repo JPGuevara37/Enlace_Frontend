@@ -24,7 +24,7 @@
                   <small *ngIf="signUpForm.controls['Apellido'].dirty && signUpForm.hasError('required','Apellido')" class="text-danger">*Apellido requerido.</small>
                   <div class="form-group pt-3">
                     <div class="input-field"[class.error]="signUpForm.controls['Email'].dirty && signUpForm.hasError('required','Email')">
-                      <span class="fa fa-user p-2"></span>
+                      <span class="fa fa-mail-bulk p-2"></span>
                       <input formControlName="Email" type="text" placeholder="Email">
                     </div>
                   </div>

@@ -41,7 +41,7 @@ const routes: Routes = [
   { path : 'dashboard' , component:DashboardComponent, canActivate:[AuthGuard]},
   { path : 'nuevo' , component:NuevoComponent, canActivate:[AuthGuard] },
   { path : 'editar/:id' , component:EditarComponent, canActivate:[AuthGuard] },
-  { path: 'signup', component:SignupComponent, canActivate:[AuthGuard]},
+  { path: 'signup', component:SignupComponent },
   { path: 'logout', component:LoguotComponent, canActivate:[AuthGuard] },
   
   //rutas para encargados
