@@ -242,7 +242,7 @@ export class ApiService {
     }
 
     resetPassword(resetPasswordObj: ResetPassword){
-      return this.http.post<any>(`${this.url}/api/reset-password`, resetPasswordObj);
+      return this.http.post<any>(`${this.url}/api/ResetEmail/reset-password`, resetPasswordObj);
     }
 
     sendResetPasswordLink(email: string) {
