@@ -13,6 +13,8 @@ import { NgToastService } from 'ng-angular-popup';
 
 import { Input } from '@angular/core';
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { ResetPassword } from '../../modelos/resetPassword.interfase';
+import { error } from 'console';
 
 
 
@@ -39,7 +41,7 @@ export class LoginComponent {
     private fb: FormBuilder, 
     private api:ApiService, 
     private router: Router,
-    private toast: NgToastService
+    private toast: NgToastService,
     ){}
 
   ngOnInit() : void {
@@ -88,7 +90,7 @@ export class LoginComponent {
   
     // Imprimir información relevante en la consola
     console.log('Token expiration in localStorage:', localStorage.getItem('tokenExpiration'));
-    console.log('Is token expired?', this.isTokenExpired());
+    console.log('Is token expired?', this.api.isTokenExpired());
   }
   
 
@@ -110,12 +112,41 @@ export class LoginComponent {
     return this.isValidEmail;
   }
 
-  confirmToSend(){
-    if(this.checkValidEmail(this.resetPasswordEmail))
-    console.log(this.resetPasswordEmail);
+  confirmToSend() {
+    if (this.checkValidEmail(this.resetPasswordEmail)) {
+       console.log('Sending reset password link for email:', this.resetPasswordEmail);
+ 
+       this.api.sendResetPasswordLink(this.resetPasswordEmail)
+          .subscribe({
+             next: (res: any) => {
+                console.log('Reset password link sent successfully:', res);
+                this.toast.success({
+                   detail: 'Restablecimiento exitoso',
+                   summary: 'Restablecimiento exitoso',
+                   duration: 3000,
+                });
+                this.resetPasswordEmail = "";
+                const buttonRef = document.getElementById("closeBtn");
+                buttonRef?.click();
+             },
+             error: (err: any) => {
+              console.error('Error sending reset password link:', err);
+                this.toast.error({
+                   detail: 'Algo Salio mal',
+                   summary: 'Error',
+                   duration: 3000,
+                });
+             }
+          });
+      }
   }
+}
 
-  isTokenExpired(): boolean {
+  /*isTokenExpired(): boolean {
+    if (typeof localStorage === 'undefined') {
+      return true; // Tratar como token expirado si localStorage no está definido
+    }
+
     const tokenExpirationString = localStorage.getItem('tokenExpiration');
   
     if (!tokenExpirationString) {
@@ -128,7 +159,7 @@ export class LoginComponent {
   
     // Verificar si la fecha de expiración es anterior a la fecha y hora actuales
     return tokenExpiration < currentDateTime;
-  }
+  }*/
 
-}
+
 

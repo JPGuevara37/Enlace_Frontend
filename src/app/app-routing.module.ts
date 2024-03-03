@@ -27,9 +27,10 @@ import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 
-//Sistema de Login
+//Sistema de Login y reset
 import { SignupComponent } from './vistas/signup/signup.component';
 import { LoguotComponent } from './plantillas/loguot/loguot.component';
+import { ResetComponent } from './vistas/reset/reset.component';
 
 
 //Guards
@@ -38,7 +39,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   { path : '' , redirectTo : 'login' , pathMatch : 'full'},
   { path : 'login' , component:LoginComponent },
-  { path : 'dashboard' , component:DashboardComponent, canActivate:[AuthGuard]},
+  { path : 'dashboard' , component:DashboardComponent, canActivate:[AuthGuard],},
   { path : 'nuevo' , component:NuevoComponent, canActivate:[AuthGuard] },
   { path : 'editar/:id' , component:EditarComponent, canActivate:[AuthGuard] },
   { path: 'signup', component:SignupComponent },
@@ -64,6 +65,9 @@ const routes: Routes = [
   { path: 'recursos' ,  component:RecursosComponent, canActivate:[AuthGuard]},
   { path: 'editar-recursos/:id', component:EditarRecursosComponent, canActivate:[AuthGuard]},
   { path: 'nuevo-recursos' , component:NuevoRecursosComponent, canActivate:[AuthGuard]},
+
+  //reset
+  { path: 'reset' , component:ResetComponent },
 
 
 ];

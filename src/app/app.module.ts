@@ -30,6 +30,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SignupComponent } from './vistas/signup/signup.component';
 import { LoginComponent } from './vistas/login/login.component';
 import { NgToastModule } from 'ng-angular-popup';
+import { ResetComponent } from './vistas/reset/reset.component';
+
+
 
 
 
@@ -56,6 +59,7 @@ import { NgToastModule } from 'ng-angular-popup';
     MenuComponent,
     SignupComponent,
     LoginComponent,
+    ResetComponent,
   ],
   imports: [
     BrowserModule,

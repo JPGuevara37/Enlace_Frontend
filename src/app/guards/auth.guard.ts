@@ -14,11 +14,15 @@ import { NgToastService } from 'ng-angular-popup';
   canActivate():boolean{
     if(this.api.isloggedIn()){
       return true
+    }if (this.api.isTokenExpired()) {
+      // El token ha expirado, redirige a la página de inicio de sesión
+      this.router.navigate(['login']);
+      return false;
     }else{
       this.toast.error({detail:"ERROR", summary:"por favor acceda primero"});
       this.router.navigate(['login'])
       return false;
     }
   }
-
 }
+

@@ -15,13 +15,14 @@ import { IRecursos } from '../../modelos/recursos.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
 import { IEdades } from '../../modelos/Edades.interfase';
 import { isPlatformBrowser } from '@angular/common';
+import { ResetPassword } from '../../modelos/resetPassword.interfase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private url:string = "https://api-enlace.azurewebsites.net";
+  private url:string = "http://localhost:5066";
 
   //http://localhost:5066
   //https://api-enlace.azurewebsites.net
@@ -52,6 +53,26 @@ export class ApiService {
       return !!localStorage.getItem('token');
     }
     return false;
+  }
+
+  isTokenExpired(): boolean {
+    if (typeof localStorage === 'undefined') {
+      return true; // Tratar como token expirado si localStorage no está definido
+    }
+
+    const tokenExpirationString = localStorage.getItem('tokenExpiration');
+
+    if (!tokenExpirationString) {
+      localStorage.removeItem("Token");
+      // No hay fecha de expiración almacenada, el token se considera expirado
+      return true;
+    }
+  
+    const tokenExpiration = new Date(tokenExpirationString);
+    const currentDateTime = new Date();
+  
+    // Verificar si la fecha de expiración es anterior a la fecha y hora actuales
+    return tokenExpiration <= currentDateTime;
   }
 
 //servicio de para encargados.
@@ -220,11 +241,14 @@ export class ApiService {
       return this.http.get<IEdades>(direccion);
     }
 
-    resetearContrasena(email: string): Observable<any> {
-      const resetPasswordRequest = { email: email };
-      const direccion = `${this.url}/api/reset-password`;
-      return this.http.post<any>(direccion, resetPasswordRequest);
+    resetPassword(resetPasswordObj: ResetPassword){
+      return this.http.post<any>(`${this.url}/api/reset-password`, resetPasswordObj);
     }
+
+    sendResetPasswordLink(email: string) {
+      const direccion = `${this.url}/api/ResetEmail/send-reset-email/${email}`;
+      return this.http.post<any>(direccion, null); // No envíes datos en el cuerpo
+   }
 
   }
 
