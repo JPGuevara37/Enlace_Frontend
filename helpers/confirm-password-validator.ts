@@ -4,12 +4,12 @@ export function ConfirmPasswordValidator(controlName: string, matchControlName: 
     return (formGroup:FormGroup) => {
         const passwordControl = formGroup.controls[controlName];
         const confirmPasswordControl = formGroup.controls[matchControlName];
-        if(confirmPasswordControl.errors && confirmPasswordControl.errors['confirmPasswordValitor']){
+        if(confirmPasswordControl.errors && confirmPasswordControl.errors['confirmPasswordValidator']){
             return;
         }
 
         if(passwordControl.value !== confirmPasswordControl.value){
-            confirmPasswordControl.setErrors({ ConfirmPasswordValidator :true})
+            confirmPasswordControl.setErrors({ confirmPasswordValidator :true})
         }else{
             confirmPasswordControl.setErrors(null)
         }

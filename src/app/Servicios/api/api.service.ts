@@ -241,14 +241,14 @@ export class ApiService {
       return this.http.get<IEdades>(direccion);
     }
 
-    resetPassword(resetPasswordObj: ResetPassword){
-      return this.http.post<any>(`${this.url}/api/ResetEmail/reset-password`, resetPasswordObj);
-    }
-
     sendResetPasswordLink(email: string) {
       const direccion = `${this.url}/api/ResetEmail/send-reset-email/${email}`;
       return this.http.post<any>(direccion, null); // No envíes datos en el cuerpo
    }
 
-  }
+    resetPassword(resetPasswordObj: ResetPassword){
+      return this.http.post<any>(`${this.url}/api/ResetEmail/reset-password`, resetPasswordObj);
+    }
+
+ }
 
