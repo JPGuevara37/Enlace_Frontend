@@ -1,11 +1,14 @@
 header{
-    background-color: #161F30;
+    background-color: #042940;
     margin: 0;
     padding: 0;
+
     height: 100%;
 }
 .navbar{
-    background-color: #161F30;
+    position: fixed;
+    width: 100%;
+    background-color: #042940;
     padding: 10px;
 }
 

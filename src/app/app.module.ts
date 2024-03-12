@@ -31,6 +31,8 @@ import { SignupComponent } from './vistas/signup/signup.component';
 import { LoginComponent } from './vistas/login/login.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { ResetComponent } from './vistas/reset/reset.component';
+import { MaterialComponent } from './vistas/material/material.component';
+
 
 
 
@@ -60,6 +62,7 @@ import { ResetComponent } from './vistas/reset/reset.component';
     SignupComponent,
     LoginComponent,
     ResetComponent,
+    MaterialComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,16 +1,83 @@
 
+<div class="wrapper" [class.show]="isMenuOpen" [class.hide-sidebar]="!isMenuOpen">
 
-<button class="burger-menu" (click)="toggleMenu()">
-    <div class="bar"></div>
-    <div class="bar"></div>
-    <div class="bar"></div>
-</button>
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-<div class="menu-container" [class.show]="isMenuOpen">
-    <span class="menu-item" (click)="encargadosPage()">Padres</span>
-    <span class="menu-item" (click)="alumnosPage()">Alumnos</span>
-    <span class="menu-item" (click)="profesoresPage()">Profesores</span>
-    <span class="menu-item" (click)="recursosPage()">Recursos</span>
-    <span class="menu-item" (click)="salir()">Dashboard</span>
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh"></i>
+                </div>
+                <div class="sidebar-brand-text mx-2">Bienvenidos</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span (click)="salir()">Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                <h6>Personas</h6>
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fa fa-address-book"></i>
+                    <span (click)="encargadosPage()">Padres</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fa fa-address-book"></i>
+                    <span (click)="alumnosPage()">Alumnos</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fa fa-address-book"></i>
+                    <span (click)="profesoresPage()">Profesores</span></a>
+            </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            <h6>Utilidades</h6>
+        </div>
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fa fa-archive"></i>
+                    <span (click)="recursosPage()">Recursos</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fa fa-file-pdf"></i>
+                    <span (click)="materialPage()">Material</span></a>
+            </li>
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <button class="toggle-sidebar-btn" (click)="toggleMenu()">
+                <i class="fas" [ngClass]="{'fa-arrow-circle-left': isMenuOpen, 'fa-arrow-circle-right': !isMenuOpen}"></i>
+            </button>
+
+        </ul>
 </div>
 

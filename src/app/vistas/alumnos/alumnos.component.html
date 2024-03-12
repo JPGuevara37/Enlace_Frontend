@@ -1,9 +1,8 @@
 <div class="app-container">
+  <app-header></app-header>
+  <app-loguot></app-loguot> 
 
-<app-header></app-header>
-<app-loguot></app-loguot>
-
-<div class="d-flex justify-content-end align-items-center position-absolute" style="top: 105px; right: 10px;">
+  <div class="d-flex justify-content-end align-items-center position-absolute" style="top: 105px; right: 10px;">
   <div class="input-group">
     <input type="text" [(ngModel)]="filtroNombre" class="form-control" style="width: 150px;" placeholder="Buscar" (keyup.enter)="filtrar()" />
     <button class="btn btn-primary" style="padding: 0.25rem 0.5rem;" (click)="filtrar()">
@@ -11,15 +10,15 @@
     </button>
   </div>
 </div>
-  
 
 <app-menu></app-menu>
 
-<div class="container">
-    <br>
-    <h3>Lista de Alumnos</h3><br>
+<div class="container"> <!-- Cambié container por container-fluid -->
+  <br>
+  <h3>Lista de Alumnos</h3><br>
 
-    <div class="d-flex mb-3">
+  <div class="d-flex mb-3">
+
         <div>
           <button type="button" class="btn btn-primary mb-2" (click)="nuevoAlumnos()">
               <i class="fas fa-chalkboard-teacher"></i> Agregar Alumnos
@@ -37,7 +36,7 @@
         </div>
       </div>
   
-  <div class="table-responsive text-left">
+  <div class="table-responsive text-rigth">
     <table class="table">
         <caption>Lista de Alumnos</caption>
         <thead>
@@ -76,5 +75,5 @@
     </div>
 </div>
 <app-footer></app-footer>
-
 </div>
+

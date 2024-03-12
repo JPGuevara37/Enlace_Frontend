@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -9,15 +10,37 @@ import { Router } from '@angular/router';
 export class MenuComponent {
   isMenuOpen: boolean = false;
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, private elementRef: ElementRef, private renderer:Renderer2) {}
   
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+
+    if (this.isMenuOpen) {
+      this.renderer.removeClass(this.elementRef.nativeElement, 'hide-sidebar');
+      this.renderer.addClass(this.elementRef.nativeElement, 'show-sidebar');
+    } else {
+      this.renderer.removeClass(this.elementRef.nativeElement, 'show-sidebar');
+      this.renderer.addClass(this.elementRef.nativeElement, 'hide-sidebar');
+    }
+  }
+
+  showMenu() {
+    this.isMenuOpen = true;
+    this.renderer.removeClass(this.elementRef.nativeElement, 'hide-sidebar');
+    this.renderer.addClass(this.elementRef.nativeElement, 'show-sidebar');
+  }
+
+  hideMenu() {
+    this.isMenuOpen = false;
+    this.renderer.removeClass(this.elementRef.nativeElement, 'show-sidebar');
+    this.renderer.addClass(this.elementRef.nativeElement, 'hide-sidebar');
   }
 
   encargadosPage() {
     this.router.navigate(['/encargados']); // Asegúrate de usar el prefijo '/'
   }
+
+  
 
   alumnosPage() {
     this.router.navigate(['/alumnos']); // Asegúrate de usar el prefijo '/'
@@ -29,6 +52,10 @@ export class MenuComponent {
 
   recursosPage() {
     this.router.navigate(['/recursos']); // Asegúrate de usar el prefijo '/'
+  }
+
+  materialPage() {
+    this.router.navigate(['/material']); // Asegúrate de usar el prefijo '/'
   }
 
   salir(){

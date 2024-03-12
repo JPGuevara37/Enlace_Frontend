@@ -16,6 +16,8 @@ import { IListaEdades } from '../../modelos/listaedades.interfase';
 import { IEdades } from '../../modelos/Edades.interfase';
 import { isPlatformBrowser } from '@angular/common';
 import { ResetPassword } from '../../modelos/resetPassword.interfase';
+import { IMaterial } from '../../modelos/material.interfase';
+import { IListaMateriales } from '../../modelos/IListaMateriales';
 
 @Injectable({
   providedIn: 'root'
@@ -204,7 +206,6 @@ export class ApiService {
     }  
 
     //servicio para Edades
-
     getAllEdades(page:number):Observable<IListaEdades[]>{
       let direccion = this.url + "/api/edad";
       return this.http.get<IListaEdades[]>(direccion);
@@ -230,6 +231,39 @@ export class ApiService {
       }
       return this.http.delete<IResponse>(direccion);
     }
+
+    //servicio para Materiales
+    getAllMateriales(page:number):Observable<IListaMateriales[]>{
+      let direccion = this.url + "/api/material";
+      return this.http.get<IListaMateriales[]>(direccion);
+    }
+
+    getSingleMaterial(id: any):Observable<IMaterial>{
+      let direccion = this.url + "/api/material/" + id;
+      return this.http.get<IMaterial>(direccion);
+    }
+
+    putMateriales(form: any): Observable<IResponse> {
+      let direccion = this.url + "/api/material/" + form.materialId;
+      return this.http.put<IResponse>(direccion, form);
+    }
+
+    deleteMateriales(form: IMaterial):Observable<IResponse>{
+      let direccion = this.url + "/api/material/" + form.materialId;
+      let Options = {
+        headers : new HttpHeaders({
+          'Content-Type': 'application/json'
+        }),
+        body: form
+      }
+      return this.http.delete<IResponse>(direccion);
+    }
+
+    postMaterial(form:IMaterial):Observable<IResponse>{
+      let direccion = this.url + "/api/material";
+      return this.http.post<IResponse>(direccion, form);
+    }  
+
 
     postEdad(form:IRecursos):Observable<IResponse>{
       let direccion = this.url + "/api/edad";

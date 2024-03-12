@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
 import { ApiService } from '../../Servicios/api/api.service';
-import { ChartType, ChartOptions } from 'chart.js';
-
-
+import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
+import { Label } from 'chart.js';
 
 
 @Component({
@@ -14,6 +13,36 @@ import { ChartType, ChartOptions } from 'chart.js';
 })
 export class DashboardComponent implements OnInit {
 
+  // Variables para el área
+  public areaChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public areaChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public areaChartType: ChartType = 'line';
+  public areaChartLegend = true;
+  public areaChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+  ];
+
+  // Variables para la barra
+  public barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public barChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartData: ChartDataSets[] = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+  ];
+
+  // Variables para el donut
+  public pieChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  public pieChartLabels: Label[] = ['Download Sales', 'In-Store Sales', 'Mail Sales'];
+  public pieChartData: number[] = [300, 500, 100];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
   
   
   constructor(private router: Router) {}

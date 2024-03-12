@@ -1,101 +1,52 @@
-/* Estilo del botón hamburguesa */
-.burger-menu {
-  display: flex;
-  background: #173540;
-  border: 2px solid aliceblue;
+.hide-sidebar {
+  margin-left: -350px;
+}
+
+.show-sidebar {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+/* Estilos para el botón */
+.toggle-sidebar-btn {
+  background-color: #005C53;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
   cursor: pointer;
-  flex-direction: column;
+  position: fixed;
+  top: 650px;
+  left: 30px;
+  transition: left 0.3s ease, transform 0.3s ease;
 }
 
-/* Estilo de las barras en el botón hamburguesa */
-.bar {
-  width: 25px;
-  height: 2px;
-  background-color: white;
-  margin: 2px 0;
+/* Estilos adicionales para el ícono */
+.toggle-sidebar-btn i {
+  font-size: 1.5em;
 }
 
-/* Mostrar el menú en dispositivos más pequeños */
-@media screen and (max-width: 900px) {
-  .menu-container {
-      display: none; /* Oculta el menú en pantallas pequeñas */
-  }
+/* Estilos cuando el sidebar está oculto */
+.hide-sidebar .toggle-sidebar-btn {
+  left: 0;
+  transform: rotate(0deg);
+}
 
-  .burger-menu {
-    display: flex;
-    justify-content: center;
-    background-color: #173540;
-    padding: 20px;
-    margin-top: 0px; /* Muestra el botón hamburguesa en pantallas pequeñas */
+/* Agrega las animaciones de deslizamiento y rotación */
+@keyframes slideIn {
+  from {
+    left: -55px;
   }
-
-  .bar {
-    width: 25px;
-    height: 4px;
-    background-color: white;
-    margin: 2px 0;
-  }
-
-  .menu-item {
-    padding: 8px 16px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer; /* Espacio entre elementos en modo columna */
-  }
-
-  .menu-container.show {
-    display: flex; /* Muestra el menú cuando se activa */
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 160px; /* Ajusta según sea necesario para evitar solapamiento con otros elementos */
+  to {
     left: 0;
-    width: 100%;
-    background-color: #173540;
-    padding: 10px;
-    margin: 5px;
-    box-sizing: border-box;
+  }
 }
 
-  .menu-item:hover {
-    background-color: #555; /* Restaura el cambio de fondo al pasar el ratón por encima */
-    border-style: none;
+@keyframes slideOut {
+  from {
+    left: 0;
   }
-  .menu-item:hover {
-    background-color: #555; /* Restaura el cambio de fondo al pasar el ratón por encima */
-    border-style: none;
-  }
-
-  .menu-item:hover {
-    background-color: #555; /* Restaura el cambio de fondo al pasar el ratón por encima */
-    border-style: none;
-  }
-
-}
-
-/* Mostrar el menú en pantallas grandes */
-@media screen and (min-width: 901px) {
-  .burger-menu {
-      display: none; /* Oculta el botón hamburguesa en pantallas grandes */
-  }
-
-  .menu-container {
-      display: flex;
-      justify-content: center;
-      background-color: #173540;
-      padding: 10px;
-      margin-top: 0px;
-  }
-
-  .menu-item {
-    padding: 8px 16px;
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .menu-item:hover {
-      background-color: #555; /* Restaura el cambio de fondo al pasar el ratón por encima */
-      border-style: none;
+  to {
+    left: -155px;
   }
 }

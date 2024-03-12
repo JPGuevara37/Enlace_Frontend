@@ -27,6 +27,9 @@ import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 
+//Materiales
+import { MaterialComponent } from './vistas/material/material.component';
+
 //Sistema de Login y reset
 import { SignupComponent } from './vistas/signup/signup.component';
 import { LoguotComponent } from './plantillas/loguot/loguot.component';
@@ -66,8 +69,14 @@ const routes: Routes = [
   { path: 'editar-recursos/:id', component:EditarRecursosComponent, canActivate:[AuthGuard]},
   { path: 'nuevo-recursos' , component:NuevoRecursosComponent, canActivate:[AuthGuard]},
 
+  //rutas para Materiales
+  { path: 'material' , component:MaterialComponent, canActivate:[AuthGuard]},
+
+
   //reset
   { path: 'reset' , component:ResetComponent },
+
+
 
 
 ];
