@@ -25,13 +25,6 @@ steps:
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)/dist'
   displayName: 'Copy files to artifact staging directory'
-  
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-      Rename-Item -Path "$(Build.ArtifactStagingDirectory)/dist/index.csr.html" -NewName "index.html"
-  displayName: 'Rename index.csr.html to index.html'
 
 
 - task: ArchiveFiles@2
