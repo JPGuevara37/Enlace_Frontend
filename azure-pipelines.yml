@@ -33,6 +33,7 @@ steps:
       Rename-Item -Path "$(Build.ArtifactStagingDirectory)/dist/index.csr.html" -NewName "index.html"
   displayName: 'Rename index.csr.html to index.html'
 
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.ArtifactStagingDirectory)'
