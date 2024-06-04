@@ -32,11 +32,8 @@ import { LoginComponent } from './vistas/login/login.component';
 import { NgToastModule } from 'ng-angular-popup';
 import { ResetComponent } from './vistas/reset/reset.component';
 import { MaterialComponent } from './vistas/material/material.component';
-
-
-
-
-
+import { provideCharts } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -69,11 +66,11 @@ import { MaterialComponent } from './vistas/material/material.component';
     AppRoutingModule, 
     ReactiveFormsModule,
     HttpClientModule,
-    BrowserAnimationsModule, // required animations module
-    ToastrModule.forRoot(), // ToastrModule added
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     FormsModule,
     NgxPaginationModule,
-    NgToastModule,
+    NgToastModule
   ],
   providers: [
     provideClientHydration()

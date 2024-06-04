@@ -286,3 +286,5 @@ export class ApiService {
 
  }
 
+export { IListaEdades };
+
