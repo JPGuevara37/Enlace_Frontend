@@ -6,9 +6,6 @@ import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 
-
-;
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -16,19 +13,8 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class DashboardComponent implements OnInit {
 
-  title = 'ng2-charts-demo';
-
-  public pieChartOptions: ChartOptions<'pie'> = {
-    responsive: false,
-  };
-  public pieChartLabels = [ [ 'Download', 'Sales' ], [ 'In', 'Store', 'Sales' ], 'Mail Sales' ];
-  public pieChartDatasets = [ {
-    data: [ 300, 500, 100 ]
-  } ];
-  public pieChartLegend = true;
-  public pieChartPlugins = [];
   
-  constructor(private router: Router, private pieChart: ElementRef) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     // Puedes realizar alguna lógica de inicialización si es necesario
