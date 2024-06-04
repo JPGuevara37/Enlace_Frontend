@@ -50,7 +50,7 @@ steps:
 - task: AzureStaticWebApp@0
   inputs:
     workingDirectory: '$(System.DefaultWorkingDirectory)/dist/db-enlace-front'
-    app_location: '/dist/db-enlace-front/browser'
+    app_location: '/browser'
     skip_app_build: true
     skip_api_build: true
     is_static_export: true
