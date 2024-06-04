@@ -30,6 +30,13 @@ steps:
 
 - script: ls
   displayName: 'List contents of working directory'
+  
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      Rename-Item -Path "$(Build.ArtifactStagingDirectory)/dist/db-enlace-front/browser/index.csr.html" -NewName "index.html"
+  displayName: 'Rename index.csr.html to index.html'
 
 - task: CopyFiles@2
   inputs:
