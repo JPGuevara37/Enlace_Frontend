@@ -11,8 +11,12 @@
       }
     </select>
     <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
-    <span class="lbl">Día</span>
-    <input class="anno" type="number" [(ngModel)]="dia" min="1" max="31" />
+    <span class="lbl">Domingo</span>
+    <select class="select" [(ngModel)]="dia">
+      @for (d of domingos; track d) {
+        <option [value]="d">{{ formatearDomingo(d) }}</option>
+      }
+    </select>
 
     <div class="modo">
       <button class="chip" [class.active]="modoPropuesta" (click)="modoPropuesta = true">Propuesta</button>

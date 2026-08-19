@@ -88,6 +88,38 @@ export class MaterialComponent implements OnInit {
     return this.meses[mes - 1] || `Mes ${mes}`;
   }
 
+  obtenerDomingos(mes: number, anno: number): number[] {
+    const domingos: number[] = [];
+    const diasEnMes = new Date(anno, mes, 0).getDate();
+    for (let d = 1; d <= diasEnMes; d++) {
+      if (new Date(anno, mes - 1, d).getDay() === 0) {
+        domingos.push(d);
+      }
+    }
+    return domingos;
+  }
+
+  get domingosNuevo(): number[] {
+    return this.obtenerDomingos(this.mesNuevo, this.annoNuevo);
+  }
+
+  get domingosEdit(): number[] {
+    return this.obtenerDomingos(this.editMes, this.editAnno);
+  }
+
+  formatearDomingo(dia: number, mes: number, anno: number): string {
+    const fecha = new Date(anno, mes - 1, dia);
+    return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  onMesNuevoChange(): void {
+    this.diaNuevo = this.obtenerDomingos(this.mesNuevo, this.annoNuevo)[0] || 1;
+  }
+
+  onAnnoNuevoChange(): void {
+    this.diaNuevo = this.obtenerDomingos(this.mesNuevo, this.annoNuevo)[0] || 1;
+  }
+
   seleccionarCategoria(categoria: string): void {
     this.categoriaSeleccionada = categoria;
     this.mostrarUpload = false;

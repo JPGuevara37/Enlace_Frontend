@@ -25,6 +25,7 @@ export class RolesMesComponent implements OnInit {
   anno = new Date().getFullYear();
   dia = 1;
   modoPropuesta = true;
+  domingos: number[] = [];
 
   personaArrastrada: IListaProfesores | null = null;
 
@@ -34,6 +35,7 @@ export class RolesMesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.calcularDomingos();
     this.cargarDatos();
   }
 
@@ -57,7 +59,31 @@ export class RolesMesComponent implements OnInit {
   }
 
   cambiarPeriodo(): void {
+    this.calcularDomingos();
     this.cargarAsignaciones();
+  }
+
+  calcularDomingos(): void {
+    this.domingos = this.obtenerDomingos(this.mes, this.anno);
+    if (!this.domingos.includes(this.dia)) {
+      this.dia = this.domingos[0] || 1;
+    }
+  }
+
+  obtenerDomingos(mes: number, anno: number): number[] {
+    const domingos: number[] = [];
+    const diasEnMes = new Date(anno, mes, 0).getDate();
+    for (let d = 1; d <= diasEnMes; d++) {
+      if (new Date(anno, mes - 1, d).getDay() === 0) {
+        domingos.push(d);
+      }
+    }
+    return domingos;
+  }
+
+  formatearDomingo(dia: number): string {
+    const fecha = new Date(this.anno, this.mes - 1, dia);
+    return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   }
 
   onDragStart(persona: IListaProfesores): void {

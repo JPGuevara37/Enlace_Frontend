@@ -40,13 +40,17 @@
           </label>
           <input class="name-input" type="text" [(ngModel)]="nombreNuevo" placeholder="Nombre (opcional)" />
           @if (esClasesEnlace) {
-            <select class="select" [(ngModel)]="mesNuevo">
+            <select class="select" [(ngModel)]="mesNuevo" (change)="onMesNuevoChange()">
               @for (m of meses; track m; let i = $index) {
                 <option [value]="i + 1">{{ m }}</option>
               }
             </select>
-            <input class="name-input" type="number" [(ngModel)]="annoNuevo" placeholder="Año" />
-            <input class="name-input" type="number" [(ngModel)]="diaNuevo" placeholder="Día" />
+            <input class="name-input" type="number" [(ngModel)]="annoNuevo" (change)="onAnnoNuevoChange()" placeholder="Año" />
+            <select class="select" [(ngModel)]="diaNuevo">
+              @for (d of domingosNuevo; track d) {
+                <option [value]="d">{{ formatearDomingo(d, mesNuevo, annoNuevo) }}</option>
+              }
+            </select>
           }
           <button class="btn-add" (click)="subirMaterial()" [disabled]="!archivoSeleccionado">Subir</button>
           <button class="btn-ghost" (click)="mostrarUpload = false">Cancelar</button>
@@ -137,8 +141,12 @@
             <input type="number" [(ngModel)]="editAnno" />
           </div>
           <div class="field">
-            <label>Día</label>
-            <input type="number" [(ngModel)]="editDia" />
+            <label>Domingo</label>
+            <select [(ngModel)]="editDia">
+              @for (d of domingosEdit; track d) {
+                <option [value]="d">{{ formatearDomingo(d, editMes, editAnno) }}</option>
+              }
+            </select>
           </div>
         }
       </div>
