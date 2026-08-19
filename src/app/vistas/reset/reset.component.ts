@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../Servicios/api/api.service';
 import { ResetPassword } from '../../modelos/resetPassword.interfase';
 import { ConfirmPasswordValidator } from '../../../../helpers/confirm-password-validator';
-import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-reset',
@@ -24,8 +23,7 @@ export class ResetComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private acticateRoute: ActivatedRoute,
-    private api: ApiService,
-    private toast: NgToastService) {}
+    private api: ApiService) {}
 
   ngOnInit(): void {
     this.resetPasswordForm = this.fb.group({
@@ -52,16 +50,10 @@ export class ResetComponent implements OnInit {
         .subscribe({
           next: (res: any) => {
             if (res && res.statusCode === 200) {
-              this.toast.success({ detail: 'Hecho', summary: 'Contraseña restablecida', duration: 3000 });
               this.router.navigate(['/']);
-            } else {
-              this.toast.error({ detail: 'ERROR', summary: 'Algo salió mal', duration: 3000 });
             }
           },
-          error: (err) => {
-            const msg = err?.error?.message || 'Algo salió mal';
-            this.toast.error({ detail: 'ERROR', summary: msg, duration: 4000 });
-          }
+          error: () => {}
         });
     } else {
       this.validateAllFormFields(this.resetPasswordForm);

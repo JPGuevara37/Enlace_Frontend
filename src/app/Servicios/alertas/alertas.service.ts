@@ -1,18 +1,10 @@
-import { Injectable, inject } from '@angular/core';
-import { NgToastService } from 'ng-angular-popup';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AlertasService {
+  showSuccess(_texto?: string, _titulo?: string): void {}
 
-  private toast = inject(NgToastService);
-
-  showSuccess(texto: string | undefined, titulo: string | undefined) {
-    this.toast.success({ detail: titulo ?? '', summary: texto ?? '', duration: 5000 });
-  }
-
-  showError(texto: string | undefined, titulo: string | undefined) {
-    this.toast.error({ detail: titulo ?? '', summary: texto ?? '', duration: 5000 });
-  }
+  showError(_texto?: string, _titulo?: string): void {}
 }

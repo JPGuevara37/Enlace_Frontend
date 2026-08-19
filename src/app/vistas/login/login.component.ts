@@ -48,13 +48,10 @@ export class LoginComponent implements OnInit {
           const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
           window.localStorage.setItem('tokenExpiration', expirationDate.toISOString());
           this.loginForm.reset();
-          this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 5000 });
+          this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 1000 });
           this.router.navigate(['home']);
         },
-        error: (err) => {
-          const message = err?.error?.message ?? 'Algo salió mal!!!';
-          this.toast.error({ detail: 'Error', summary: message, duration: 5000 });
-        }
+        error: () => {}
       });
     } else {
       this.validateAllFormFileds(this.loginForm);
@@ -84,15 +81,12 @@ export class LoginComponent implements OnInit {
     if (this.checkValidEmail(this.resetPasswordEmail)) {
       this.api.sendResetPasswordLink(this.resetPasswordEmail)
         .subscribe({
-          next: (res: any) => {
-            this.toast.success({ detail: 'Restablecimiento exitoso', summary: 'Restablecimiento exitoso', duration: 3000 });
+          next: () => {
             this.resetPasswordEmail = '';
             const buttonRef = document.getElementById('closeBtn');
             buttonRef?.click();
           },
-          error: (err: any) => {
-            this.toast.error({ detail: 'Algo Salio mal', summary: 'Error', duration: 3000 });
-          }
+          error: () => {}
         });
     }
   }

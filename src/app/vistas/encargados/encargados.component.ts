@@ -19,8 +19,6 @@ export class EncargadosComponent implements OnInit {
   provincias = PROVINCIAS;
 
   filtroNombre = '';
-  filtroProvincia = '';
-  filtroCanton = '';
 
   seleccionados = new Set<string>();
 
@@ -58,16 +56,8 @@ export class EncargadosComponent implements OnInit {
     const q = this.quitarTildes(this.filtroNombre.trim().toLowerCase());
     return this.encargados.filter(e => {
       const nombre = this.quitarTildes(`${e.nombre} ${e.apellido}`.toLowerCase());
-      const coincideNombre = !q || nombre.includes(q);
-      const coincideProvincia = !this.filtroProvincia || e.provincia === this.filtroProvincia;
-      const coincideCanton = !this.filtroCanton || e.canton === this.filtroCanton;
-      return coincideNombre && coincideProvincia && coincideCanton;
+      return !q || nombre.includes(q);
     });
-  }
-
-  get cantonesFiltro() {
-    const p = this.provincias.find(p => p.nombre === this.filtroProvincia);
-    return p ? p.cantones : [];
   }
 
   get cantonesEdicion() {
@@ -86,8 +76,6 @@ export class EncargadosComponent implements OnInit {
 
   limpiarFiltros(): void {
     this.filtroNombre = '';
-    this.filtroProvincia = '';
-    this.filtroCanton = '';
   }
 
   // Selección múltiple

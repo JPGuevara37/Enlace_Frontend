@@ -10,20 +10,6 @@
       <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar por nombre..." />
     </div>
 
-    <select class="select" [(ngModel)]="filtroProvincia" (change)="filtroCanton = ''">
-      <option value="">Provincia</option>
-      @for (p of provincias; track p.nombre) {
-        <option [value]="p.nombre">{{ p.nombre }}</option>
-      }
-    </select>
-
-    <select class="select" [(ngModel)]="filtroCanton">
-      <option value="">Cantón</option>
-      @for (c of cantonesFiltro; track c.nombre) {
-        <option [value]="c.nombre">{{ c.nombre }}</option>
-      }
-    </select>
-
     <button class="btn-add" (click)="nuevoEncargado()">
       <i class="fa-solid fa-plus"></i> Agregar
     </button>
@@ -46,9 +32,6 @@
             </th>
             <th>Nombre</th>
             <th>Apellido</th>
-            <th>Provincia</th>
-            <th>Cantón</th>
-            <th>Distrito</th>
             <th>Email</th>
             <th>Teléfono</th>
             <th></th>
@@ -62,9 +45,6 @@
               </td>
               <td><a class="nombre-link" (click)="verDetalle(e)">{{ e.nombre }}</a></td>
               <td>{{ e.apellido }}</td>
-              <td>{{ e.provincia }}</td>
-              <td>{{ e.canton }}</td>
-              <td>{{ e.distrito }}</td>
               <td>{{ e.email }}</td>
               <td>{{ e.telefono }}</td>
               <td class="acciones">
