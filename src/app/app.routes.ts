@@ -20,7 +20,6 @@ import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.c
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 import { MaterialComponent } from './vistas/material/material.component';
 import { RolesMesComponent } from './vistas/roles-mes/roles-mes.component';
-import { SignupComponent } from './vistas/signup/signup.component';
 import { ResetComponent } from './vistas/reset/reset.component';
 
 import { authGuard } from './guards/auth.guard';
@@ -28,7 +27,6 @@ import { authGuard } from './guards/auth.guard';
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignupComponent },
   { path: 'reset', component: ResetComponent },
   {
     path: '',
