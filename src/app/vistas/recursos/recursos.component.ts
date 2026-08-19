@@ -5,15 +5,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import * as XLSX from 'xlsx';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
-import { MenuComponent } from '../../plantillas/menu/menu.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-recursos',
   standalone: true,
-  imports: [FormsModule, NgxPaginationModule, HeaderComponent, LoguotComponent, MenuComponent, FooterComponent],
+  imports: [FormsModule, NgxPaginationModule],
   templateUrl: './recursos.component.html',
   styleUrl: './recursos.component.css'
 })

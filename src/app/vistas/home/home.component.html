@@ -1,0 +1,21 @@
+<div class="home">
+  <div class="page-head">
+    <h1>Bienvenido</h1>
+    <p>Selecciona un módulo para comenzar a trabajar</p>
+  </div>
+
+  <div class="modules-grid">
+    @for (mod of modulos; track mod.ruta) {
+      <a class="module-card" [routerLink]="mod.ruta">
+        <div class="module-icon" [style.background]="mod.color">
+          <i class="fa-solid" [class]="mod.icono"></i>
+        </div>
+        <div class="module-body">
+          <h3>{{ mod.titulo }}</h3>
+          <p>{{ mod.descripcion }}</p>
+        </div>
+        <i class="fa-solid fa-chevron-right module-arrow"></i>
+      </a>
+    }
+  </div>
+</div>

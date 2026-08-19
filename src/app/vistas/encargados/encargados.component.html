@@ -1,70 +1,59 @@
-<app-header></app-header>
-<app-loguot></app-loguot>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+    <h3 class="mb-0">Lista de Padres</h3>
+    <div class="input-group" style="width: 240px;">
+      <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar" (keyup.enter)="filtrar()" />
+      <button class="btn btn-primary" (click)="filtrar()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
 
-<div class="d-flex justify-content-end align-items-center position-absolute" style="top: 105px; right: 10px;">
-  <div class="input-group">
-    <input type="text" [(ngModel)]="filtroNombre" class="form-control" style="width: 150px;" placeholder="Buscar" (keyup.enter)="filtrar()" />
-    <button class="btn btn-primary" style="padding: 0.25rem 0.5rem;" (click)="filtrar()">
-      <i class="fas fa-search"></i>
+  <div>
+    <button type="button" class="btn btn-primary mb-2" (click)="nuevoEncargado()">
+      <i class="fas fa-chalkboard-teacher"></i> Agregar Encargado
     </button>
   </div>
-</div>
-
-<app-menu></app-menu>
-
-<div class="container">
-    <br>
-    <h3>Lista de Padres</h3><br>
-    
-  <div>
-      <button type="button" class="btn btn-primary mb-2" (click)="nuevoEncargado()">
-          <i class="fas fa-chalkboard-teacher"></i> Agregar Encargado
-      </button>
-  </div>
-    
 
   <div class="d-flex justify-content-end align-items-center mb-3">
-    <!-- Mover el elemento a la derecha con ml-auto -->
     <div class="ml-auto" id="navPages">
       <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
     </div>
   </div>
 
-<div class="table-responsive">
-  <table class="table">
-    <caption>Lista de Encargados</caption>
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Direccion</th>
-        <th scope="col">E-mail</th>
-        <th scope="col">Teléfono</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (encargado of encargados | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track encargado.encargadoId) {
+  <div class="table-responsive">
+    <table class="table">
+      <caption>Lista de Encargados</caption>
+      <thead>
         <tr>
-          <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-          <td>{{ encargado.nombre }}</td>
-          <td>{{ encargado.apellido }}</td>
-          <td>{{ encargado.direccion }}</td>
-          <td>{{ encargado.email }}</td>
-          <td>{{ encargado.telefono }}</td>
-          <td>
-            <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)"><i class="fas fa-edit"></i> Editar</button>
-          </td>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Direccion</th>
+          <th scope="col">E-mail</th>
+          <th scope="col">Teléfono</th>
         </tr>
-      }
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        @for (encargado of encargados | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track encargado.encargadoId) {
+          <tr>
+            <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
+            <td>{{ encargado.nombre }}</td>
+            <td>{{ encargado.apellido }}</td>
+            <td>{{ encargado.direccion }}</td>
+            <td>{{ encargado.email }}</td>
+            <td>{{ encargado.telefono }}</td>
+            <td>
+              <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)"><i class="fas fa-edit"></i> Editar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   <div class="d-flex justify-content-end align-items-center">
-    <!-- Mover el elemento a la derecha con ml-auto -->
     <div class="ml-auto" id="navPages">
       <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
     </div>
   </div>
 </div>
-<app-footer></app-footer>

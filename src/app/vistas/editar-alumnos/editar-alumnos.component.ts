@@ -9,13 +9,11 @@ import { IAlumnos } from '../../modelos/alumnos.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-editar-alumnos',
   standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './editar-alumnos.component.html',
   styleUrl: './editar-alumnos.component.css',
   providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es' }]

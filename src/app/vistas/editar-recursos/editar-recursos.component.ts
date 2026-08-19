@@ -5,13 +5,11 @@ import { IResponse } from '../../modelos/response.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IRecursos } from '../../modelos/recursos.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-editar-recursos',
   standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './editar-recursos.component.html',
   styleUrl: './editar-recursos.component.css'
 })

@@ -4,15 +4,11 @@ import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
-import { MenuComponent } from '../../plantillas/menu/menu.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-encargados',
   standalone: true,
-  imports: [FormsModule, NgxPaginationModule, HeaderComponent, LoguotComponent, MenuComponent, FooterComponent],
+  imports: [FormsModule, NgxPaginationModule],
   templateUrl: './encargados.component.html',
   styleUrls: ['./encargados.component.css']
 })

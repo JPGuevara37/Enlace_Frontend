@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
           window.localStorage.setItem('tokenExpiration', expirationDate.toISOString());
           this.loginForm.reset();
           this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 5000 });
-          this.router.navigate(['dashboard']);
+          this.router.navigate(['home']);
         },
         error: (err) => {
           const message = err?.error?.message ?? 'Algo salió mal!!!';

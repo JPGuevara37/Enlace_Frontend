@@ -4,15 +4,11 @@ import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
-import { MenuComponent } from '../../plantillas/menu/menu.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-profesores',
   standalone: true,
-  imports: [FormsModule, NgxPaginationModule, HeaderComponent, LoguotComponent, MenuComponent, FooterComponent],
+  imports: [FormsModule, NgxPaginationModule],
   templateUrl: './profesores.component.html',
   styleUrl: './profesores.component.css'
 })

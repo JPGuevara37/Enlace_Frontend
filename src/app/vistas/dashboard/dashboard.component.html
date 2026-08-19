@@ -1,9 +1,96 @@
-<app-loguot></app-loguot>
-<div class="options-container">
-  <h3>Elige una opción</h3>
-  <div class="options">
-    <button class="option-button" (click)="encargadosPage()">Padres</button>
-    <button class="option-button" (click)="alumnosPage()">Alumnos</button>
-    <button class="option-button" (click)="profesoresPage()">Profesores</button>
-    <button class="option-button" (click)="recursosPage()">Recursos</button>
+<div class="dashboard">
+  <div class="page-head">
+    <h1>Panel de control</h1>
+    <p>Resumen general del ministerio</p>
   </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="--c: #4e73df"><i class="fa-solid fa-user-group"></i></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalEncargados }}</span>
+        <span class="stat-label">Padres</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="--c: #1cc88a"><i class="fa-solid fa-children"></i></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalAlumnos }}</span>
+        <span class="stat-label">Alumnos</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="--c: #f6c23e"><i class="fa-solid fa-chalkboard-user"></i></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalProfesores }}</span>
+        <span class="stat-label">Profesores</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="--c: #e74a3b"><i class="fa-solid fa-box-archive"></i></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalRecursos }}</span>
+        <span class="stat-label">Recursos</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="--c: #36b9cc"><i class="fa-solid fa-folder-open"></i></div>
+      <div class="stat-info">
+        <span class="stat-value">{{ totalMateriales }}</span>
+        <span class="stat-label">Material</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h2 class="chart-title">Alumnos por edad</h2>
+      @if (cargando) {
+        <div class="skeleton">Cargando…</div>
+      } @else if (alumnosPorEdad.length) {
+        <div class="bar-chart">
+          @for (item of alumnosPorEdad; track item.label) {
+            <div class="bar-row">
+              <span class="bar-label">{{ item.label }}</span>
+              <div class="bar-track">
+                <div class="bar-fill" [style.width.%]="barPercent(item.value)"></div>
+              </div>
+              <span class="bar-value">{{ item.value }}</span>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="empty">No hay datos disponibles</p>
+      }
+    </div>
+
+    <div class="chart-card">
+      <h2 class="chart-title">Estado de recursos</h2>
+      @if (cargando) {
+        <div class="skeleton">Cargando…</div>
+      } @else {
+        <div class="donut-wrap">
+          <svg viewBox="0 0 120 120" class="donut">
+            <circle cx="60" cy="60" r="52" fill="none" stroke="#eef1f7" stroke-width="14"></circle>
+            <circle
+              cx="60" cy="60" r="52" fill="none" stroke="#1cc88a" stroke-width="14"
+              stroke-linecap="round" [attr.stroke-dasharray]="donutActivoDash"
+              stroke-dashoffset="0" transform="rotate(-90 60 60)"></circle>
+            <circle
+              cx="60" cy="60" r="52" fill="none" stroke="#e74a3b" stroke-width="14"
+              stroke-linecap="round" [attr.stroke-dasharray]="donutInactivoDash"
+              [attr.stroke-dashoffset]="donutInactivoOffset" transform="rotate(-90 60 60)"></circle>
+          </svg>
+          <div class="donut-center">
+            <span class="donut-total">{{ totalRecursos }}</span>
+            <span class="donut-caption">recursos</span>
+          </div>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><i style="background: #1cc88a"></i> Activos ({{ recursosActivos }})</span>
+          <span class="legend-item"><i style="background: #e74a3b"></i> Inactivos ({{ recursosInactivos }})</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>

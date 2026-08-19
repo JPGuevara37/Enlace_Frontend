@@ -5,13 +5,11 @@ import { IResponse } from '../../modelos/response.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IProfesores } from '../../modelos/profesores.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-nuevo-profesores',
   standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './nuevo-profesores.component.html',
   styleUrl: './nuevo-profesores.component.css'
 })

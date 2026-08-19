@@ -5,13 +5,11 @@ import { IResponse } from '../../modelos/response.interfase';
 import { IEncargado } from '../../modelos/encargado.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-nuevo',
   standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './nuevo.component.html',
   styleUrls: ['./nuevo.component.css']
 })

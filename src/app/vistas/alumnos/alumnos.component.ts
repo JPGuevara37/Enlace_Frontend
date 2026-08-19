@@ -9,17 +9,13 @@ import { ApiService } from '../../Servicios/api/api.service';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
-import { MenuComponent } from '../../plantillas/menu/menu.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 registerLocaleData(localeEs);
 
 @Component({
   selector: 'app-alumnos',
   standalone: true,
-  imports: [FormsModule, NgxPaginationModule, HeaderComponent, LoguotComponent, MenuComponent, FooterComponent],
+  imports: [FormsModule, NgxPaginationModule],
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.css'],
   providers: [DatePipe, { provide: LOCALE_ID, useValue: 'es' }]

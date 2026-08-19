@@ -8,13 +8,11 @@ import { IAlumnos } from '../../modelos/alumnos.interfase';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
-import { HeaderComponent } from '../../plantillas/header/header.component';
-import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-nuevo-alumnos',
   standalone: true,
-  imports: [ReactiveFormsModule, HeaderComponent, FooterComponent],
+  imports: [ReactiveFormsModule],
   templateUrl: './nuevo-alumnos.component.html',
   styleUrl: './nuevo-alumnos.component.css'
 })

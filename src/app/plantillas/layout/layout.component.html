@@ -1,0 +1,59 @@
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" routerLink="/home">
+      <img src="assets/enlace_imag.png" alt="Enlace" />
+      <span class="brand-name">Enlace</span>
+    </a>
+
+    <nav class="nav">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <i class="fa-solid fa-house"></i>
+        <span>Inicio</span>
+      </a>
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Panel</span>
+      </a>
+
+      <div class="nav-group">Personas</div>
+      <a class="nav-link" routerLink="/encargados" routerLinkActive="active">
+        <i class="fa-solid fa-user-group"></i>
+        <span>Padres</span>
+      </a>
+      <a class="nav-link" routerLink="/alumnos" routerLinkActive="active">
+        <i class="fa-solid fa-children"></i>
+        <span>Alumnos</span>
+      </a>
+      <a class="nav-link" routerLink="/profesores" routerLinkActive="active">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <span>Profesores</span>
+      </a>
+
+      <div class="nav-group">Utilidades</div>
+      <a class="nav-link" routerLink="/recursos" routerLinkActive="active">
+        <i class="fa-solid fa-box-archive"></i>
+        <span>Recursos</span>
+      </a>
+      <a class="nav-link" routerLink="/material" routerLinkActive="active">
+        <i class="fa-solid fa-folder-open"></i>
+        <span>Material</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button type="button" class="logout-btn" (click)="logout()">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <span>Cerrar sesión</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <span class="topbar-title">Sistema Enlace</span>
+    </header>
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

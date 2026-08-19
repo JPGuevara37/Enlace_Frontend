@@ -1,37 +1,28 @@
-<app-header></app-header>
-<app-loguot></app-loguot>
+<div class="container">
+  <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
+    <h3 class="mb-0">Lista de Profesores</h3>
+    <div class="input-group" style="width: 240px;">
+      <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar" (keyup.enter)="filtrar()" />
+      <button class="btn btn-primary" (click)="filtrar()">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
 
-<div class="d-flex justify-content-end align-items-center position-absolute" style="top: 105px; right: 10px;">
-  <div class="input-group">
-    <input type="text" [(ngModel)]="filtroNombre" class="form-control" style="width: 150px;" placeholder="Buscar" (keyup.enter)="filtrar()" />
-    <button class="btn btn-primary" style="padding: 0.25rem 0.5rem;" (click)="filtrar()">
-      <i class="fas fa-search"></i>
+  <div>
+    <button type="button" class="btn btn-primary mb-2" (click)="nuevoProfesores()">
+      <i class="fas fa-chalkboard-teacher"></i> Agregar profesores
     </button>
   </div>
-</div>
-
-
-<app-menu></app-menu>
-
-<div class="container">
-    <br>
-    <h3>Lista de Profesores</h3><br>
-
-<div>
-    <button type="button" class="btn btn-primary mb-2" (click)="nuevoProfesores()">
-        <i class="fas fa-chalkboard-teacher"></i> Agregar profesores
-    </button>
-</div>
 
   <div class="d-flex justify-content-end align-items-center mb-3">
-    <!-- Mover el elemento a la derecha con ml-auto -->
     <div class="ml-auto" id="navPages">
       <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
     </div>
   </div>
 
-<div class="table-responsive">
-  <table class="table">
+  <div class="table-responsive">
+    <table class="table">
       <caption>Lista de Profesores</caption>
       <thead>
         <tr>
@@ -51,7 +42,7 @@
             <td>{{ profesor.email }}</td>
             <td>{{ profesor.telefono }}</td>
             <td>
-                <button class="btn btn-outline-secondary" (click)="editarProfesores(profesor.profesorId)"><i class="fas fa-edit"></i> Editar</button>
+              <button class="btn btn-outline-secondary" (click)="editarProfesores(profesor.profesorId)"><i class="fas fa-edit"></i> Editar</button>
             </td>
           </tr>
         }
@@ -59,12 +50,8 @@
     </table>
   </div>
   <div class="d-flex justify-content-end align-items-center">
-    <!-- Mover el elemento a la derecha con ml-auto -->
     <div class="ml-auto" id="navPages">
       <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
     </div>
   </div>
-
 </div>
-
-<app-footer></app-footer>
