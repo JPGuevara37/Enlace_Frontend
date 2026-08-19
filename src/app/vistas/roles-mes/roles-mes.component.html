@@ -27,7 +27,7 @@
   <div class="layout">
     <div class="clases">
       @for (edad of edades; track edad.edadId) {
-        <div class="clase" (dragover)="$event.preventDefault()" (drop)="onDrop(edad)">
+        <div class="clase" (dragover)="onDragOver($event)" (drop)="onDrop($event, edad)">
           <div class="clase-titulo">{{ edad.rangoEdad }}</div>
           @if (getAsignacion(edad.edadId); as rol) {
             <div class="asignado">
@@ -47,7 +47,7 @@
     <div class="personas">
       <div class="personas-titulo">Personas</div>
       @for (p of personas; track p.profesorId) {
-        <div class="persona" draggable="true" (dragstart)="onDragStart(p)" (dragend)="onDragEnd()">
+        <div class="persona" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
           <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
           <div class="info">
             <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>

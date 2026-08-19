@@ -86,15 +86,27 @@ export class RolesMesComponent implements OnInit {
     return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   }
 
-  onDragStart(persona: IListaProfesores): void {
+  onDragStart(event: DragEvent, persona: IListaProfesores): void {
     this.personaArrastrada = persona;
+    if (event.dataTransfer) {
+      event.dataTransfer.setData('text/plain', persona.profesorId);
+      event.dataTransfer.effectAllowed = 'move';
+    }
   }
 
   onDragEnd(): void {
     this.personaArrastrada = null;
   }
 
-  onDrop(edad: IListaEdades): void {
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'move';
+    }
+  }
+
+  onDrop(event: DragEvent, edad: IListaEdades): void {
+    event.preventDefault();
     if (!this.personaArrastrada) {
       return;
     }
