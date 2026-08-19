@@ -11,6 +11,8 @@
       }
     </select>
     <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
+    <span class="lbl">Día</span>
+    <input class="anno" type="number" [(ngModel)]="dia" min="1" max="31" />
 
     <div class="modo">
       <button class="chip" [class.active]="modoPropuesta" (click)="modoPropuesta = true">Propuesta</button>

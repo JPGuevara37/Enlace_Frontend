@@ -23,6 +23,7 @@ export class RolesMesComponent implements OnInit {
 
   mes = new Date().getMonth() + 1;
   anno = new Date().getFullYear();
+  dia = 1;
   modoPropuesta = true;
 
   personaArrastrada: IListaProfesores | null = null;
@@ -86,6 +87,7 @@ export class RolesMesComponent implements OnInit {
         personaId: persona.profesorId,
         mes: this.mes,
         anno: this.anno,
+        dia: this.dia,
         estado: this.modoPropuesta ? 'Propuesta' : 'Confirmado',
         disponible: true,
       };
@@ -98,7 +100,7 @@ export class RolesMesComponent implements OnInit {
   }
 
   getAsignacion(edadId: string): IRolesMes | undefined {
-    return this.asignaciones.find(a => a.edadId === edadId);
+    return this.asignaciones.find(a => a.edadId === edadId && a.dia === this.dia);
   }
 
   getPersona(personaId: string): IListaProfesores | undefined {

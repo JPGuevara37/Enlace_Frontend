@@ -4,6 +4,7 @@ export interface IRolesMes {
     personaId: string;
     mes: number;
     anno: number;
+    dia: number;
     estado: string;
     disponible: boolean;
     fechaCreacion?: string;

@@ -46,6 +46,7 @@
               }
             </select>
             <input class="name-input" type="number" [(ngModel)]="annoNuevo" placeholder="Año" />
+            <input class="name-input" type="number" [(ngModel)]="diaNuevo" placeholder="Día" />
           }
           <button class="btn-add" (click)="subirMaterial()" [disabled]="!archivoSeleccionado">Subir</button>
           <button class="btn-ghost" (click)="mostrarUpload = false">Cancelar</button>
@@ -57,7 +58,7 @@
       <p class="empty">Cargando…</p>
     } @else if (esClasesEnlace) {
       @for (grupo of gruposClases; track grupo.anno + '-' + grupo.mes) {
-        <h2 class="grupo-titulo">{{ nombreMes(grupo.mes) }} {{ grupo.anno }}</h2>
+        <h2 class="grupo-titulo">Día {{ grupo.dia }} · {{ nombreMes(grupo.mes) }} {{ grupo.anno }}</h2>
         <div class="grid">
           @for (m of grupo.items; track m.materialId) {
             <div class="card">
@@ -134,6 +135,10 @@
           <div class="field">
             <label>Año</label>
             <input type="number" [(ngModel)]="editAnno" />
+          </div>
+          <div class="field">
+            <label>Día</label>
+            <input type="number" [(ngModel)]="editDia" />
           </div>
         }
       </div>

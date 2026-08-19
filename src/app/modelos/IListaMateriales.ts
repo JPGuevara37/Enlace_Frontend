@@ -5,6 +5,7 @@ export interface IListaMateriales{
     categoria?:string;
     mes?:number;
     anno?:number;
+    dia?:number;
     fecha:Date | string;
     contentType?:string;
     tamano?:number;

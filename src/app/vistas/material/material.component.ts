@@ -28,12 +28,14 @@ export class MaterialComponent implements OnInit {
   nombreNuevo = '';
   mesNuevo = 1;
   annoNuevo = new Date().getFullYear();
+  diaNuevo = 1;
 
   editando: IListaMateriales | null = null;
   editNombre = '';
   editDescripcion = '';
   editMes = 1;
   editAnno = new Date().getFullYear();
+  editDia = 1;
 
   constructor(
     private api: ApiService,
@@ -67,18 +69,19 @@ export class MaterialComponent implements OnInit {
     return this.categoriaSeleccionada === 'Clases Enlace';
   }
 
-  get gruposClases(): { anno: number; mes: number; items: IListaMateriales[] }[] {
-    const grupos = new Map<string, { anno: number; mes: number; items: IListaMateriales[] }>();
+  get gruposClases(): { anno: number; mes: number; dia: number; items: IListaMateriales[] }[] {
+    const grupos = new Map<string, { anno: number; mes: number; dia: number; items: IListaMateriales[] }>();
     this.materialesCategoria.forEach(m => {
       const anno = m.anno ?? 0;
       const mes = m.mes ?? 0;
-      const clave = `${anno}-${mes}`;
+      const dia = m.dia ?? 0;
+      const clave = `${anno}-${mes}-${dia}`;
       if (!grupos.has(clave)) {
-        grupos.set(clave, { anno, mes, items: [] });
+        grupos.set(clave, { anno, mes, dia, items: [] });
       }
       grupos.get(clave)!.items.push(m);
     });
-    return Array.from(grupos.values()).sort((a, b) => (b.anno - a.anno) || (b.mes - a.mes));
+    return Array.from(grupos.values()).sort((a, b) => (b.anno - a.anno) || (b.mes - a.mes) || (b.dia - a.dia));
   }
 
   nombreMes(mes: number): string {
@@ -115,6 +118,7 @@ export class MaterialComponent implements OnInit {
     if (this.esClasesEnlace) {
       fd.append('mes', String(this.mesNuevo));
       fd.append('anno', String(this.annoNuevo));
+      fd.append('dia', String(this.diaNuevo));
     }
 
     this.api.subirMaterial(fd).subscribe({
@@ -150,6 +154,7 @@ export class MaterialComponent implements OnInit {
     this.editDescripcion = m.descripcion || '';
     this.editMes = m.mes || 1;
     this.editAnno = m.anno || new Date().getFullYear();
+    this.editDia = m.dia || 1;
   }
 
   cancelarEdicion(): void {
@@ -165,6 +170,7 @@ export class MaterialComponent implements OnInit {
     if (this.esClasesEnlace) {
       this.editando.mes = this.editMes;
       this.editando.anno = this.editAnno;
+      this.editando.dia = this.editDia;
     }
     this.api.putMateriales(this.editando).subscribe({
       next: () => {

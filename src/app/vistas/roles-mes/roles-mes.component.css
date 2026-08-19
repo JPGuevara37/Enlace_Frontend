@@ -42,6 +42,12 @@
   width: 90px;
 }
 
+.lbl {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5a6b8c;
+}
+
 .modo {
   display: flex;
   gap: 0.4rem;
