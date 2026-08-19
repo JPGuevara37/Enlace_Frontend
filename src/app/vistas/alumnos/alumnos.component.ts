@@ -1,4 +1,4 @@
-import { Component, LOCALE_ID, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, LOCALE_ID, OnInit } from '@angular/core';
 import { DatePipe, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -35,22 +35,26 @@ export class AlumnosComponent implements OnInit {
   constructor(
     private api: ApiService,
     private router: Router,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
     this.api.getAllAlumnos(1).subscribe(data => {
       this.alumnos = data;
       this.totalItems = this.alumnos.length;
+      this.cdr.detectChanges();
     });
 
     this.api.getAllEncargados(1).subscribe(data => {
       this.encargados = data;
       this.filtrarEncargados();
+      this.cdr.detectChanges();
     });
 
     this.api.getAllEdades(1).subscribe(data => {
       this.edades = data;
+      this.cdr.detectChanges();
     });
   }
 
@@ -79,6 +83,7 @@ export class AlumnosComponent implements OnInit {
         this.quitarTildes(alumno.nombre.toLowerCase()).includes(filtroSinTildes) ||
         this.quitarTildes(alumno.apellido.toLowerCase()).includes(filtroSinTildes)
       );
+      this.cdr.detectChanges();
     });
   }
 

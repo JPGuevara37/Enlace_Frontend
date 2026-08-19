@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -21,11 +21,12 @@ export class ProfesoresComponent implements OnInit {
   maxSize: number = 50;
   totalItems: number = 0;
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.api.getAllProfesores(1).subscribe(data => {
       this.profesores = data;
+      this.cdr.detectChanges();
     });
   }
 
@@ -61,6 +62,7 @@ export class ProfesoresComponent implements OnInit {
         this.quitarTildes(profesor.nombre.toLowerCase()).includes(filtroSinTildes) ||
         this.quitarTildes(profesor.apellido.toLowerCase()).includes(filtroSinTildes)
       );
+      this.cdr.detectChanges();
     });
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '../../Servicios/api/api.service';
@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
   cargando = true;
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     forkJoin({
@@ -47,6 +47,7 @@ export class DashboardComponent implements OnInit {
         this.buildAlumnosPorEdad(r.alumnos, r.edades);
         this.buildRecursosDonut(r.recursos);
         this.cargando = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.cargando = false;

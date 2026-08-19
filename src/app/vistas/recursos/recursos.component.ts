@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -26,11 +26,12 @@ export class RecursosComponent implements OnInit {
   totalPages: number | undefined;
   hidePageNumbers: boolean = true;
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.api.getAllRecursos(1).subscribe(data => {
       this.recursos = data;
+      this.cdr.detectChanges();
     });
   }
 
@@ -49,6 +50,7 @@ export class RecursosComponent implements OnInit {
       this.recursos = data.filter(recurso =>
         this.quitarTildes(recurso.articulo.toLowerCase()).includes(filtroSinTildes)
       );
+      this.cdr.detectChanges();
     });
   }
 

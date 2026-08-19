@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -21,11 +21,12 @@ export class EncargadosComponent implements OnInit {
   maxSize: number = 50;
   totalItems: number = 0;
 
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.api.getAllEncargados(1).subscribe(data => {
       this.encargados = data;
+      this.cdr.detectChanges();
     });
   }
 
@@ -45,6 +46,7 @@ export class EncargadosComponent implements OnInit {
         this.quitarTildes(encargado.nombre.toLowerCase()).includes(filtroSinTildes) ||
         this.quitarTildes(encargado.apellido.toLowerCase()).includes(filtroSinTildes)
       );
+      this.cdr.detectChanges();
     });
   }
 
