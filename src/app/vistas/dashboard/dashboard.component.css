@@ -200,3 +200,91 @@
   text-align: center;
   padding: 2rem 0;
 }
+
+.domingos-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2b3a55;
+  margin: 0 0 0.9rem;
+}
+
+.domingos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.domingo-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
+  overflow: hidden;
+}
+
+.domingo-fecha {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(135deg, #16345f, #4e73df);
+  color: #fff;
+}
+
+.dia-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.dia-lbl {
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  opacity: 0.9;
+}
+
+.domingo-clases {
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.clase-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.clase-nombre {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8592a6;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.personas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.persona-chip {
+  display: inline-flex;
+  align-items: center;
+  background: #eef3ff;
+  color: #4e73df;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.persona-chip.asistente {
+  background: #e6f7fa;
+  color: #0e9aa7;
+}
