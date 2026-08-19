@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
@@ -16,7 +17,6 @@ export class DashboardComponent implements OnInit {
   totalAlumnos = 0;
   totalProfesores = 0;
   totalRecursos = 0;
-  totalMateriales = 0;
 
   alumnosPorEdad: { label: string; value: number }[] = [];
   maxAlumnosPorEdad = 0;
@@ -33,19 +33,17 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      encargados: this.api.getAllEncargados(1),
-      alumnos: this.api.getAllAlumnos(1),
-      profesores: this.api.getAllProfesores(1),
-      recursos: this.api.getAllRecursos(1),
-      materiales: this.api.getAllMateriales(1),
-      edades: this.api.getAllEdades(1),
+      encargados: this.api.getAllEncargados(1).pipe(catchError(() => of([]))),
+      alumnos: this.api.getAllAlumnos(1).pipe(catchError(() => of([]))),
+      profesores: this.api.getAllProfesores(1).pipe(catchError(() => of([]))),
+      recursos: this.api.getAllRecursos(1).pipe(catchError(() => of([]))),
+      edades: this.api.getAllEdades(1).pipe(catchError(() => of([]))),
     }).subscribe({
       next: (r) => {
         this.totalEncargados = r.encargados.length;
         this.totalAlumnos = r.alumnos.length;
         this.totalProfesores = r.profesores.length;
         this.totalRecursos = r.recursos.length;
-        this.totalMateriales = r.materiales.length;
         this.buildAlumnosPorEdad(r.alumnos, r.edades);
         this.buildRecursosDonut(r.recursos);
         this.cargando = false;
