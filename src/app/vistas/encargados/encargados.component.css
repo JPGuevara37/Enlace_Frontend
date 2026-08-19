@@ -179,6 +179,60 @@
   display: flex;
   justify-content: flex-end;
   padding: 0.9rem 1rem;
+  border-top: 1px solid #eef1f7;
+}
+
+::ng-deep .ngx-pagination {
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  align-items: center;
+}
+
+::ng-deep .ngx-pagination li {
+  margin: 0;
+}
+
+::ng-deep .ngx-pagination a,
+::ng-deep .ngx-pagination span,
+::ng-deep .ngx-pagination li.disabled {
+  display: inline-block;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  color: #5a6b8c;
+  text-decoration: none;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+::ng-deep .ngx-pagination a:hover {
+  background: #eef3ff;
+  color: #4e73df;
+}
+
+::ng-deep .ngx-pagination li.current {
+  background: #4e73df;
+  border-radius: 8px;
+}
+
+::ng-deep .ngx-pagination li.current span {
+  background: #4e73df;
+  color: #fff;
+  border-radius: 8px;
+}
+
+::ng-deep .ngx-pagination .pagination-previous.disabled,
+::ng-deep .ngx-pagination .pagination-next.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Modales */
