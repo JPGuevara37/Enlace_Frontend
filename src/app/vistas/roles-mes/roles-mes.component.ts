@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
@@ -53,8 +54,13 @@ export class RolesMesComponent implements OnInit {
   }
 
   cargarAsignaciones(): void {
-    this.api.getRolesMes(this.mes, this.anno).subscribe(data => {
-      this.asignaciones = data;
+    const prevMes = this.mes === 1 ? 12 : this.mes - 1;
+    const prevAnno = this.mes === 1 ? this.anno - 1 : this.anno;
+    forkJoin([
+      this.api.getRolesMes(this.mes, this.anno),
+      this.api.getRolesMes(prevMes, prevAnno),
+    ]).subscribe(([actual, previo]) => {
+      this.asignaciones = [...actual, ...previo];
       this.cdr.detectChanges();
     });
   }
@@ -85,6 +91,12 @@ export class RolesMesComponent implements OnInit {
   formatearDomingo(dia: number): string {
     const fecha = new Date(this.anno, this.mes - 1, dia);
     return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  obtenerDomingoAdjacente(dia: number, mes: number, anno: number, offsetDias: number): { dia: number; mes: number; anno: number } {
+    const fecha = new Date(anno, mes - 1, dia);
+    fecha.setDate(fecha.getDate() + offsetDias);
+    return { dia: fecha.getDate(), mes: fecha.getMonth() + 1, anno: fecha.getFullYear() };
   }
 
   // Drag and drop
@@ -151,6 +163,23 @@ export class RolesMesComponent implements OnInit {
       const asistentes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') === 'Equipo de apoyo').length;
       if (asistentes >= 1) {
         window.alert('Máximo 1 asistente por clase');
+        return;
+      }
+    }
+
+    const prev = this.obtenerDomingoAdjacente(this.dia, this.mes, this.anno, -7);
+    const next = this.obtenerDomingoAdjacente(this.dia, this.mes, this.anno, 7);
+
+    const repetido = this.asignaciones.some(a =>
+      a.personaId === persona.profesorId &&
+      a.edadId === edad.edadId &&
+      ((a.mes === prev.mes && a.anno === prev.anno && Number(a.dia) === prev.dia) ||
+       (a.mes === next.mes && a.anno === next.anno && Number(a.dia) === next.dia))
+    );
+
+    if (repetido) {
+      const confirmar = window.confirm('Este profesor ya tiene esta clase en un domingo consecutivo. ¿Asignarlo de todos modos?');
+      if (!confirmar) {
         return;
       }
     }
