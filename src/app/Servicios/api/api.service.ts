@@ -50,6 +50,11 @@ export class ApiService {
     return localStorage.getItem('token');
   }
 
+  logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiration');
+  }
+
   isloggedIn(): boolean {
     // Verificar si se está ejecutando en el navegador antes de acceder a localStorage
     if (isPlatformBrowser(this.platformId)) {
@@ -59,23 +64,22 @@ export class ApiService {
   }
 
   isTokenExpired(): boolean {
-    if (typeof localStorage === 'undefined') {
-      return true; // Tratar como token expirado si localStorage no está definido
+    if (!isPlatformBrowser(this.platformId)) {
+      return true;
     }
 
     const tokenExpirationString = localStorage.getItem('tokenExpiration');
 
     if (!tokenExpirationString) {
-      localStorage.removeItem("Token");
-      // No hay fecha de expiración almacenada, el token se considera expirado
       return true;
     }
-  
+
     const tokenExpiration = new Date(tokenExpirationString);
-    const currentDateTime = new Date();
-  
-    // Verificar si la fecha de expiración es anterior a la fecha y hora actuales
-    return tokenExpiration <= currentDateTime;
+    if (isNaN(tokenExpiration.getTime())) {
+      return true;
+    }
+
+    return tokenExpiration <= new Date();
   }
 
 //servicio de para encargados.

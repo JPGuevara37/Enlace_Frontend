@@ -44,16 +44,16 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.api.login(this.loginForm.value).subscribe({
         next: (res) => {
-          alert(res.message);
           this.api.storeToken(res.token);
           const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
-          window.localStorage.setItem('tokenExpiration', expirationDate.toLocaleString());
+          window.localStorage.setItem('tokenExpiration', expirationDate.toISOString());
           this.loginForm.reset();
-          this.toast.success({ detail: 'Acceso permitido', summary: res.message, duration: 5000 });
+          this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 5000 });
           this.router.navigate(['dashboard']);
         },
         error: (err) => {
-          this.toast.error({ detail: 'Error', summary: 'Algo salió mal!!!', duration: 5000 });
+          const message = err?.error?.message ?? 'Algo salió mal!!!';
+          this.toast.error({ detail: 'Error', summary: message, duration: 5000 });
         }
       });
     } else {

@@ -7,7 +7,7 @@
               <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
             </div>
             <div class="panel-body p-3">
-              <form [formGroup]="resetPasswordForm">
+              <form [formGroup]="resetPasswordForm" (ngSubmit)="reset()">
                 <div class="form-group pt-3">
                     <div class="input-field" [class.error]="resetPasswordForm.controls['password'].dirty && resetPasswordForm.hasError('required', 'password')">
                       <span class="fa fa-user p-2"></span>
@@ -30,7 +30,7 @@
                   @if (resetPasswordForm.hasError('confirmPasswordValidator','confirmPassword')) {
                     <small class="text-danger">*Ambas contraseñas tienen que ser iguales.</small>
                   }
-                <button type="submit" (click)="reset()" class="btn btn-primary btn-block mt4 w-100">Restablecer</button>
+                <button type="submit" class="btn btn-primary btn-block mt4 w-100">Restablecer</button>
 
               </form>
             </div>

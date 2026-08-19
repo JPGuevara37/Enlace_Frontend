@@ -8,15 +8,11 @@ export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
   const toast = inject(NgToastService);
 
-  if (api.isloggedIn()) {
+  if (api.isloggedIn() && !api.isTokenExpired()) {
     return true;
   }
 
-  if (api.isTokenExpired()) {
-    router.navigate(['login']);
-    return false;
-  }
-
+  api.logout();
   toast.error({ detail: 'ERROR', summary: 'por favor acceda primero' });
   router.navigate(['login']);
   return false;

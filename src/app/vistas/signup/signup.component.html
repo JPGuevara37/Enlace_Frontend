@@ -7,7 +7,7 @@
               <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
             </div>
             <div class="panel-body p-3">
-              <form [formGroup]="signUpForm">
+              <form [formGroup]="signUpForm" (ngSubmit)="onSignup()">
                 <div class="form-group pt-3">
                   <div class="input-field" [class.error]="signUpForm.controls['Nombre'].dirty && signUpForm.hasError('required','Nombre')">
                     <span class="fa fa-user p-2"></span>
@@ -55,7 +55,7 @@
                   <small class="text-danger">*Contrasena requerida.</small>
                 }
 
-                <button type="submit" class="btn btn-primary btn-block mt4 w-100" (click)="onSignup()">Registrar</button>
+                <button type="submit" class="btn btn-primary btn-block mt4 w-100">Registrar</button>
                 <div class="text-center pt-4 text-muted">Tienes cuenta?<a id="forget" routerLink="/login">Entrar</a></div>
               </form>
             </div>

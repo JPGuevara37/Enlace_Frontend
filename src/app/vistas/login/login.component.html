@@ -7,14 +7,14 @@
             <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
           </div>
           <div class="panel-body p-3">
-            <form [formGroup]="loginForm">
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
               <div class="form-group pt-3">
                 <div class="input-field" [class.error]="loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usuario_Cuenta')"> 
                   <span class="fa fa-user p-2"></span>
                   <input formControlName="Usuario_Cuenta" type="text" placeholder="Usuario">
                 </div>
               </div>
-              @if (loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usario_Cuenta')) {
+              @if (loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usuario_Cuenta')) {
                 <small class="text-danger">*Usuario requerido</small>
               }
 
@@ -31,7 +31,7 @@
 
               <div class="form-inline fr mt-4"> <a id="forgot" data-bs-toggle="modal" data-bs-target="#exampleModal" class="font-weight-bold">Olvidaste tu contraseña?</a>
               </div>
-              <button (click)="onLogin()" [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block mt4 w-100">Login</button>
+              <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block mt4 w-100">Login</button>
               <div class="text-center pt-4 text-muted">No tienes cuenta?<a id="forget" routerLink="/signup">Registrar</a></div>
             </form>
           </div>
