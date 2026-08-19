@@ -133,33 +133,50 @@ export class RolesMesComponent implements OnInit {
   }
 
   asignarPersona(persona: IListaProfesores, edad: IListaEdades): void {
-    const existente = this.asignaciones.find(a => a.edadId === edad.edadId && a.dia === this.dia);
+    const asignadas = this.getAsignaciones(edad.edadId);
 
-    if (existente && existente.rolMesId) {
-      existente.personaId = persona.profesorId;
-      this.api.actualizarRolMes(existente).subscribe({
-        next: () => this.cargarAsignaciones(),
-        error: () => {},
-      });
-    } else {
-      const nuevo: IRolesMes = {
-        edadId: edad.edadId,
-        personaId: persona.profesorId,
-        mes: this.mes,
-        anno: this.anno,
-        dia: this.dia,
-        estado: this.modoPropuesta ? 'Propuesta' : 'Confirmado',
-        disponible: true,
-      };
-      this.api.crearRolMes(nuevo).subscribe({
-        next: () => this.cargarAsignaciones(),
-        error: () => {},
-      });
+    if (asignadas.some(a => a.personaId === persona.profesorId)) {
+      return;
     }
+
+    const esProfesor = (persona.categoria || 'Profesor') !== 'Equipo de apoyo';
+
+    if (esProfesor) {
+      const profes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') !== 'Equipo de apoyo').length;
+      if (profes >= 2) {
+        window.alert('Máximo 2 profesores por clase');
+        return;
+      }
+    } else {
+      const asistentes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') === 'Equipo de apoyo').length;
+      if (asistentes >= 1) {
+        window.alert('Máximo 1 asistente por clase');
+        return;
+      }
+    }
+
+    const nuevo: IRolesMes = {
+      edadId: edad.edadId,
+      personaId: persona.profesorId,
+      mes: this.mes,
+      anno: this.anno,
+      dia: this.dia,
+      estado: this.modoPropuesta ? 'Propuesta' : 'Confirmado',
+      disponible: true,
+    };
+    this.api.crearRolMes(nuevo).subscribe({
+      next: () => this.cargarAsignaciones(),
+      error: () => {},
+    });
   }
 
-  getAsignacion(edadId: string): IRolesMes | undefined {
-    return this.asignaciones.find(a => a.edadId === edadId && Number(a.dia) === Number(this.dia));
+  getAsignaciones(edadId: string): IRolesMes[] {
+    return this.asignaciones.filter(a => a.edadId === edadId && Number(a.dia) === Number(this.dia));
+  }
+
+  esAsistente(rol: IRolesMes): boolean {
+    const p = this.getPersona(rol.personaId);
+    return (p?.categoria || 'Profesor') === 'Equipo de apoyo';
   }
 
   getPersona(personaId: string): IListaProfesores | undefined {

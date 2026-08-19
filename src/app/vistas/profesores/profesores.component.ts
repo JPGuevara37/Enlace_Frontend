@@ -131,7 +131,7 @@ export class ProfesoresComponent implements OnInit {
   }
 
   editar(profesor: IListaProfesores): void {
-    this.editando = { ...profesor };
+    this.editando = { ...profesor, categoria: profesor.categoria || 'Profesor' };
   }
 
   cerrarEdicion(): void {
