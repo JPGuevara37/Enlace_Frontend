@@ -129,6 +129,22 @@
   font-weight: 600;
 }
 
+.asignado .rol-badge {
+  flex: 0 0 auto;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: #4e73df;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.asignado .rol-badge.asistente {
+  background: #36b9cc;
+}
+
 .estado {
   border: none;
   background: #f6c23e;
