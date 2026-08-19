@@ -1,0 +1,54 @@
+<div class="roles-mes">
+  <div class="page-head">
+    <h1>Roles del mes</h1>
+    <p>Arrastra una persona a cada clase para asignar el rol del mes</p>
+  </div>
+
+  <div class="toolbar">
+    <select class="select" [(ngModel)]="mes" (change)="cambiarPeriodo()">
+      @for (m of meses; track m; let i = $index) {
+        <option [value]="i + 1">{{ m }}</option>
+      }
+    </select>
+    <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
+
+    <div class="modo">
+      <button class="chip" [class.active]="modoPropuesta" (click)="modoPropuesta = true">Propuesta</button>
+      <button class="chip" [class.active]="!modoPropuesta" (click)="modoPropuesta = false">Confirmado</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <div class="clases">
+      @for (edad of edades; track edad.edadId) {
+        <div class="clase" (dragover)="$event.preventDefault()" (drop)="onDrop(edad)">
+          <div class="clase-titulo">{{ edad.rangoEdad }}</div>
+          @if (getAsignacion(edad.edadId); as rol) {
+            <div class="asignado">
+              <span>{{ getPersona(rol.personaId)?.nombre }} {{ getPersona(rol.personaId)?.apellido }}</span>
+              <button class="estado" [class.confirmado]="rol.estado === 'Confirmado'" (click)="alternarEstado(rol)">
+                {{ rol.estado }}
+              </button>
+              <button class="quitar" (click)="quitar(rol)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          } @else {
+            <div class="vacio">Arrastra una persona aquí</div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="personas">
+      <div class="personas-titulo">Personas</div>
+      @for (p of personas; track p.profesorId) {
+        <div class="persona" draggable="true" (dragstart)="onDragStart(p)" (dragend)="onDragEnd()">
+          <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
+          <div class="info">
+            <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>
+            <span class="categoria">{{ p.categoria || 'Profesor' }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

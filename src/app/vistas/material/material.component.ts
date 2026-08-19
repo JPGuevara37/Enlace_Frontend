@@ -1,8 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../Servicios/api/api.service';
-import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
+
+const CATEGORIAS = ['Clases Enlace', 'Material de apoyo', 'Talleres'];
+
+const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 @Component({
   selector: 'app-material',
@@ -12,21 +15,29 @@ import { IListaMateriales } from '../../modelos/IListaMateriales';
   styleUrls: ['./material.component.css'],
 })
 export class MaterialComponent implements OnInit {
+  categorias = CATEGORIAS;
+  meses = MESES;
+
   materiales: IListaMateriales[] = [];
+  categoriaSeleccionada: string | null = null;
   puedeSubir = false;
   cargando = true;
 
+  mostrarUpload = false;
   archivoSeleccionado: File | null = null;
   nombreNuevo = '';
+  mesNuevo = 1;
+  annoNuevo = new Date().getFullYear();
 
-  editandoId: string | null = null;
+  editando: IListaMateriales | null = null;
   editNombre = '';
   editDescripcion = '';
+  editMes = 1;
+  editAnno = new Date().getFullYear();
 
   constructor(
     private api: ApiService,
     private cdr: ChangeDetectorRef,
-    private alertas: AlertasService,
   ) {}
 
   ngOnInit(): void {
@@ -37,16 +48,51 @@ export class MaterialComponent implements OnInit {
   cargarMateriales(): void {
     this.cargando = true;
     this.api.getAllMateriales(1).subscribe({
-      next: (data) => {
+      next: data => {
         this.materiales = data;
         this.cargando = false;
         this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error('Error cargando materiales', err);
+      error: () => {
         this.cargando = false;
       },
     });
+  }
+
+  get materialesCategoria(): IListaMateriales[] {
+    return this.materiales.filter(m => (m.categoria || '') === this.categoriaSeleccionada);
+  }
+
+  get esClasesEnlace(): boolean {
+    return this.categoriaSeleccionada === 'Clases Enlace';
+  }
+
+  get gruposClases(): { anno: number; mes: number; items: IListaMateriales[] }[] {
+    const grupos = new Map<string, { anno: number; mes: number; items: IListaMateriales[] }>();
+    this.materialesCategoria.forEach(m => {
+      const anno = m.anno ?? 0;
+      const mes = m.mes ?? 0;
+      const clave = `${anno}-${mes}`;
+      if (!grupos.has(clave)) {
+        grupos.set(clave, { anno, mes, items: [] });
+      }
+      grupos.get(clave)!.items.push(m);
+    });
+    return Array.from(grupos.values()).sort((a, b) => (b.anno - a.anno) || (b.mes - a.mes));
+  }
+
+  nombreMes(mes: number): string {
+    return this.meses[mes - 1] || `Mes ${mes}`;
+  }
+
+  seleccionarCategoria(categoria: string): void {
+    this.categoriaSeleccionada = categoria;
+    this.mostrarUpload = false;
+  }
+
+  volver(): void {
+    this.categoriaSeleccionada = null;
+    this.mostrarUpload = false;
   }
 
   onArchivoSeleccionado(event: Event): void {
@@ -56,33 +102,35 @@ export class MaterialComponent implements OnInit {
 
   subirMaterial(): void {
     if (!this.archivoSeleccionado) {
-      this.alertas.showError('Selecciona un archivo PDF', 'Error');
       return;
     }
-
     const fd = new FormData();
     fd.append('archivo', this.archivoSeleccionado, this.archivoSeleccionado.name);
     if (this.nombreNuevo.trim()) {
       fd.append('nombre', this.nombreNuevo.trim());
     }
+    if (this.categoriaSeleccionada) {
+      fd.append('categoria', this.categoriaSeleccionada);
+    }
+    if (this.esClasesEnlace) {
+      fd.append('mes', String(this.mesNuevo));
+      fd.append('anno', String(this.annoNuevo));
+    }
 
     this.api.subirMaterial(fd).subscribe({
       next: () => {
-        this.alertas.showSuccess('Material subido', 'Hecho');
         this.nombreNuevo = '';
         this.archivoSeleccionado = null;
+        this.mostrarUpload = false;
         this.cargarMateriales();
       },
-      error: (err) => {
-        const msg = err?.error?.result?.mensaje || 'No se pudo subir el material';
-        this.alertas.showError(msg, 'Error');
-      },
+      error: () => {},
     });
   }
 
   descargar(m: IListaMateriales): void {
     this.api.descargarMaterial(m.materialId).subscribe({
-      next: (blob) => {
+      next: blob => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -92,48 +140,48 @@ export class MaterialComponent implements OnInit {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
       },
-      error: () => this.alertas.showError('No se pudo descargar el material', 'Error'),
+      error: () => {},
     });
   }
 
-  empezarEdicion(m: IListaMateriales): void {
-    this.editandoId = m.materialId;
+  editar(m: IListaMateriales): void {
+    this.editando = { ...m };
     this.editNombre = m.nombre || '';
     this.editDescripcion = m.descripcion || '';
+    this.editMes = m.mes || 1;
+    this.editAnno = m.anno || new Date().getFullYear();
   }
 
   cancelarEdicion(): void {
-    this.editandoId = null;
+    this.editando = null;
   }
 
-  guardarEdicion(m: IListaMateriales): void {
-    this.api
-      .putMateriales({
-        materialId: m.materialId,
-        nombre: this.editNombre,
-        descripcion: this.editDescripcion,
-      })
-      .subscribe({
-        next: () => {
-          this.alertas.showSuccess('Material actualizado', 'Hecho');
-          this.editandoId = null;
-          this.cargarMateriales();
-        },
-        error: () => this.alertas.showError('No se pudo actualizar', 'Error'),
-      });
+  guardarEdicion(): void {
+    if (!this.editando) {
+      return;
+    }
+    this.editando.nombre = this.editNombre;
+    this.editando.descripcion = this.editDescripcion;
+    if (this.esClasesEnlace) {
+      this.editando.mes = this.editMes;
+      this.editando.anno = this.editAnno;
+    }
+    this.api.putMateriales(this.editando).subscribe({
+      next: () => {
+        this.editando = null;
+        this.cargarMateriales();
+      },
+      error: () => {},
+    });
   }
 
   eliminar(m: IListaMateriales): void {
     if (!window.confirm('¿Eliminar este material?')) {
       return;
     }
-
     this.api.deleteMateriales(m.materialId).subscribe({
-      next: () => {
-        this.alertas.showSuccess('Material eliminado', 'Hecho');
-        this.cargarMateriales();
-      },
-      error: () => this.alertas.showError('No se pudo eliminar', 'Error'),
+      next: () => this.cargarMateriales(),
+      error: () => {},
     });
   }
 

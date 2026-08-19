@@ -19,6 +19,7 @@ import { RecursosComponent } from './vistas/recursos/recursos.component';
 import { NuevoRecursosComponent } from './vistas/nuevo-recursos/nuevo-recursos.component';
 import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recursos.component';
 import { MaterialComponent } from './vistas/material/material.component';
+import { RolesMesComponent } from './vistas/roles-mes/roles-mes.component';
 import { SignupComponent } from './vistas/signup/signup.component';
 import { ResetComponent } from './vistas/reset/reset.component';
 
@@ -51,6 +52,7 @@ export const routes: Routes = [
       { path: 'editar-recursos/:id', component: EditarRecursosComponent },
       { path: 'nuevo-recursos', component: NuevoRecursosComponent },
       { path: 'material', component: MaterialComponent },
+      { path: 'roles-mes', component: RolesMesComponent },
     ],
   },
   { path: '**', redirectTo: 'login' },

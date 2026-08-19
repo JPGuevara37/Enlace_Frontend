@@ -1,61 +1,146 @@
 <div class="material">
-  <div class="page-head">
-    <h1>Biblioteca de materiales</h1>
-    <p>Documentos y recursos de las clases</p>
-  </div>
+  @if (!categoriaSeleccionada) {
+    <div class="page-head">
+      <h1>Biblioteca de materiales</h1>
+      <p>Selecciona una carpeta</p>
+    </div>
 
-  @if (puedeSubir) {
-    <div class="upload-bar">
-      <label class="file-picker">
-        <i class="fa-solid fa-file-pdf"></i>
-        <span>{{ archivoSeleccionado ? archivoSeleccionado.name : 'Elegir PDF' }}</span>
-        <input type="file" accept=".pdf,application/pdf" (change)="onArchivoSeleccionado($event)" />
-      </label>
-      <input class="name-input" type="text" [(ngModel)]="nombreNuevo" placeholder="Nombre (opcional)" />
-      <button class="upload-btn" (click)="subirMaterial()" [disabled]="!archivoSeleccionado">
-        <i class="fa-solid fa-upload"></i> Subir
+    <div class="folders">
+      <button class="folder" (click)="seleccionarCategoria('Clases Enlace')">
+        <i class="fa-solid fa-folder" style="color:#4e73df"></i>
+        <h3>Clases Enlace</h3>
+        <p>Material de clases por mes y año</p>
+      </button>
+      <button class="folder" (click)="seleccionarCategoria('Material de apoyo')">
+        <i class="fa-solid fa-folder" style="color:#1cc88a"></i>
+        <h3>Material de apoyo</h3>
+        <p>Recursos complementarios</p>
+      </button>
+      <button class="folder" (click)="seleccionarCategoria('Talleres')">
+        <i class="fa-solid fa-folder" style="color:#f6c23e"></i>
+        <h3>Talleres</h3>
+        <p>Material de talleres y capacitaciones</p>
       </button>
     </div>
-  }
-
-  @if (cargando) {
-    <p class="empty">Cargando…</p>
-  } @else if (materiales.length === 0) {
-    <p class="empty">No hay material disponible</p>
   } @else {
-    <div class="grid">
-      @for (m of materiales; track m.materialId) {
-        <div class="card">
-          <div class="thumb">
+    <div class="page-head">
+      <button class="back" (click)="volver()"><i class="fa-solid fa-arrow-left"></i> Carpetas</button>
+      <h1>{{ categoriaSeleccionada }}</h1>
+    </div>
+
+    @if (puedeSubir) {
+      @if (!mostrarUpload) {
+        <button class="btn-add" (click)="mostrarUpload = true"><i class="fa-solid fa-plus"></i> Subir PDF</button>
+      } @else {
+        <div class="upload-bar">
+          <label class="file-picker">
             <i class="fa-solid fa-file-pdf"></i>
-            <span>PDF</span>
-          </div>
-          <div class="body">
-            @if (editandoId === m.materialId) {
-              <input class="edit-input" type="text" [(ngModel)]="editNombre" placeholder="Nombre" />
-              <input class="edit-input" type="text" [(ngModel)]="editDescripcion" placeholder="Descripción" />
-              <div class="actions">
-                <button class="btn primary" (click)="guardarEdicion(m)"><i class="fa-solid fa-check"></i> Guardar</button>
-                <button class="btn ghost" (click)="cancelarEdicion()">Cancelar</button>
+            <span>{{ archivoSeleccionado ? archivoSeleccionado.name : 'Elegir PDF' }}</span>
+            <input type="file" accept=".pdf,application/pdf" (change)="onArchivoSeleccionado($event)" />
+          </label>
+          <input class="name-input" type="text" [(ngModel)]="nombreNuevo" placeholder="Nombre (opcional)" />
+          @if (esClasesEnlace) {
+            <select class="select" [(ngModel)]="mesNuevo">
+              @for (m of meses; track m; let i = $index) {
+                <option [value]="i + 1">{{ m }}</option>
+              }
+            </select>
+            <input class="name-input" type="number" [(ngModel)]="annoNuevo" placeholder="Año" />
+          }
+          <button class="btn-add" (click)="subirMaterial()" [disabled]="!archivoSeleccionado">Subir</button>
+          <button class="btn-ghost" (click)="mostrarUpload = false">Cancelar</button>
+        </div>
+      }
+    }
+
+    @if (cargando) {
+      <p class="empty">Cargando…</p>
+    } @else if (esClasesEnlace) {
+      @for (grupo of gruposClases; track grupo.anno + '-' + grupo.mes) {
+        <h2 class="grupo-titulo">{{ nombreMes(grupo.mes) }} {{ grupo.anno }}</h2>
+        <div class="grid">
+          @for (m of grupo.items; track m.materialId) {
+            <div class="card">
+              <div class="thumb"><i class="fa-solid fa-file-pdf"></i><span>PDF</span></div>
+              <div class="body">
+                <h3 class="title">{{ m.nombre }}</h3>
+                <p class="desc">{{ m.descripcion }}</p>
+                <div class="actions">
+                  <button class="btn primary" (click)="descargar(m)"><i class="fa-solid fa-download"></i> Descargar</button>
+                  @if (puedeSubir) {
+                    <button class="btn icon" (click)="editar(m)"><i class="fa-solid fa-pen"></i></button>
+                    <button class="btn icon danger" (click)="eliminar(m)"><i class="fa-solid fa-trash"></i></button>
+                  }
+                </div>
               </div>
-            } @else {
+            </div>
+          }
+        </div>
+      }
+      @if (!materialesCategoria.length) {
+        <p class="empty">No hay material en esta carpeta</p>
+      }
+    } @else {
+      <div class="grid">
+        @for (m of materialesCategoria; track m.materialId) {
+          <div class="card">
+            <div class="thumb"><i class="fa-solid fa-file-pdf"></i><span>PDF</span></div>
+            <div class="body">
               <h3 class="title">{{ m.nombre }}</h3>
               <p class="desc">{{ m.descripcion }}</p>
-              <p class="meta">
-                <span><i class="fa-regular fa-calendar"></i> {{ formatearFecha(m.fecha) }}</span>
-                <span><i class="fa-regular fa-file"></i> {{ formatearTamano(m.tamano) }}</span>
-              </p>
               <div class="actions">
                 <button class="btn primary" (click)="descargar(m)"><i class="fa-solid fa-download"></i> Descargar</button>
                 @if (puedeSubir) {
-                  <button class="btn icon" (click)="empezarEdicion(m)" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                  <button class="btn icon danger" (click)="eliminar(m)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                  <button class="btn icon" (click)="editar(m)"><i class="fa-solid fa-pen"></i></button>
+                  <button class="btn icon danger" (click)="eliminar(m)"><i class="fa-solid fa-trash"></i></button>
                 }
               </div>
-            }
+            </div>
           </div>
-        </div>
+        }
+      </div>
+      @if (!materialesCategoria.length) {
+        <p class="empty">No hay material en esta carpeta</p>
       }
-    </div>
+    }
   }
 </div>
+
+@if (editando) {
+  <div class="modal-backdrop" (click)="cancelarEdicion()">
+    <div class="card-modal" (click)="$event.stopPropagation()">
+      <div class="card-head">
+        <div class="card-titulo"><h3>Editar material</h3></div>
+        <button class="close" (click)="cancelarEdicion()">&times;</button>
+      </div>
+      <div class="card-body form-grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="editNombre" />
+        </div>
+        <div class="field">
+          <label>Descripción</label>
+          <input type="text" [(ngModel)]="editDescripcion" />
+        </div>
+        @if (esClasesEnlace) {
+          <div class="field">
+            <label>Mes</label>
+            <select [(ngModel)]="editMes">
+              @for (m of meses; track m; let i = $index) {
+                <option [value]="i + 1">{{ m }}</option>
+              }
+            </select>
+          </div>
+          <div class="field">
+            <label>Año</label>
+            <input type="number" [(ngModel)]="editAnno" />
+          </div>
+        }
+      </div>
+      <div class="card-foot">
+        <button class="btn-ghost" (click)="cancelarEdicion()">Cancelar</button>
+        <button class="btn-primary" (click)="guardarEdicion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+}

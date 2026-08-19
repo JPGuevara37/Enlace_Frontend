@@ -17,6 +17,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { ResetPassword } from '../../modelos/resetPassword.interfase';
 import { IMaterial } from '../../modelos/material.interfase';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
+import { IRolesMes } from '../../modelos/rolesmes.interfase';
 import { RuntimeConfigService } from '../../config/runtime-config.service';
 
 @Injectable({
@@ -311,6 +312,23 @@ export class ApiService {
 
     resetPassword(resetPasswordObj: ResetPassword){
       return this.http.post<any>(`${this.url}/api/ResetEmail/reset-password`, resetPasswordObj);
+    }
+
+    // Roles del mes
+    getRolesMes(mes: number, anno: number):Observable<IRolesMes[]>{
+      return this.http.get<IRolesMes[]>(`${this.url}/api/RolesMes/${mes}/${anno}`);
+    }
+
+    crearRolMes(rol: IRolesMes):Observable<IResponse>{
+      return this.http.post<IResponse>(`${this.url}/api/RolesMes`, rol);
+    }
+
+    actualizarRolMes(rol: IRolesMes):Observable<IResponse>{
+      return this.http.put<IResponse>(`${this.url}/api/RolesMes/${rol.rolMesId}`, rol);
+    }
+
+    borrarRolMes(id: string):Observable<IResponse>{
+      return this.http.delete<IResponse>(`${this.url}/api/RolesMes/${id}`);
     }
 
  }

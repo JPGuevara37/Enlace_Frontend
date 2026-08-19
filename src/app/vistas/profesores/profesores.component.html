@@ -79,6 +79,7 @@
       <div class="card-body">
         <div class="info-row"><i class="fa-solid fa-envelope"></i><span>{{ detalle.email || '—' }}</span></div>
         <div class="info-row"><i class="fa-solid fa-phone"></i><span>{{ detalle.telefono || '—' }}</span></div>
+        <div class="info-row"><i class="fa-solid fa-user-tag"></i><span>{{ detalle.categoria || 'Profesor' }}</span></div>
       </div>
     </div>
   </div>
@@ -109,6 +110,13 @@
         <div class="field">
           <label>Teléfono</label>
           <input type="text" [(ngModel)]="editando.telefono" />
+        </div>
+        <div class="field">
+          <label>Categoría</label>
+          <select [(ngModel)]="editando.categoria">
+            <option value="Profesor">Profesor</option>
+            <option value="Equipo de apoyo">Equipo de apoyo</option>
+          </select>
         </div>
       </div>
       <div class="card-foot">

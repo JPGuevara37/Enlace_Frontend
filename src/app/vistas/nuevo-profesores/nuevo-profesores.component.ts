@@ -18,6 +18,7 @@ export class NuevoProfesoresComponent {
     apellido: new FormControl(''),
     email: new FormControl(''),
     telefono: new FormControl(''),
+    categoria: new FormControl('Profesor'),
   });
 
   constructor(
