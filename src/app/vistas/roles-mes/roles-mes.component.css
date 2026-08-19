@@ -176,16 +176,19 @@
   gap: 0.7rem;
   padding: 0.6rem;
   border-radius: 10px;
-  cursor: grab;
+  cursor: pointer;
   transition: background 0.15s ease;
+  user-select: none;
+  -webkit-user-drag: element;
 }
 
 .persona:hover {
   background: #f4f6fb;
 }
 
-.persona:active {
-  cursor: grabbing;
+.persona.seleccionada {
+  background: #eef3ff;
+  outline: 2px solid #4e73df;
 }
 
 .avatar {

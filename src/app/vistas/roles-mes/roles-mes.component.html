@@ -1,7 +1,7 @@
 <div class="roles-mes">
   <div class="page-head">
     <h1>Roles del mes</h1>
-    <p>Arrastra una persona a cada clase para asignar el rol del mes</p>
+    <p>Arrastra una persona a una clase, o haz clic en la persona y luego en la clase</p>
   </div>
 
   <div class="toolbar">
@@ -27,7 +27,7 @@
   <div class="layout">
     <div class="clases">
       @for (edad of edades; track edad.edadId) {
-        <div class="clase" (dragover)="onDragOver($event)" (drop)="onDrop($event, edad)">
+        <div class="clase" (click)="asignarAClase(edad)" (dragover)="onDragOver($event)" (drop)="onDrop($event, edad)">
           <div class="clase-titulo">{{ edad.rangoEdad }}</div>
           @if (getAsignacion(edad.edadId); as rol) {
             <div class="asignado">
@@ -47,7 +47,7 @@
     <div class="personas">
       <div class="personas-titulo">Personas</div>
       @for (p of personas; track p.profesorId) {
-        <div class="persona" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
+        <div class="persona" [class.seleccionada]="personaSeleccionada?.profesorId === p.profesorId" (click)="seleccionarPersona(p)" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
           <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
           <div class="info">
             <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>

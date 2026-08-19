@@ -28,6 +28,7 @@ export class RolesMesComponent implements OnInit {
   domingos: number[] = [];
 
   personaArrastrada: IListaProfesores | null = null;
+  personaSeleccionada: IListaProfesores | null = null;
 
   constructor(
     private api: ApiService,
@@ -86,6 +87,7 @@ export class RolesMesComponent implements OnInit {
     return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   }
 
+  // Drag and drop
   onDragStart(event: DragEvent, persona: IListaProfesores): void {
     this.personaArrastrada = persona;
     if (event.dataTransfer) {
@@ -107,11 +109,31 @@ export class RolesMesComponent implements OnInit {
 
   onDrop(event: DragEvent, edad: IListaEdades): void {
     event.preventDefault();
-    if (!this.personaArrastrada) {
+    if (this.personaArrastrada) {
+      this.asignarPersona(this.personaArrastrada, edad);
+      this.personaArrastrada = null;
+    }
+  }
+
+  // Click to assign (alternativa confiable)
+  seleccionarPersona(persona: IListaProfesores): void {
+    if (this.personaSeleccionada?.profesorId === persona.profesorId) {
+      this.personaSeleccionada = null;
+    } else {
+      this.personaSeleccionada = persona;
+    }
+  }
+
+  asignarAClase(edad: IListaEdades): void {
+    if (!this.personaSeleccionada) {
       return;
     }
-    const persona = this.personaArrastrada;
-    const existente = this.asignaciones.find(a => a.edadId === edad.edadId);
+    this.asignarPersona(this.personaSeleccionada, edad);
+    this.personaSeleccionada = null;
+  }
+
+  asignarPersona(persona: IListaProfesores, edad: IListaEdades): void {
+    const existente = this.asignaciones.find(a => a.edadId === edad.edadId && a.dia === this.dia);
 
     if (existente && existente.rolMesId) {
       existente.personaId = persona.profesorId;
@@ -134,7 +156,6 @@ export class RolesMesComponent implements OnInit {
         error: () => {},
       });
     }
-    this.personaArrastrada = null;
   }
 
   getAsignacion(edadId: string): IRolesMes | undefined {
@@ -160,9 +181,5 @@ export class RolesMesComponent implements OnInit {
     this.api.actualizarRolMes(rol).subscribe({
       error: () => {},
     });
-  }
-
-  nombreMes(mes: number): string {
-    return this.meses[mes - 1] || `Mes ${mes}`;
   }
 }
