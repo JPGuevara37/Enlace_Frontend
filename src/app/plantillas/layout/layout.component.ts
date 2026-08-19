@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, OnDestroy } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { ApiService } from '../../Servicios/api/api.service';
 
 @Component({
@@ -9,13 +11,40 @@ import { ApiService } from '../../Servicios/api/api.service';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnDestroy {
   sidebarOpen = false;
+  enConfiguracion = false;
 
-  constructor(private router: Router, private api: ApiService) {}
+  subItems = [
+    { ruta: '/configuracion/usuarios', icono: 'fa-users', titulo: 'Usuarios' },
+  ];
+
+  private routerSub: Subscription;
+
+  constructor(private router: Router, private api: ApiService) {
+    this.routerSub = this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.enConfiguracion = this.router.url.startsWith('/configuracion');
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.routerSub.unsubscribe();
+  }
 
   get esAdmin(): boolean {
     return this.api.isAdmin();
+  }
+
+  get iniciales(): string {
+    const n = (this.api.getNombre() || '').trim();
+    const a = (this.api.getApellido() || '').trim();
+    return ((n.charAt(0) || '') + (a.charAt(0) || '')).toUpperCase() || '?';
+  }
+
+  get nombreCompleto(): string {
+    return this.api.getNombreCompleto();
   }
 
   toggleSidebar(): void {
@@ -27,8 +56,7 @@ export class LayoutComponent {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('tokenExpiration');
+    this.api.logout();
     this.router.navigate(['login']);
   }
 }

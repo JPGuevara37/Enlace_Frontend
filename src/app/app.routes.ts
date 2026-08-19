@@ -53,7 +53,10 @@ export const routes: Routes = [
       { path: 'nuevo-recursos', component: NuevoRecursosComponent },
       { path: 'material', component: MaterialComponent },
       { path: 'roles-mes', component: RolesMesComponent },
-      { path: 'configuracion', component: ConfiguracionComponent, canActivate: [adminGuard] },
+      { path: 'configuracion', canActivate: [adminGuard], children: [
+        { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
+        { path: 'usuarios', component: ConfiguracionComponent },
+      ] },
     ],
   },
   { path: '**', redirectTo: 'login' },

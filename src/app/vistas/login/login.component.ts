@@ -48,6 +48,8 @@ export class LoginComponent implements OnInit {
           const expirationDate = new Date(new Date().getTime() + 60 * 60 * 1000);
           window.localStorage.setItem('tokenExpiration', expirationDate.toISOString());
           window.localStorage.setItem('cuenta', this.loginForm.value.Usuario_Cuenta || '');
+          window.localStorage.setItem('nombre', res.nombre || '');
+          window.localStorage.setItem('apellido', res.apellido || '');
           this.loginForm.reset();
           this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 1000 });
           this.router.navigate(['home']);

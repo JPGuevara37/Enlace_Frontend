@@ -82,10 +82,24 @@ export class ApiService {
     localStorage.removeItem('tokenExpiration');
     localStorage.removeItem('role');
     localStorage.removeItem('cuenta');
+    localStorage.removeItem('nombre');
+    localStorage.removeItem('apellido');
   }
 
   getCuenta(): string {
     return localStorage.getItem('cuenta') || '';
+  }
+
+  getNombre(): string {
+    return localStorage.getItem('nombre') || '';
+  }
+
+  getApellido(): string {
+    return localStorage.getItem('apellido') || '';
+  }
+
+  getNombreCompleto(): string {
+    return `${this.getNombre()} ${this.getApellido()}`.trim();
   }
 
   isAdmin(): boolean {

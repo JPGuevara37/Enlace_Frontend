@@ -1,4 +1,15 @@
 <div class="layout">
+  <header class="topbar">
+    <button class="hamburger" (click)="toggleSidebar()" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <span class="topbar-title">Sistema Enlace</span>
+    <div class="topbar-user">
+      <span class="user-initials">{{ iniciales }}</span>
+      <span class="user-name">{{ nombreCompleto }}</span>
+    </div>
+  </header>
+
   <aside class="sidebar" [class.open]="sidebarOpen">
     <a class="brand" routerLink="/home" (click)="cerrarSidebar()">
       <img src="assets/enlace_imag.png" alt="Enlace" />
@@ -60,19 +71,23 @@
     </div>
   </aside>
 
+  @if (enConfiguracion) {
+    <aside class="sub-sidebar">
+      <div class="sub-sidebar-heading">Configuración</div>
+      @for (item of subItems; track item.ruta) {
+        <a class="sub-link" [routerLink]="item.ruta" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="cerrarSidebar()">
+          <i class="fa-solid" [class]="item.icono"></i>
+          <span>{{ item.titulo }}</span>
+        </a>
+      }
+    </aside>
+  }
+
   @if (sidebarOpen) {
     <div class="backdrop" (click)="cerrarSidebar()"></div>
   }
 
-  <div class="main">
-    <header class="topbar">
-      <button class="hamburger" (click)="toggleSidebar()" aria-label="Abrir menú">
-        <i class="fa-solid fa-bars"></i>
-      </button>
-      <span class="topbar-title">Sistema Enlace</span>
-    </header>
-    <main class="content">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
+  <main class="content" [class.with-sub]="enConfiguracion">
+    <router-outlet></router-outlet>
+  </main>
 </div>
