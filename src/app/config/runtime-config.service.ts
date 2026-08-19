@@ -5,12 +5,14 @@ import { firstValueFrom } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class RuntimeConfigService {
   private http = inject(HttpClient);
-  apiUrl = 'https://api-enlace.azurewebsites.net';
+  apiUrl = 'https://enlace-api.jifftry.com';
 
   async load(): Promise<void> {
     try {
       const cfg = await firstValueFrom(
-        this.http.get<{ apiUrl?: string }>('/assets/config.json'),
+        this.http.get<{ apiUrl?: string }>('/assets/config.json', {
+          params: { v: Date.now().toString() },
+        }),
       );
       if (cfg?.apiUrl) {
         this.apiUrl = cfg.apiUrl.replace(/\/+$/, '');
