@@ -59,7 +59,8 @@ export class ResetComponent implements OnInit {
             }
           },
           error: (err) => {
-            this.toast.error({ detail: 'ERROR', summary: 'Algo salió mal', duration: 3000 });
+            const msg = err?.error?.message || 'Algo salió mal';
+            this.toast.error({ detail: 'ERROR', summary: msg, duration: 4000 });
           }
         });
     } else {
