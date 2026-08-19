@@ -9,7 +9,17 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
   styleUrls: ['./layout.component.css'],
 })
 export class LayoutComponent {
+  sidebarOpen = false;
+
   constructor(private router: Router) {}
+
+  toggleSidebar(): void {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  cerrarSidebar(): void {
+    this.sidebarOpen = false;
+  }
 
   logout() {
     localStorage.removeItem('token');

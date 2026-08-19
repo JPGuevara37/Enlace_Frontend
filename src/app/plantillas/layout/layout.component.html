@@ -1,44 +1,44 @@
 <div class="layout">
-  <aside class="sidebar">
-    <a class="brand" routerLink="/home">
+  <aside class="sidebar" [class.open]="sidebarOpen">
+    <a class="brand" routerLink="/home" (click)="cerrarSidebar()">
       <img src="assets/enlace_imag.png" alt="Enlace" />
       <span class="brand-name">Enlace</span>
     </a>
 
     <nav class="nav">
-      <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <a class="nav-link" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="cerrarSidebar()">
         <i class="fa-solid fa-house"></i>
         <span>Inicio</span>
       </a>
-      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-chart-pie"></i>
         <span>Panel</span>
       </a>
 
       <div class="nav-group">Personas</div>
-      <a class="nav-link" routerLink="/encargados" routerLinkActive="active">
+      <a class="nav-link" routerLink="/encargados" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-user-group"></i>
         <span>Padres</span>
       </a>
-      <a class="nav-link" routerLink="/alumnos" routerLinkActive="active">
+      <a class="nav-link" routerLink="/alumnos" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-children"></i>
         <span>Alumnos</span>
       </a>
-      <a class="nav-link" routerLink="/profesores" routerLinkActive="active">
+      <a class="nav-link" routerLink="/profesores" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-chalkboard-user"></i>
         <span>Profesores</span>
       </a>
 
       <div class="nav-group">Utilidades</div>
-      <a class="nav-link" routerLink="/recursos" routerLinkActive="active">
+      <a class="nav-link" routerLink="/recursos" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-box-archive"></i>
         <span>Recursos</span>
       </a>
-      <a class="nav-link" routerLink="/material" routerLinkActive="active">
+      <a class="nav-link" routerLink="/material" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-folder-open"></i>
         <span>Material</span>
       </a>
-      <a class="nav-link" routerLink="/roles-mes" routerLinkActive="active">
+      <a class="nav-link" routerLink="/roles-mes" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-calendar-days"></i>
         <span>Roles del mes</span>
       </a>
@@ -52,8 +52,15 @@
     </div>
   </aside>
 
+  @if (sidebarOpen) {
+    <div class="backdrop" (click)="cerrarSidebar()"></div>
+  }
+
   <div class="main">
     <header class="topbar">
+      <button class="hamburger" (click)="toggleSidebar()" aria-label="Abrir menú">
+        <i class="fa-solid fa-bars"></i>
+      </button>
       <span class="topbar-title">Sistema Enlace</span>
     </header>
     <main class="content">
