@@ -56,6 +56,18 @@ export class ApiService {
   }
 
   getRole(): string {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const payload = token.split('.')[1];
+        const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
+        const decoded = JSON.parse(atob(padded));
+        return decoded.role || '';
+      } catch {
+        /* usa el valor guardado */
+      }
+    }
     return localStorage.getItem('role') || '';
   }
 

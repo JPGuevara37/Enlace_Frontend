@@ -1,60 +1,172 @@
-<div class="container">
-  <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-    <h3 class="mb-0">Lista de Padres</h3>
-    <div class="input-group" style="width: 240px;">
-      <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar" (keyup.enter)="filtrar()" />
-      <button class="btn btn-primary" (click)="filtrar()">
-        <i class="fas fa-search"></i>
-      </button>
-    </div>
+<div class="encargados">
+  <div class="page-head">
+    <h1>Padres</h1>
+    <p>Gestión de encargados de familia</p>
   </div>
 
-  <div>
-    <button type="button" class="btn btn-primary mb-2" (click)="nuevoEncargado()">
-      <i class="fas fa-chalkboard-teacher"></i> Agregar Encargado
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar por nombre..." />
+    </div>
+
+    <select class="select" [(ngModel)]="filtroProvincia" (change)="filtroCanton = ''">
+      <option value="">Provincia</option>
+      @for (p of provincias; track p.nombre) {
+        <option [value]="p.nombre">{{ p.nombre }}</option>
+      }
+    </select>
+
+    <select class="select" [(ngModel)]="filtroCanton">
+      <option value="">Cantón</option>
+      @for (c of cantonesFiltro; track c.nombre) {
+        <option [value]="c.nombre">{{ c.nombre }}</option>
+      }
+    </select>
+
+    <button class="btn-add" (click)="nuevoEncargado()">
+      <i class="fa-solid fa-plus"></i> Agregar
     </button>
+
+    @if (haySeleccionados) {
+      <button class="btn-bulk" (click)="eliminarSeleccionados()">
+        <i class="fa-solid fa-trash"></i> Eliminar ({{ seleccionados.size }})
+      </button>
+    }
   </div>
 
-  <div class="d-flex justify-content-end align-items-center mb-3">
-    <div class="ml-auto" id="navPages">
-      <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
-    </div>
-  </div>
-
-  <div class="table-responsive">
-    <table class="table">
-      <caption>Lista de Encargados</caption>
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">Direccion</th>
-          <th scope="col">E-mail</th>
-          <th scope="col">Teléfono</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (encargado of encargados | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track encargado.encargadoId) {
+  <div class="card-table">
+    <div class="table-responsive">
+      <table class="table">
+        <caption>Lista de encargados</caption>
+        <thead>
           <tr>
-            <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-            <td><input class="cell-input" [(ngModel)]="encargado.nombre" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
-            <td><input class="cell-input" [(ngModel)]="encargado.apellido" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
-            <td><input class="cell-input" [(ngModel)]="encargado.direccion" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
-            <td><input class="cell-input" [(ngModel)]="encargado.email" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
-            <td><input class="cell-input" [(ngModel)]="encargado.telefono" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
-            <td>
-              <button class="btn-delete" (click)="borrarEncargado(encargado)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-            </td>
+            <th class="col-check">
+              <input type="checkbox" [checked]="todosSeleccionados" (change)="toggleSeleccionarTodos()" />
+            </th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Provincia</th>
+            <th>Cantón</th>
+            <th>Distrito</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th></th>
           </tr>
-        }
-      </tbody>
-    </table>
-  </div>
-  <div class="d-flex justify-content-end align-items-center">
-    <div class="ml-auto" id="navPages">
+        </thead>
+        <tbody>
+          @for (e of encargadosFiltrados | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track e.encargadoId) {
+            <tr>
+              <td class="col-check">
+                <input type="checkbox" [checked]="seleccionados.has(e.encargadoId)" (change)="toggleSeleccion(e.encargadoId)" />
+              </td>
+              <td><a class="nombre-link" (click)="verDetalle(e)">{{ e.nombre }}</a></td>
+              <td>{{ e.apellido }}</td>
+              <td>{{ e.provincia }}</td>
+              <td>{{ e.canton }}</td>
+              <td>{{ e.distrito }}</td>
+              <td>{{ e.email }}</td>
+              <td>{{ e.telefono }}</td>
+              <td class="acciones">
+                <button class="btn-icon" (click)="editar(e)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon danger" (click)="borrarEncargado(e)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (!encargadosFiltrados.length) {
+      <p class="empty">No hay resultados</p>
+    }
+    <div class="pagination-bar">
       <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
     </div>
   </div>
 </div>
+
+@if (detalle) {
+  <div class="modal-backdrop" (click)="cerrarDetalle()">
+    <div class="card-modal" (click)="$event.stopPropagation()">
+      <div class="card-head">
+        <div class="avatar">{{ iniciales(detalle) }}</div>
+        <div class="card-titulo">
+          <h3>{{ detalle.nombre }} {{ detalle.apellido }}</h3>
+          <span>Encargado de familia</span>
+        </div>
+        <button class="close" (click)="cerrarDetalle()">&times;</button>
+      </div>
+      <div class="card-body">
+        <div class="info-row"><i class="fa-solid fa-envelope"></i><span>{{ detalle.email || '—' }}</span></div>
+        <div class="info-row"><i class="fa-solid fa-phone"></i><span>{{ detalle.telefono || '—' }}</span></div>
+        <div class="info-row"><i class="fa-solid fa-location-dot"></i><span>{{ direccionCompleta(detalle) }}</span></div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (editando) {
+  <div class="modal-backdrop" (click)="cerrarEdicion()">
+    <div class="card-modal wide" (click)="$event.stopPropagation()">
+      <div class="card-head">
+        <div class="card-titulo">
+          <h3>Editar encargado</h3>
+        </div>
+        <button class="close" (click)="cerrarEdicion()">&times;</button>
+      </div>
+      <div class="card-body form-grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="editando.nombre" />
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" [(ngModel)]="editando.apellido" />
+        </div>
+        <div class="field">
+          <label>Provincia</label>
+          <select [(ngModel)]="editProvincia" (change)="onProvinciaEdicion()">
+            <option value="">Seleccione</option>
+            @for (p of provincias; track p.nombre) {
+              <option [value]="p.nombre">{{ p.nombre }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Cantón</label>
+          <select [(ngModel)]="editCanton" (change)="onCantonEdicion()">
+            <option value="">Seleccione</option>
+            @for (c of cantonesEdicion; track c.nombre) {
+              <option [value]="c.nombre">{{ c.nombre }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Distrito</label>
+          <select [(ngModel)]="editDistrito">
+            <option value="">Seleccione</option>
+            @for (d of distritosEdicion; track d) {
+              <option [value]="d">{{ d }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Dirección exacta</label>
+          <input type="text" [(ngModel)]="editando.direccion" placeholder="Calle, casa, etc." />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" [(ngModel)]="editando.email" />
+        </div>
+        <div class="field">
+          <label>Teléfono</label>
+          <input type="text" [(ngModel)]="editando.telefono" />
+        </div>
+      </div>
+      <div class="card-foot">
+        <button class="btn-ghost" (click)="cerrarEdicion()">Cancelar</button>
+        <button class="btn-primary" (click)="guardarEdicion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,45 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IResponse } from '../../modelos/response.interfase';
-import { IEncargado } from '../../modelos/encargado.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
+import { PROVINCIAS } from '../../modelos/ubicaciones';
 
 @Component({
   selector: 'app-nuevo',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './nuevo.component.html',
-  styleUrls: ['./nuevo.component.css']
+  styleUrls: ['./nuevo.component.css'],
 })
-export class NuevoComponent implements OnInit {
+export class NuevoComponent {
+  provincias = PROVINCIAS;
 
   nuevoForm = new FormGroup({
     nombre: new FormControl(''),
     apellido: new FormControl(''),
+    provincia: new FormControl(''),
+    canton: new FormControl(''),
+    distrito: new FormControl(''),
     direccion: new FormControl(''),
     email: new FormControl(''),
     telefono: new FormControl(''),
-    token: new FormControl(''),
   });
 
-  constructor(private api: ApiService, private router: Router, private alertas: AlertasService) {}
+  constructor(
+    private api: ApiService,
+    private router: Router,
+    private alertas: AlertasService,
+  ) {}
 
-  ngOnInit(): void {
-    if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-      let token = localStorage.getItem('token');
-      if (token) {
-        this.nuevoForm.patchValue({ token: token });
-      }
-    } else {
-      console.warn('No se puede acceder a localStorage en este entorno.');
-    }
+  get cantones() {
+    const p = this.provincias.find(p => p.nombre === this.nuevoForm.value.provincia);
+    return p ? p.cantones : [];
+  }
+
+  get distritos() {
+    const c = this.cantones.find(c => c.nombre === this.nuevoForm.value.canton);
+    return c ? c.distritos : [];
+  }
+
+  onProvinciaChange(): void {
+    this.nuevoForm.patchValue({ canton: '', distrito: '' });
+  }
+
+  onCantonChange(): void {
+    this.nuevoForm.patchValue({ distrito: '' });
   }
 
   postForm(form: any) {
     this.api.postEncargado(form).subscribe(data => {
-      let respuesta: IResponse = data;
+      const respuesta: IResponse = data;
       if (respuesta.status == 'ok') {
         this.alertas.showSuccess('Nuevo encargado insertado', 'Hecho');
         this.router.navigate(['encargados']);

@@ -1,48 +1,65 @@
-
-<div class="container">
-    <div class="row justify-content-center">
-      <h1>Padres de familia</h1>
-    </div>
+<div class="nuevo">
+  <div class="page-head">
+    <h1>Nuevo encargado</h1>
+    <p>Completa los datos del padre o madre de familia</p>
   </div>
-  
-  <div class="container">
-      <form [formGroup]="nuevoForm" (ngSubmit)="postForm(nuevoForm.value)">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" placeholder="Nombre del encargado" formControlName="nombre">
+
+  <div class="card">
+    <form [formGroup]="nuevoForm" (ngSubmit)="postForm(nuevoForm.value)">
+      <div class="form-grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" formControlName="nombre" placeholder="Nombre del encargado" />
         </div>
-    
-        <div class="form-group">   
-          <label for="apellido">Apellido</label>
-          <input type="text" class="form-control" placeholder="Apellido del encargado" formControlName="apellido">
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" formControlName="apellido" placeholder="Apellido del encargado" />
         </div>
-    
-        <div class="form-group row">
-          <div class="col">
-            <label for="direccion">Dirección</label>
-            <input type="text" class="form-control" placeholder="Dirección del encargado" formControlName="direccion">
-          </div>
-    
-          <div class="col">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" placeholder="Email del encargado" formControlName="email">
-          </div>
-    
-          <div class="col">
-            <label for="telefono">Teléfono</label>
-            <input type="text" class="form-control" placeholder="Teléfono del encargado" formControlName="telefono">
-          </div>
+        <div class="field">
+          <label>Provincia</label>
+          <select formControlName="provincia" (change)="onProvinciaChange()">
+            <option value="">Seleccione</option>
+            @for (p of provincias; track p.nombre) {
+              <option [value]="p.nombre">{{ p.nombre }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Cantón</label>
+          <select formControlName="canton" (change)="onCantonChange()">
+            <option value="">Seleccione</option>
+            @for (c of cantones; track c.nombre) {
+              <option [value]="c.nombre">{{ c.nombre }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Distrito</label>
+          <select formControlName="distrito">
+            <option value="">Seleccione</option>
+            @for (d of distritos; track d) {
+              <option [value]="d">{{ d }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Dirección exacta</label>
+          <input type="text" formControlName="direccion" placeholder="Calle, casa, número, referencias" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" formControlName="email" placeholder="Email del encargado" />
+        </div>
+        <div class="field">
+          <label>Teléfono</label>
+          <input type="text" formControlName="telefono" placeholder="Teléfono del encargado" />
+        </div>
       </div>
-        <br><br>
-        <!-- Agrega otros campos según sea necesario -->
-    
-        <!-- Botón de envío -->
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-dark" (click)="salir()">Atras</button>
-      </form>
 
-    </div>
-    
-
-    
-
+      <div class="actions">
+        <button type="button" class="btn-ghost" (click)="salir()">Atrás</button>
+        <button type="submit" class="btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
