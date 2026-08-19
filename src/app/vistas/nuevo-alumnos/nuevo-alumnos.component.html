@@ -1,61 +1,48 @@
-
-<div class="container">
-    <div class="row justify-content-center">
-      <h1>Alumnos</h1>
-    </div>
+<div class="nuevo">
+  <div class="page-head">
+    <h1>Nuevo alumno</h1>
+    <p>Completa los datos del estudiante</p>
   </div>
-  
-  <div class="container">
-      <form [formGroup]="nuevoForm" (ngSubmit)="postForm(nuevoForm.value)">
-        <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" class="form-control" placeholder="Nombre del profe" formControlName="nombre">
-        </div>
-    
-        <div class="form-group">   
-          <label for="apellido">Apellido</label>
-          <input type="text" class="form-control" placeholder="Apellido del profe" formControlName="apellido">
-        </div>
-    
-        <div class="form-group row">
-            <div class="col">
-                <label for="fechaNacimiento">fechanacimiento</label>
-                <input type="date" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento">
-            </div>
-            
-          <div class="col">
-            <label for="encargadoId">Padre</label>
-            <select class="form-control" formControlName="encargadoId">
-              @for (encargado of encargados; track encargado.encargadoId) {
-                <option [value]="encargado.encargadoId">
-                  {{ encargado.nombre + ' ' + encargado.apellido }}
-                </option>
-              }
-            </select>
-          </div>
-          
-          <div class="col">
-            <label for="edadId">Rango de Edad</label>
-            <select class="form-control" formControlName="edadId">
-              @for (edad of edades; track edad.edadId) {
-                <option [value]="edad.edadId">{{ edad.rangoEdad }}</option>
-              }
-            </select>
-          </div>
 
+  <div class="card">
+    <form [formGroup]="nuevoForm" (ngSubmit)="postForm(nuevoForm.value)">
+      <div class="form-grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" formControlName="nombre" placeholder="Nombre del alumno" />
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" formControlName="apellido" placeholder="Apellido del alumno" />
+        </div>
+        <div class="field">
+          <label>Fecha de nacimiento</label>
+          <input type="date" formControlName="fechaNacimiento" />
+        </div>
+        <div class="field">
+          <label>Padre o madre</label>
+          <select formControlName="encargadoId">
+            <option value="">Seleccione</option>
+            @for (encargado of encargados; track encargado.encargadoId) {
+              <option [value]="encargado.encargadoId">{{ encargado.nombre }} {{ encargado.apellido }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Clase</label>
+          <select formControlName="edadId">
+            <option value="">Seleccione</option>
+            @for (edad of edades; track edad.edadId) {
+              <option [value]="edad.edadId">{{ edad.rangoEdad }}</option>
+            }
+          </select>
+        </div>
       </div>
-        <br><br>
-        <!-- Agrega otros campos según sea necesario -->
-    
-        <!-- Botón de envío -->
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <button type="button" class="btn btn-dark" (click)="salir()">Atras</button>
-      </form>
 
-    </div>
-    
-
-    
-
-
-
+      <div class="actions">
+        <button type="button" class="btn-ghost" (click)="salir()">Atrás</button>
+        <button type="submit" class="btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
