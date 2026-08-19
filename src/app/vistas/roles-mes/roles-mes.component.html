@@ -7,14 +7,14 @@
   <div class="toolbar">
     <select class="select" [(ngModel)]="mes" (change)="cambiarPeriodo()">
       @for (m of meses; track m; let i = $index) {
-        <option [value]="i + 1">{{ m }}</option>
+        <option [ngValue]="i + 1">{{ m }}</option>
       }
     </select>
     <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
     <span class="lbl">Domingo</span>
-    <select class="select" [(ngModel)]="dia">
+    <select class="select" [(ngModel)]="dia" (change)="cargarAsignaciones()">
       @for (d of domingos; track d) {
-        <option [value]="d">{{ formatearDomingo(d) }}</option>
+        <option [ngValue]="d">{{ formatearDomingo(d) }}</option>
       }
     </select>
 

@@ -159,7 +159,7 @@ export class RolesMesComponent implements OnInit {
   }
 
   getAsignacion(edadId: string): IRolesMes | undefined {
-    return this.asignaciones.find(a => a.edadId === edadId && a.dia === this.dia);
+    return this.asignaciones.find(a => a.edadId === edadId && Number(a.dia) === Number(this.dia));
   }
 
   getPersona(personaId: string): IListaProfesores | undefined {
