@@ -1,78 +1,73 @@
-<div class="outer">
-  <div class="container">
-    <div class="row">
-      <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
-        <div class="panel border bg-white">
-          <div class="panel-heading">
-            <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
-          </div>
-          <div class="panel-body p-3">
-            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-              <div class="form-group pt-3">
-                <div class="input-field" [class.error]="loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usuario_Cuenta')"> 
-                  <span class="fa fa-user p-2"></span>
-                  <input formControlName="Usuario_Cuenta" type="text" placeholder="Usuario">
-                </div>
-              </div>
-              @if (loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usuario_Cuenta')) {
-                <small class="text-danger">*Usuario requerido</small>
-              }
-
-              <div class="form-group pt-3">
-                <div class="input-field" [class.error]="loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')">
-                  <span class="fa fa-lock p-2"></span>
-                  <input formControlName="Password" [type]="type" placeholder="Contrasena">
-                  <span (click)="hideshowPass()" class="fa {{eyeIcon}}"></span>
-                </div>
-              </div>
-              @if (loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')) {
-                <small class="text-danger">*Contrasena requerida</small>
-              }
-
-              <div class="form-inline fr mt-4"> <a id="forgot" data-bs-toggle="modal" data-bs-target="#exampleModal" class="font-weight-bold">Olvidaste tu contraseña?</a>
-              </div>
-              <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block mt4 w-100">Login</button>
-              <div class="text-center pt-4 text-muted">No tienes cuenta?<a id="forget" routerLink="/signup">Registrar</a></div>
-            </form>
-          </div>
-          <div class="mx-3 my-2 py-2 bordert">
-            <div class="text-center py-3">
-              <a href="https://www.facebook.com" target="_blank" class="px-2"><img id="img" src="https://www.dpreview.com/files/p/articles/4698742202/facebook.jpeg" alt=""></a>
-                <a href="https://google.com" target="_blank" class="px-2"><img id="img" src="assets/google-logo-9824.png" alt=""></a>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-brand">
+      <img src="assets/enlace_imag.png" alt="Ministerio Infantil Enlace" />
     </div>
+
+    <h1 class="login-title">Iniciar sesión</h1>
+    <p class="login-subtitle">Ingresa tus credenciales para acceder a tu cuenta</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
+      <div class="field-group">
+        <div class="field" [class.field-error]="loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usuario_Cuenta')">
+          <span class="field-icon fa fa-user"></span>
+          <input formControlName="Usuario_Cuenta" type="text" placeholder="Usuario" autocomplete="username" />
+        </div>
+        @if (loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usuario_Cuenta')) {
+          <small class="field-msg">*Usuario requerido</small>
+        }
+      </div>
+
+      <div class="field-group">
+        <div class="field" [class.field-error]="loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')">
+          <span class="field-icon fa fa-lock"></span>
+          <input formControlName="Password" [type]="type" placeholder="Contraseña" autocomplete="current-password" />
+          <button type="button" class="field-toggle" (click)="hideshowPass()" aria-label="Mostrar u ocultar contraseña">
+            <span class="fa {{ eyeIcon }}"></span>
+          </button>
+        </div>
+        @if (loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')) {
+          <small class="field-msg">*Contraseña requerida</small>
+        }
+      </div>
+
+      <div class="login-options">
+        <a class="forgot-link" data-bs-toggle="modal" data-bs-target="#exampleModal">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" class="login-btn" [disabled]="loginForm.invalid">Iniciar sesión</button>
+    </form>
+
+    <p class="login-signup">¿No tienes cuenta? <a routerLink="/signup">Regístrate</a></p>
   </div>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <p class="modal-title" id="exampleModalLabel"> <span style="font-size: 25px;font-weight:700">Olvidaste tu contraseña?</span><br>
-                  <small>Por favor ingresar su correo registrado</small></p>
-
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-          </div>
-
-          <div class="modal-body">
-              <div class="form-group pt-3">
-                  <div class="input-field"> <span class="fa fa-mail-bulk p-2"></span> <input [(ngModel)]="resetPasswordEmail" (ngModelChange)="checkValidEmail($event)" type="text" placeholder="Tu correo"> </div>
-              </div>
-              @if (!resetPasswordEmail) {
-                <small class="text-danger">*Correo requerido*</small>
-              }
-              @if (!isValidEmail && resetPasswordEmail) {
-                <small class="text-danger">*No hay registro de tu correo</small>
-              }
-          </div>
-          <div class="modal-footer">
-              <button id="closeBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-              <button type="button" (click)="confirmToSend()" class="btn btn-primary">Enviar</button>
-          </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          ¿Olvidaste tu contraseña?
+          <small class="modal-subtitle">Por favor ingresa tu correo registrado</small>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <div class="modal-body">
+        <div class="field">
+          <span class="field-icon fa fa-envelope"></span>
+          <input [(ngModel)]="resetPasswordEmail" (ngModelChange)="checkValidEmail($event)" type="text" placeholder="Tu correo" />
+        </div>
+        @if (!resetPasswordEmail) {
+          <small class="text-danger">*Correo requerido</small>
+        }
+        @if (!isValidEmail && resetPasswordEmail) {
+          <small class="text-danger">*No hay registro de tu correo</small>
+        }
+      </div>
+      <div class="modal-footer">
+        <button id="closeBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" (click)="confirmToSend()" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
   </div>
 </div>

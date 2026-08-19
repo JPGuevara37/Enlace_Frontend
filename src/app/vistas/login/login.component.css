@@ -1,90 +1,193 @@
-.outer{
-  height: 100vh;
-  background-color: white;
-}
-
-.panel-heading{
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-#forget{
-  min-width: 100px;
-  margin-left: auto;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-.form-inlie label{
-  padding-left: 10px;
-  margin: 0;
-  cursor: pointer;
-}
-
-.btn{
-  margin-top: 20px;
-  border-radius: 15px;
-}
-
-.panel{
-  min-height: 380px;
-  box-shadow: 20px 20px 9px rgb(218, 218,218);
-  border-radius: 12px;
-  margin-top: 100px;
-}
-
-.input-field{
-  border-radius: 5px;
-  padding: 5px;
+.login-page {
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  color: #4343ff
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #16345f 0%, #4e73df 55%, #74a0f8 100%);
 }
 
-.input-field.error{
-  border: 1px solid red;
-  color: red;
-}
-
-input[type='text'],
-input[type='password']{
-  border: none;
-  outline: none;
-  box-shadow: none;
+.login-card {
   width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 22px;
+  padding: 2.5rem 2.25rem 2rem;
+  box-shadow: 0 24px 60px rgba(10, 25, 55, 0.35);
+  animation: login-appear 0.35s ease-out;
 }
 
-fa-eye-slash.btn{
+@keyframes login-appear {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-brand {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.login-brand img {
+  max-height: 78px;
+  width: auto;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #2b3a55;
+  margin-bottom: 0.25rem;
+}
+
+.login-subtitle {
+  text-align: center;
+  color: #8592a6;
+  font-size: 0.95rem;
+  margin-bottom: 1.75rem;
+}
+
+.field-group {
+  margin-bottom: 1rem;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #f4f6fb;
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 0.8rem 1rem;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field:focus-within {
+  background: #ffffff;
+  border-color: #4e73df;
+  box-shadow: 0 0 0 4px rgba(78, 115, 223, 0.12);
+}
+
+.field-icon {
+  color: #9aa5b8;
+  font-size: 0.95rem;
+}
+
+.field input {
+  flex: 1;
   border: none;
   outline: none;
+  background: transparent;
+  color: #2b3a55;
+  font-size: 0.95rem;
+}
+
+.field input::placeholder {
+  color: #aab3c3;
+}
+
+.field-toggle {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #9aa5b8;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.field-toggle:hover {
+  color: #4e73df;
+}
+
+.field-error {
+  border-color: #e74a3b;
+  background: #fff5f5;
+}
+
+.field-msg {
+  display: block;
+  color: #e74a3b;
+  font-size: 0.78rem;
+  margin-top: 0.35rem;
+  margin-left: 0.25rem;
+}
+
+.login-options {
+  text-align: right;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.forgot-link {
+  color: #4e73df;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.forgot-link:hover {
+  color: #224abe;
+  text-decoration: underline;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4e73df 0%, #3a5bc7 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+  box-shadow: 0 10px 22px rgba(78, 115, 223, 0.35);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(78, 115, 223, 0.42);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
   box-shadow: none;
 }
 
-#img{
-  width: 40px;
-  height: 40px;
-  object-fit: cover;
-  border-radius: 50%;
-  position: relative;
-
+.login-signup {
+  text-align: center;
+  margin: 1.5rem 0 0;
+  color: #8592a6;
+  font-size: 0.9rem;
 }
 
-.bordert{
-  border-top: 3px solid #aaa;
-  position: relative;
+.login-signup a {
+  color: #4e73df;
+  font-weight: 700;
 }
 
-.bordert:after {
-  content: "Ó conectate con";
-  position: absolute;
-  top: -13px;
-  left: 33%;
-  background-color: #fff;
-  padding: 0 8px;
+.login-signup a:hover {
+  color: #224abe;
+  text-decoration: underline;
+}
+
+.modal-subtitle {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 400;
+  color: #8592a6;
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 2rem 1.5rem 1.75rem;
+  }
 }
