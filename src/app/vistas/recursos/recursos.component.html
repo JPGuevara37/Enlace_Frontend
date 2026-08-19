@@ -42,13 +42,10 @@
         @for (recurso of recursos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track recurso.recursosId) {
           <tr>
             <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-            <td>{{ recurso.articulo }}</td>
-            <td>{{ recurso.numero_Locker }}</td>
-            <td>{{ recurso.cantidad }}</td>
-            <td>{{ recurso.descripcion }}</td>
-            <td>
-              <button class="btn btn-outline-secondary" (click)="editarRecursos(recurso.recursosId)"><i class="fas fa-edit"></i> Editar</button>
-            </td>
+            <td><input class="cell-input" [(ngModel)]="recurso.articulo" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
+            <td><input class="cell-input" type="number" [(ngModel)]="recurso.numero_Locker" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
+            <td><input class="cell-input" type="number" [(ngModel)]="recurso.cantidad" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
+            <td><input class="cell-input" [(ngModel)]="recurso.descripcion" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
           </tr>
         }
       </tbody>

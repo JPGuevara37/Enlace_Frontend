@@ -6,6 +6,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import * as XLSX from 'xlsx';
 import localeEs from '@angular/common/locales/es';
 import { ApiService } from '../../Servicios/api/api.service';
+import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaAlumnos } from '../../modelos/listaalumnos.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 import { IListaEdades } from '../../modelos/listaedades.interfase';
@@ -37,6 +38,7 @@ export class AlumnosComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private cdr: ChangeDetectorRef,
+    private alertas: AlertasService,
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +71,23 @@ export class AlumnosComponent implements OnInit {
 
   editarAlumnos(id: any) {
     this.router.navigate(['editar-alumnos', id]);
+  }
+
+  guardarAlumno(alumno: IListaAlumnos) {
+    this.api.putAlumnos(alumno).subscribe({
+      next: () => this.alertas.showSuccess('Datos guardados', 'Hecho'),
+      error: () => this.alertas.showError('No se pudo guardar', 'Error'),
+    });
+  }
+
+  formatFecha(fecha: string): string {
+    return fecha ? fecha.slice(0, 10) : '';
+  }
+
+  onFechaChange(alumno: IListaAlumnos, event: Event): void {
+    const input = event.target as HTMLInputElement;
+    alumno.fechaNacimiento = input.value;
+    this.guardarAlumno(alumno);
   }
 
   nuevoAlumnos() {

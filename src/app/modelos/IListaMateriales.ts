@@ -1,6 +1,8 @@
 export interface IListaMateriales{
     materialId:string;
     nombre:string;
-    fecha:Date | any;
-    link_descarga?:string;
+    descripcion?:string;
+    fecha:Date | string;
+    contentType?:string;
+    tamano?:number;
 }

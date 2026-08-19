@@ -1,0 +1,29 @@
+.cell-input,
+.cell-select {
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cell-input:hover,
+.cell-select:hover {
+  border-color: #d8deea;
+  background: #fafbff;
+}
+
+.cell-input:focus,
+.cell-select:focus {
+  border-color: #4e73df;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.12);
+}
+
+.cell-select {
+  cursor: pointer;
+}

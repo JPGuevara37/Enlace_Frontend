@@ -36,7 +36,7 @@
           <th scope="col">Apellido</th>
           <th scope="col">Fecha Nacimiento</th>
           <th scope="col">Teléfono</th>
-          <th scope="col">Padre</th>
+          <th scope="col">Padre o Madre</th>
           <th scope="col">Clase</th>
         </tr>
       </thead>
@@ -44,14 +44,23 @@
         @for (alumno of alumnos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track alumno.alumnoId) {
           <tr>
             <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-            <td>{{ alumno.nombre }}</td>
-            <td>{{ alumno.apellido }}</td>
-            <td>{{ formatDateEs(alumno.fechaNacimiento) }}</td>
-            <td>{{ getTelefonoEncargado(alumno.encargadoId) }}</td>
-            <td>{{ getNombreEncargado(alumno.encargadoId) }}</td>
-            <td>{{ getEdadClase(alumno.edadId) }}</td>
+            <td><input class="cell-input" [(ngModel)]="alumno.nombre" (blur)="guardarAlumno(alumno)" (keyup.enter)="guardarAlumno(alumno)" /></td>
+            <td><input class="cell-input" [(ngModel)]="alumno.apellido" (blur)="guardarAlumno(alumno)" (keyup.enter)="guardarAlumno(alumno)" /></td>
+            <td><input class="cell-input" type="date" [value]="formatFecha(alumno.fechaNacimiento)" (change)="onFechaChange(alumno, $event)" /></td>
+            <td><input class="cell-input" [(ngModel)]="alumno.telefono" (blur)="guardarAlumno(alumno)" (keyup.enter)="guardarAlumno(alumno)" /></td>
             <td>
-              <button class="btn btn-outline-secondary" (click)="editarAlumnos(alumno.alumnoId)"><i class="fas fa-edit"></i> Editar</button>
+              <select class="cell-select" [(ngModel)]="alumno.encargadoId" (change)="guardarAlumno(alumno)">
+                @for (e of encargados; track e.encargadoId) {
+                  <option [value]="e.encargadoId">{{ e.nombre }} {{ e.apellido }}</option>
+                }
+              </select>
+            </td>
+            <td>
+              <select class="cell-select" [(ngModel)]="alumno.edadId" (change)="guardarAlumno(alumno)">
+                @for (ed of edades; track ed.edadId) {
+                  <option [value]="ed.edadId">{{ ed.rangoEdad }}</option>
+                }
+              </select>
             </td>
           </tr>
         }

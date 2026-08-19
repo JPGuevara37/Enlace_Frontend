@@ -1,28 +1,49 @@
 #navPages ul.pagination {
-    margin: 0; /* Ajusta el margen según sea necesario */
+  margin: 0;
 }
 
 #navPages ul.pagination li.page-item {
-    margin: 0 2px; /* Espacio entre los elementos de la paginación */
+  margin: 0 2px;
 }
 
 #navPages ul.pagination li.page-item.active span {
-    background-color: #007BFF; /* Color de fondo del número de página activa */
-    border-color: #007BFF; /* Color del borde del número de página activa */
-    color: #fff; /* Color del texto del número de página activa */
+  background-color: #007BFF;
+  border-color: #007BFF;
+  color: #fff;
 }
 
 .btn-custom {
-    background-color: #84B026;
-    color: #ffffff; /* Cambiar el color del texto según sea necesario */
-    margin-left: 20px;
-  }
-  
-  
-  .app-container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex: 1;
-    overflow: auto;
-  }
+  background-color: #84B026;
+  color: #ffffff;
+  margin-left: 20px;
+}
+
+.cell-input,
+.cell-select {
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cell-input:hover,
+.cell-select:hover {
+  border-color: #d8deea;
+  background: #fafbff;
+}
+
+.cell-input:focus,
+.cell-select:focus {
+  border-color: #4e73df;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.12);
+}
+
+.cell-select {
+  cursor: pointer;
+}

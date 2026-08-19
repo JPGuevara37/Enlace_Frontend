@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ApiService } from '../../Servicios/api/api.service';
+import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
 
 @Component({
@@ -21,7 +22,7 @@ export class ProfesoresComponent implements OnInit {
   maxSize: number = 50;
   totalItems: number = 0;
 
-  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
     this.api.getAllProfesores(1).subscribe(data => {
@@ -48,6 +49,13 @@ export class ProfesoresComponent implements OnInit {
 
   editarProfesores(id: any) {
     this.router.navigate(['editar-profesores', id]);
+  }
+
+  guardarProfesor(profesor: IListaProfesores) {
+    this.api.putProfesores(profesor).subscribe({
+      next: () => this.alertas.showSuccess('Datos guardados', 'Hecho'),
+      error: () => this.alertas.showError('No se pudo guardar', 'Error'),
+    });
   }
 
   nuevoProfesores() {

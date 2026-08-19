@@ -37,13 +37,10 @@
         @for (profesor of profesores | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track profesor.profesorId) {
           <tr>
             <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-            <td>{{ profesor.nombre }}</td>
-            <td>{{ profesor.apellido }}</td>
-            <td>{{ profesor.email }}</td>
-            <td>{{ profesor.telefono }}</td>
-            <td>
-              <button class="btn btn-outline-secondary" (click)="editarProfesores(profesor.profesorId)"><i class="fas fa-edit"></i> Editar</button>
-            </td>
+            <td><input class="cell-input" [(ngModel)]="profesor.nombre" (blur)="guardarProfesor(profesor)" (keyup.enter)="guardarProfesor(profesor)" /></td>
+            <td><input class="cell-input" [(ngModel)]="profesor.apellido" (blur)="guardarProfesor(profesor)" (keyup.enter)="guardarProfesor(profesor)" /></td>
+            <td><input class="cell-input" [(ngModel)]="profesor.email" (blur)="guardarProfesor(profesor)" (keyup.enter)="guardarProfesor(profesor)" /></td>
+            <td><input class="cell-input" [(ngModel)]="profesor.telefono" (blur)="guardarProfesor(profesor)" (keyup.enter)="guardarProfesor(profesor)" /></td>
           </tr>
         }
       </tbody>

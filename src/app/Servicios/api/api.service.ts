@@ -44,6 +44,19 @@ export class ApiService {
   //servicio de guards Token
   storeToken(tokenValue: string){
     localStorage.setItem('token', tokenValue)
+    try {
+      const payload = tokenValue.split('.')[1];
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const padded = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
+      const decoded = JSON.parse(atob(padded));
+      localStorage.setItem('role', decoded.role || '');
+    } catch {
+      localStorage.setItem('role', '');
+    }
+  }
+
+  getRole(): string {
+    return localStorage.getItem('role') || '';
   }
 
   getToken(){
@@ -248,26 +261,25 @@ export class ApiService {
       return this.http.get<IMaterial>(direccion);
     }
 
+    subirMaterial(formData: FormData):Observable<IResponse>{
+      let direccion = this.url + "/api/material";
+      return this.http.post<IResponse>(direccion, formData);
+    }
+
+    descargarMaterial(id: string):Observable<Blob>{
+      let direccion = this.url + "/api/material/" + id + "/descargar";
+      return this.http.get(direccion, { responseType: 'blob' });
+    }
+
     putMateriales(form: any): Observable<IResponse> {
       let direccion = this.url + "/api/material/" + form.materialId;
       return this.http.put<IResponse>(direccion, form);
     }
 
-    deleteMateriales(form: IMaterial):Observable<IResponse>{
-      let direccion = this.url + "/api/material/" + form.materialId;
-      let Options = {
-        headers : new HttpHeaders({
-          'Content-Type': 'application/json'
-        }),
-        body: form
-      }
+    deleteMateriales(id: string):Observable<IResponse>{
+      let direccion = this.url + "/api/material/" + id;
       return this.http.delete<IResponse>(direccion);
     }
-
-    postMaterial(form:IMaterial):Observable<IResponse>{
-      let direccion = this.url + "/api/material";
-      return this.http.post<IResponse>(direccion, form);
-    }  
 
 
     postEdad(form:IRecursos):Observable<IResponse>{

@@ -1,6 +1,8 @@
 export interface IMaterial {
     materialId?:any;
     nombre?:any;
+    descripcion?:any;
     fecha?:any;
-    link_descarga?:any;
+    contentType?:any;
+    tamano?:any;
 }

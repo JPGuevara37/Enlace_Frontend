@@ -38,14 +38,11 @@
         @for (encargado of encargados | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track encargado.encargadoId) {
           <tr>
             <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-            <td>{{ encargado.nombre }}</td>
-            <td>{{ encargado.apellido }}</td>
-            <td>{{ encargado.direccion }}</td>
-            <td>{{ encargado.email }}</td>
-            <td>{{ encargado.telefono }}</td>
-            <td>
-              <button class="btn btn-outline-secondary" (click)="editarEncargados(encargado.encargadoId)"><i class="fas fa-edit"></i> Editar</button>
-            </td>
+            <td><input class="cell-input" [(ngModel)]="encargado.nombre" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
+            <td><input class="cell-input" [(ngModel)]="encargado.apellido" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
+            <td><input class="cell-input" [(ngModel)]="encargado.direccion" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
+            <td><input class="cell-input" [(ngModel)]="encargado.email" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
+            <td><input class="cell-input" [(ngModel)]="encargado.telefono" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
           </tr>
         }
       </tbody>

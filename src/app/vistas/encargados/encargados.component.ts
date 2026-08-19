@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ApiService } from '../../Servicios/api/api.service';
+import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 
 @Component({
@@ -21,7 +22,7 @@ export class EncargadosComponent implements OnInit {
   maxSize: number = 50;
   totalItems: number = 0;
 
-  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
     this.api.getAllEncargados(1).subscribe(data => {
@@ -30,8 +31,11 @@ export class EncargadosComponent implements OnInit {
     });
   }
 
-  editarEncargados(id: any) {
-    this.router.navigate(['editar', id]);
+  guardarEncargado(encargado: IListaEcargados) {
+    this.api.putEncargado(encargado).subscribe({
+      next: () => this.alertas.showSuccess('Datos guardados', 'Hecho'),
+      error: () => this.alertas.showError('No se pudo guardar', 'Error'),
+    });
   }
 
   nuevoEncargado() {

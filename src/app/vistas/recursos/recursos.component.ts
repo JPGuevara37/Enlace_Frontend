@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxPaginationModule } from 'ngx-pagination';
 import * as XLSX from 'xlsx';
 import { ApiService } from '../../Servicios/api/api.service';
+import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
 
 @Component({
@@ -26,7 +27,7 @@ export class RecursosComponent implements OnInit {
   totalPages: number | undefined;
   hidePageNumbers: boolean = true;
 
-  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef) {}
+  constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
     this.api.getAllRecursos(1).subscribe(data => {
@@ -37,6 +38,13 @@ export class RecursosComponent implements OnInit {
 
   editarRecursos(id: any) {
     this.router.navigate(['editar-recursos', id]);
+  }
+
+  guardarRecurso(recurso: IListaRecursos) {
+    this.api.putRecursos(recurso).subscribe({
+      next: () => this.alertas.showSuccess('Datos guardados', 'Hecho'),
+      error: () => this.alertas.showError('No se pudo guardar', 'Error'),
+    });
   }
 
   nuevoRecurso() {

@@ -1,29 +1,35 @@
-
 .btn-custom {
   background-color: #84B026;
-  color: #ffffff; /* Cambiar el color del texto según sea necesario */
+  color: #ffffff;
   margin-left: 20px;
 }
 
-.app-container {
-  display: flexbox;
-  flex-direction: column;
-  height: 100%;
-  flex: 1;
-  overflow: auto;
-
+.cell-input,
+.cell-select {
+  border: 1px solid transparent;
+  background: transparent;
+  width: 100%;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 
-.menu-container {
-  width: 250px;
+.cell-input:hover,
+.cell-select:hover {
+  border-color: #d8deea;
+  background: #fafbff;
 }
 
-.content-container {
-  flex: 1;
-  padding: 10px; /* Ajusta según sea necesario */
+.cell-input:focus,
+.cell-select:focus {
+  border-color: #4e73df;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.12);
 }
 
-.search-bar {
-  margin-top: 20px; /* Ajusta según sea necesario */
-  margin-bottom: 20px;
+.cell-select {
+  cursor: pointer;
 }
