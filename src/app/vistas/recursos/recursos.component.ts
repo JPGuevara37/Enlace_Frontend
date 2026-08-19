@@ -30,9 +30,27 @@ export class RecursosComponent implements OnInit {
   constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
+    this.cargarRecursos();
+  }
+
+  cargarRecursos(): void {
     this.api.getAllRecursos(1).subscribe(data => {
       this.recursos = data;
+      this.totalItems = data.length;
       this.cdr.detectChanges();
+    });
+  }
+
+  borrarRecurso(recurso: IListaRecursos): void {
+    if (!window.confirm('¿Eliminar este recurso?')) {
+      return;
+    }
+    this.api.deleteRecurso(recurso as any).subscribe({
+      next: () => {
+        this.alertas.showSuccess('Recurso eliminado', 'Hecho');
+        this.cargarRecursos();
+      },
+      error: () => this.alertas.showError('No se pudo eliminar', 'Error'),
     });
   }
 

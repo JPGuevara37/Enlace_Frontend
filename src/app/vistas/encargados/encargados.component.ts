@@ -25,9 +25,27 @@ export class EncargadosComponent implements OnInit {
   constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
+    this.cargarEncargados();
+  }
+
+  cargarEncargados(): void {
     this.api.getAllEncargados(1).subscribe(data => {
       this.encargados = data;
+      this.totalItems = data.length;
       this.cdr.detectChanges();
+    });
+  }
+
+  borrarEncargado(encargado: IListaEcargados): void {
+    if (!window.confirm('¿Eliminar este encargado?')) {
+      return;
+    }
+    this.api.deleteEncargado(encargado as any).subscribe({
+      next: () => {
+        this.alertas.showSuccess('Encargado eliminado', 'Hecho');
+        this.cargarEncargados();
+      },
+      error: () => this.alertas.showError('No se pudo eliminar', 'Error'),
     });
   }
 

@@ -35,9 +35,11 @@
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
           <th scope="col">Fecha Nacimiento</th>
+          <th scope="col">Edad</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Padre o Madre</th>
           <th scope="col">Clase</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -47,6 +49,7 @@
             <td><input class="cell-input" [(ngModel)]="alumno.nombre" (blur)="guardarAlumno(alumno)" (keyup.enter)="guardarAlumno(alumno)" /></td>
             <td><input class="cell-input" [(ngModel)]="alumno.apellido" (blur)="guardarAlumno(alumno)" (keyup.enter)="guardarAlumno(alumno)" /></td>
             <td><input class="cell-input" type="date" [value]="formatFecha(alumno.fechaNacimiento)" (change)="onFechaChange(alumno, $event)" /></td>
+            <td class="edad">{{ calcularEdad(alumno.fechaNacimiento) }}</td>
             <td><input class="cell-input" [(ngModel)]="alumno.telefono" (blur)="guardarAlumno(alumno)" (keyup.enter)="guardarAlumno(alumno)" /></td>
             <td>
               <select class="cell-select" [(ngModel)]="alumno.encargadoId" (change)="guardarAlumno(alumno)">
@@ -61,6 +64,9 @@
                   <option [value]="ed.edadId">{{ ed.rangoEdad }}</option>
                 }
               </select>
+            </td>
+            <td>
+              <button class="btn-delete" (click)="borrarAlumno(alumno)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
             </td>
           </tr>
         }

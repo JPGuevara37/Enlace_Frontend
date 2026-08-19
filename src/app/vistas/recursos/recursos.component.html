@@ -36,6 +36,7 @@
           <th scope="col">Locker</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Descripcion</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -46,6 +47,9 @@
             <td><input class="cell-input" type="number" [(ngModel)]="recurso.numero_Locker" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
             <td><input class="cell-input" type="number" [(ngModel)]="recurso.cantidad" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
             <td><input class="cell-input" [(ngModel)]="recurso.descripcion" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
+            <td>
+              <button class="btn-delete" (click)="borrarRecurso(recurso)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            </td>
           </tr>
         }
       </tbody>

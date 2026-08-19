@@ -33,3 +33,23 @@
 .cell-select {
   cursor: pointer;
 }
+
+.btn-delete {
+  border: 1px solid #f1c4c0;
+  background: #fff5f5;
+  color: #e74a3b;
+  border-radius: 8px;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-delete:hover {
+  background: #ffe3e1;
+}
+
+.edad {
+  font-weight: 600;
+  color: #4e73df;
+  white-space: nowrap;
+}

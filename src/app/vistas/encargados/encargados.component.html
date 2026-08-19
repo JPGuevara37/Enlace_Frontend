@@ -32,6 +32,7 @@
           <th scope="col">Direccion</th>
           <th scope="col">E-mail</th>
           <th scope="col">Teléfono</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +44,9 @@
             <td><input class="cell-input" [(ngModel)]="encargado.direccion" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
             <td><input class="cell-input" [(ngModel)]="encargado.email" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
             <td><input class="cell-input" [(ngModel)]="encargado.telefono" (blur)="guardarEncargado(encargado)" (keyup.enter)="guardarEncargado(encargado)" /></td>
+            <td>
+              <button class="btn-delete" (click)="borrarEncargado(encargado)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            </td>
           </tr>
         }
       </tbody>

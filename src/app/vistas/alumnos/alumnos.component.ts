@@ -42,11 +42,7 @@ export class AlumnosComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.api.getAllAlumnos(1).subscribe(data => {
-      this.alumnos = data;
-      this.totalItems = this.alumnos.length;
-      this.cdr.detectChanges();
-    });
+    this.cargarAlumnos();
 
     this.api.getAllEncargados(1).subscribe(data => {
       this.encargados = data;
@@ -57,6 +53,27 @@ export class AlumnosComponent implements OnInit {
     this.api.getAllEdades(1).subscribe(data => {
       this.edades = data;
       this.cdr.detectChanges();
+    });
+  }
+
+  cargarAlumnos(): void {
+    this.api.getAllAlumnos(1).subscribe(data => {
+      this.alumnos = data;
+      this.totalItems = this.alumnos.length;
+      this.cdr.detectChanges();
+    });
+  }
+
+  borrarAlumno(alumno: IListaAlumnos): void {
+    if (!window.confirm('¿Eliminar este alumno?')) {
+      return;
+    }
+    this.api.deleteAlumnos(alumno as any).subscribe({
+      next: () => {
+        this.alertas.showSuccess('Alumno eliminado', 'Hecho');
+        this.cargarAlumnos();
+      },
+      error: () => this.alertas.showError('No se pudo eliminar', 'Error'),
     });
   }
 
@@ -82,6 +99,23 @@ export class AlumnosComponent implements OnInit {
 
   formatFecha(fecha: string): string {
     return fecha ? fecha.slice(0, 10) : '';
+  }
+
+  calcularEdad(fechaNacimiento: string): string {
+    if (!fechaNacimiento) {
+      return '';
+    }
+    const nacimiento = new Date(fechaNacimiento);
+    if (isNaN(nacimiento.getTime())) {
+      return '';
+    }
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+      edad--;
+    }
+    return edad >= 0 ? `${edad} años` : '';
   }
 
   onFechaChange(alumno: IListaAlumnos, event: Event): void {

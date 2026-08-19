@@ -25,9 +25,27 @@ export class ProfesoresComponent implements OnInit {
   constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
+    this.cargarProfesores();
+  }
+
+  cargarProfesores(): void {
     this.api.getAllProfesores(1).subscribe(data => {
       this.profesores = data;
+      this.totalItems = data.length;
       this.cdr.detectChanges();
+    });
+  }
+
+  borrarProfesor(profesor: IListaProfesores): void {
+    if (!window.confirm('¿Eliminar este profesor?')) {
+      return;
+    }
+    this.api.deleteProfesor(profesor as any).subscribe({
+      next: () => {
+        this.alertas.showSuccess('Profesor eliminado', 'Hecho');
+        this.cargarProfesores();
+      },
+      error: () => this.alertas.showError('No se pudo eliminar', 'Error'),
     });
   }
 
