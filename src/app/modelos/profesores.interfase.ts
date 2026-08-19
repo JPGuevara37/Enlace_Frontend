@@ -1,8 +1,7 @@
 export interface IProfesores {
-    profesorId?:any;
-    nombre?:any;
-    apellido?:any;
-    email?:any;
-    telefono?:any;
-    token?:any;
+    profesorId?: string;
+    nombre?: string;
+    apellido?: string;
+    email?: string;
+    telefono?: string;
 }

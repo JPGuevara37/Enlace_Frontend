@@ -1,28 +1,23 @@
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { ApiService } from '../Servicios/api/api.service';
-import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 
-@Injectable({
-  providedIn: 'root'
-})
-  export class AuthGuard implements CanActivate {
-  constructor(private api: ApiService, private router: Router, private toast: NgToastService){
+export const authGuard: CanActivateFn = () => {
+  const api = inject(ApiService);
+  const router = inject(Router);
+  const toast = inject(NgToastService);
 
+  if (api.isloggedIn()) {
+    return true;
   }
-  
-  canActivate():boolean{
-    if(this.api.isloggedIn()){
-      return true
-    }if (this.api.isTokenExpired()) {
-      // El token ha expirado, redirige a la página de inicio de sesión
-      this.router.navigate(['login']);
-      return false;
-    }else{
-      this.toast.error({detail:"ERROR", summary:"por favor acceda primero"});
-      this.router.navigate(['login'])
-      return false;
-    }
-  }
-}
 
+  if (api.isTokenExpired()) {
+    router.navigate(['login']);
+    return false;
+  }
+
+  toast.error({ detail: 'ERROR', summary: 'por favor acceda primero' });
+  router.navigate(['login']);
+  return false;
+};

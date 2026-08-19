@@ -1,4 +1,4 @@
 export interface IEdades {
-    edadId?:any;
-    rangoEdad?:any;
+    edadId?: string;
+    rangoEdad?: string;
 }

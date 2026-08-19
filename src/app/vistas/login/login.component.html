@@ -14,7 +14,9 @@
                   <input formControlName="Usuario_Cuenta" type="text" placeholder="Usuario">
                 </div>
               </div>
-              <small *ngIf="loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usario_Cuenta')" class="text-danger">*Usuario requerido</small>
+              @if (loginForm.controls['Usuario_Cuenta'].dirty && loginForm.hasError('required','Usario_Cuenta')) {
+                <small class="text-danger">*Usuario requerido</small>
+              }
 
               <div class="form-group pt-3">
                 <div class="input-field" [class.error]="loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')">
@@ -23,7 +25,9 @@
                   <span (click)="hideshowPass()" class="fa {{eyeIcon}}"></span>
                 </div>
               </div>
-              <small *ngIf="loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')" class="text-danger">*Contrasena requerida</small>
+              @if (loginForm.controls['Password'].dirty && loginForm.hasError('required','Password')) {
+                <small class="text-danger">*Contrasena requerida</small>
+              }
 
               <div class="form-inline fr mt-4"> <a id="forgot" data-bs-toggle="modal" data-bs-target="#exampleModal" class="font-weight-bold">Olvidaste tu contraseña?</a>
               </div>
@@ -58,8 +62,12 @@
               <div class="form-group pt-3">
                   <div class="input-field"> <span class="fa fa-mail-bulk p-2"></span> <input [(ngModel)]="resetPasswordEmail" (ngModelChange)="checkValidEmail($event)" type="text" placeholder="Tu correo"> </div>
               </div>
-              <small *ngIf="!resetPasswordEmail" class="text-danger">*Correo requerido*</small>
-              <small *ngIf="!isValidEmail && resetPasswordEmail" class="text-danger">*No hay registro de tu correo</small>
+              @if (!resetPasswordEmail) {
+                <small class="text-danger">*Correo requerido*</small>
+              }
+              @if (!isValidEmail && resetPasswordEmail) {
+                <small class="text-danger">*No hay registro de tu correo</small>
+              }
           </div>
           <div class="modal-footer">
               <button id="closeBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

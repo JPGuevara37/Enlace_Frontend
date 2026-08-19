@@ -14,16 +14,22 @@
                       <input formControlName="password" type="password" placeholder="Nueva contraseña">
                     </div>
                   </div>
-                  
-                  <small *ngIf="resetPasswordForm.controls['password'].dirty && resetPasswordForm.hasError('required', 'password')" class="text-danger">*Nueva contraseña requerida.</small>
+
+                  @if (resetPasswordForm.controls['password'].dirty && resetPasswordForm.hasError('required', 'password')) {
+                    <small class="text-danger">*Nueva contraseña requerida.</small>
+                  }
                 <div class="form-group pt-3">
                     <div class="input-field" [class.error]="resetPasswordForm.controls['confirmPassword'].dirty && resetPasswordForm.hasError('required','confirmPassword')">
                       <span class="fa fa-user p-2"></span>
                       <input formControlName="confirmPassword" type="password" placeholder="Confirmar contraseña">
                     </div>
                   </div>
-                  <small *ngIf="resetPasswordForm.controls['confirmPassword'].dirty && resetPasswordForm.hasError('required','confirmPassword')" class="text-danger">*Confirmar contraseña requerido.</small>
-                  <small *ngIf="resetPasswordForm.hasError('ConfirmPasswordValidator','confirmPassword')" class="text-danger">*Ambas contraseñas tienen que ser iguales.</small>
+                  @if (resetPasswordForm.controls['confirmPassword'].dirty && resetPasswordForm.hasError('required','confirmPassword')) {
+                    <small class="text-danger">*Confirmar contraseña requerido.</small>
+                  }
+                  @if (resetPasswordForm.hasError('confirmPasswordValidator','confirmPassword')) {
+                    <small class="text-danger">*Ambas contraseñas tienen que ser iguales.</small>
+                  }
                 <button type="submit" (click)="reset()" class="btn btn-primary btn-block mt4 w-100">Restablecer</button>
 
               </form>

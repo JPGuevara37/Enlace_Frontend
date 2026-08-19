@@ -1,42 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../Servicios/api/api.service';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ApiService } from '../../Servicios/api/api.service';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
+import { HeaderComponent } from '../../plantillas/header/header.component';
+import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
+import { MenuComponent } from '../../plantillas/menu/menu.component';
+import { FooterComponent } from '../../plantillas/footer/footer.component';
 
 @Component({
   selector: 'app-encargados',
+  standalone: true,
+  imports: [FormsModule, NgxPaginationModule, HeaderComponent, LoguotComponent, MenuComponent, FooterComponent],
   templateUrl: './encargados.component.html',
   styleUrls: ['./encargados.component.css']
 })
 export class EncargadosComponent implements OnInit {
 
-  encargados:IListaEcargados[] = [];
+  encargados: IListaEcargados[] = [];
   filtroNombre: string = '';
   itemsPerPage: number = 10;
   currentPage: number = 1;
-  maxSize: number = 50; // Puedes ajustar el tamaño máximo de la paginación aquí
+  maxSize: number = 50;
   totalItems: number = 0;
 
-  constructor(private api:ApiService, private router:Router){}
+  constructor(private api: ApiService, private router: Router) {}
 
-  ngOnInit(): void{
-    this.api.getAllEncargados(1).subscribe(data =>{
+  ngOnInit(): void {
+    this.api.getAllEncargados(1).subscribe(data => {
       this.encargados = data;
-      
-    })
+    });
   }
 
-  editarEncargados(id: any){
-    this.router.navigate(['editar', id])
+  editarEncargados(id: any) {
+    this.router.navigate(['editar', id]);
   }
 
-  nuevoEncargado(){
+  nuevoEncargado() {
     this.router.navigate(['nuevo']);
   }
 
   filtrar() {
-    // Filtra la lista de encargados por el nombre o apellido ingresado en el filtro
     this.api.getAllEncargados(1).subscribe(data => {
       const filtroSinTildes = this.quitarTildes(this.filtroNombre.toLowerCase());
 
@@ -45,26 +50,22 @@ export class EncargadosComponent implements OnInit {
         this.quitarTildes(encargado.apellido.toLowerCase()).includes(filtroSinTildes)
       );
     });
-}
+  }
 
-quitarTildes(texto: string): string {
-    return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
+  quitarTildes(texto: string): string {
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
 
-pageChanged(event: any): void {
-  this.currentPage = event;
-  this.encargados;
-}
+  pageChanged(event: any): void {
+    this.currentPage = event;
+  }
 
-salir(){
-  this.router.navigate(['dashboard']);
-}
+  salir() {
+    this.router.navigate(['dashboard']);
+  }
 
-logout() {
-  localStorage.removeItem('token');
-  this.router.navigate(['login']);
-}
-
-
-
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['login']);
+  }
 }

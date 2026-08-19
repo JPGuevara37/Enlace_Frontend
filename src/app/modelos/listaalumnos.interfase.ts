@@ -1,12 +1,11 @@
-export interface IListaAlumnos{
-    alumnoId:string;
-    nombre:string;
-    apellido:string;
-    fechaNacimiento: Date | any;
-    direccion:string;
-    email:string;
-    telefono:string;
-    token?:any;
-    encargadoId?:any;
-    edadId?:any;
+export interface IListaAlumnos {
+    alumnoId: string;
+    nombre: string;
+    apellido: string;
+    fechaNacimiento: string;
+    direccion: string;
+    email: string;
+    telefono: string;
+    encargadoId: string;
+    edadId: string;
 }

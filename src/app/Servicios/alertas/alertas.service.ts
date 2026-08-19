@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Injectable, inject } from '@angular/core';
+import { NgToastService } from 'ng-angular-popup';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertasService {
 
-  constructor( private toast:ToastrService) { }
+  private toast = inject(NgToastService);
 
-  showSuccess(texto: string | undefined,titulo: string | undefined){
-    this.toast.success(texto,titulo)
+  showSuccess(texto: string | undefined, titulo: string | undefined) {
+    this.toast.success({ detail: titulo ?? '', summary: texto ?? '', duration: 5000 });
   }
 
-  showError(texto: string | undefined,titulo: string | undefined){
-    this.toast.error(texto,titulo)
+  showError(texto: string | undefined, titulo: string | undefined) {
+    this.toast.error({ detail: titulo ?? '', summary: texto ?? '', duration: 5000 });
   }
 }

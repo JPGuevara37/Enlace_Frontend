@@ -4,8 +4,7 @@ import { IResponse } from '../../modelos/response.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 import { IEncargado } from '../../modelos/encargado.interfase';
 import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { format } from 'path';
+import { Observable } from 'rxjs';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
 import { IProfesores } from '../../modelos/profesores.interfase';
 import { IAlumnos } from '../../modelos/alumnos.interfase';
@@ -18,18 +17,20 @@ import { isPlatformBrowser } from '@angular/common';
 import { ResetPassword } from '../../modelos/resetPassword.interfase';
 import { IMaterial } from '../../modelos/material.interfase';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
+import { RuntimeConfigService } from '../../config/runtime-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
 
-  private url:string = "https://api-enlace.azurewebsites.net";
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private config: RuntimeConfigService,
+  ) { }
 
-  //http://localhost:5066
-  //https://api-enlace.azurewebsites.net
-
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+  private get url(): string { return this.config.apiUrl; }
   //servicio de login.
   login(loginObj:any){
     let direccion = this.url + "/api/autenticar/authenticate";
@@ -285,6 +286,4 @@ export class ApiService {
     }
 
  }
-
-export { IListaEdades };
 

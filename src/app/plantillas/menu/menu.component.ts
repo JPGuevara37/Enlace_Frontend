@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ElementRef, Renderer2 } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent {
   isMenuOpen: boolean = false;
-  
-  constructor(private router: Router, private elementRef: ElementRef, private renderer:Renderer2) {}
-  
+
+  constructor(private router: Router, private elementRef: ElementRef, private renderer: Renderer2) {}
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
 
@@ -37,31 +39,26 @@ export class MenuComponent {
   }
 
   encargadosPage() {
-    this.router.navigate(['/encargados']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/encargados']);
   }
 
-  
-
   alumnosPage() {
-    this.router.navigate(['/alumnos']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/alumnos']);
   }
 
   profesoresPage() {
-    this.router.navigate(['/profesores']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/profesores']);
   }
 
   recursosPage() {
-    this.router.navigate(['/recursos']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/recursos']);
   }
 
   materialPage() {
-    this.router.navigate(['/material']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/material']);
   }
 
-  salir(){
+  salir() {
     this.router.navigate(['dashboard']);
   }
-
-
-
 }

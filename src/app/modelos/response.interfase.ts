@@ -1,5 +1,4 @@
-export interface IResponse{
-    status:any;
-    result?:{ token: any, error_msj:string };
-    
+export interface IResponse {
+    status: string;
+    result?: any;
 }

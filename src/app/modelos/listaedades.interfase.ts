@@ -1,4 +1,4 @@
-export interface IListaEdades{
-    edadId:string;
-    rangoEdad:string;
+export interface IListaEdades {
+    edadId: string;
+    rangoEdad: string;
 }

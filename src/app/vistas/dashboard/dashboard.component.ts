@@ -1,56 +1,45 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Chart } from 'chart.js';
-import { ApiService } from '../../Servicios/api/api.service';
-import { ChartDataset, ChartOptions, ChartType } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
-
+import { LoguotComponent } from '../../plantillas/loguot/loguot.component';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
+  imports: [LoguotComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
-  
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    // Puedes realizar alguna lógica de inicialización si es necesario
-  }
-
   confirmLogout() {
-    let isConfirmed = window.confirm('¿Estás seguro de que deseas cerrar sesión?')
+    let isConfirmed = window.confirm('¿Estás seguro de que deseas cerrar sesión?');
 
     if (isConfirmed) {
-      // Realizar la lógica de cierre de sesión aquí
       localStorage.removeItem('token');
       this.router.navigate(['login']);
     }
   }
-  // Método para navegar a la ruta 'encargados'
+
   encargadosPage() {
-    this.router.navigate(['/encargados']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/encargados']);
   }
 
   alumnosPage() {
-    this.router.navigate(['/alumnos']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/alumnos']);
   }
 
   profesoresPage() {
-    this.router.navigate(['/profesores']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/profesores']);
   }
 
   recursosPage() {
-    this.router.navigate(['/recursos']); // Asegúrate de usar el prefijo '/'
+    this.router.navigate(['/recursos']);
   }
 
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['login']);
   }
-
-
-  
 }

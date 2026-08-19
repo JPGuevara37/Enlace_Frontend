@@ -32,7 +32,7 @@
     <div class="d-flex justify-content-end align-items-center mb-3">
         <!-- Mover el elemento a la derecha con ml-auto -->
         <div class="ml-auto" id="navPages">
-          <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
+          <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
         </div>
       </div>
   
@@ -51,26 +51,27 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let alumno of alumnos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; let i = index">
-                <th scope="row">{{ (currentPage - 1) * itemsPerPage + i + 1}}</th>
-                <td>{{ alumno.nombre}}</td>
-                <td>{{ alumno.apellido}}</td>
+          @for (alumno of alumnos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track alumno.alumnoId) {
+            <tr>
+                <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
+                <td>{{ alumno.nombre }}</td>
+                <td>{{ alumno.apellido }}</td>
                 <td>{{ formatDateEs(alumno.fechaNacimiento) }}</td>
-                <td>{{ getTelefonoEncargado(alumno.encargadoId)}}</td>
+                <td>{{ getTelefonoEncargado(alumno.encargadoId) }}</td>
                 <td>{{ getNombreEncargado(alumno.encargadoId) }}</td>
                 <td>{{ getEdadClase(alumno.edadId) }}</td>
                 <td>
                     <button class="btn btn-outline-secondary" (click)="editarAlumnos(alumno.alumnoId)"><i class="fas fa-edit"></i> Editar</button>
-                      
                 </td>
             </tr>
+          }
         </tbody>
     </table>
   </div>
     <div class="d-flex justify-content-end align-items-center">
       <!-- Mover el elemento a la derecha con ml-auto -->
       <div class="ml-auto" id="navPages">
-        <pagination-controls (pageChange)="pageChanged($event)" [(page)]="currentPage" [pageSize]="itemsPerPage" [maxSize]="maxSize" [totalItems]="totalItems"></pagination-controls>
+        <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
       </div>
     </div>
 </div>

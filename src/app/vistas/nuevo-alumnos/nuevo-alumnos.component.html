@@ -26,16 +26,20 @@
           <div class="col">
             <label for="encargadoId">Padre</label>
             <select class="form-control" formControlName="encargadoId">
-              <option *ngFor="let encargado of encargados" [value]="encargado.encargadoId">
-                {{ encargado.nombre + ' ' + encargado.apellido }}
-              </option>
+              @for (encargado of encargados; track encargado.encargadoId) {
+                <option [value]="encargado.encargadoId">
+                  {{ encargado.nombre + ' ' + encargado.apellido }}
+                </option>
+              }
             </select>
           </div>
           
           <div class="col">
             <label for="edadId">Rango de Edad</label>
             <select class="form-control" formControlName="edadId">
-              <option *ngFor="let edad of edades" [value]="edad.edadId">{{ edad.rangoEdad }}</option>
+              @for (edad of edades; track edad.edadId) {
+                <option [value]="edad.edadId">{{ edad.rangoEdad }}</option>
+              }
             </select>
           </div>
 

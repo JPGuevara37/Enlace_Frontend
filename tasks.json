@@ -1,0 +1,60 @@
+{
+  "tareas": [
+    {
+      "id": "T-01",
+      "titulo": "Autenticacion",
+      "descripcion": "Login, registro y reset de contrasena (login/signup/reset) contra /api/autenticar y /api/ResetEmail.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-02",
+      "titulo": "Dashboard y navegacion",
+      "descripcion": "Layout (header, footer, menu, loguot) y dashboard con accesos a modulos.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-03",
+      "titulo": "CRUD Encargados",
+      "descripcion": "Listado, alta y edicion de encargados contra /api/encargados.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-04",
+      "titulo": "CRUD Alumnos",
+      "descripcion": "Listado, alta, edicion y export a Excel contra /api/alumnos.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-05",
+      "titulo": "CRUD Profesores",
+      "descripcion": "Listado, alta y edicion de profesores contra /api/profesores.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-06",
+      "titulo": "CRUD Recursos",
+      "descripcion": "Listado, alta, edicion y export a Excel contra /api/recursos.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-07",
+      "titulo": "Migracion a Angular 22 standalone",
+      "descripcion": "Convertir de Angular 18 (NgModule) a Angular 22 (standalone + control flow nuevo) y alinear modelos con la API.",
+      "status": "done",
+      "requiere_sdd": false
+    },
+    {
+      "id": "T-08",
+      "titulo": "Pruebas unitarias frontend",
+      "descripcion": "Restaurar specs (jasmine/karma) para guard, servicios y componentes clave.",
+      "status": "pending",
+      "requiere_sdd": true
+    }
+  ]
+}

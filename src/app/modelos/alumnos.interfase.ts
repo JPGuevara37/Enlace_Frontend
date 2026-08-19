@@ -1,12 +1,11 @@
 export interface IAlumnos {
-    alumnoId?:any;
-    nombre?:any;
-    apellido?:any;
-    fechaNacimiento?: Date | any;
-    direccion?:any;
-    email?:any;
-    telefono?:any;
-    token?:any;
-    encargadoId?:any;
-    edadId?:any;
+    alumnoId?: string;
+    nombre?: string;
+    apellido?: string;
+    fechaNacimiento?: string;
+    direccion?: string;
+    email?: string;
+    telefono?: string;
+    encargadoId?: string;
+    edadId?: string;
 }
