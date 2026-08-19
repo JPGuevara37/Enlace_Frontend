@@ -79,7 +79,11 @@
       <div class="card-body">
         <div class="info-row"><i class="fa-solid fa-envelope"></i><span>{{ detalle.email || '—' }}</span></div>
         <div class="info-row"><i class="fa-solid fa-phone"></i><span>{{ detalle.telefono || '—' }}</span></div>
-        <div class="info-row"><i class="fa-solid fa-location-dot"></i><span>{{ direccionCompleta(detalle) }}</span></div>
+        <div class="section-title">Ubicación</div>
+        <div class="info-row"><i class="fa-solid fa-map"></i><span>Provincia: {{ detalle.provincia || '—' }}</span></div>
+        <div class="info-row"><i class="fa-solid fa-city"></i><span>Cantón: {{ detalle.canton || '—' }}</span></div>
+        <div class="info-row"><i class="fa-solid fa-map-pin"></i><span>Distrito: {{ detalle.distrito || '—' }}</span></div>
+        <div class="info-row"><i class="fa-solid fa-house"></i><span>{{ detalle.direccion || '—' }}</span></div>
       </div>
     </div>
   </div>

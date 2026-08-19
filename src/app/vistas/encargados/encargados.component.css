@@ -333,6 +333,15 @@
   text-align: center;
 }
 
+.section-title {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9aa5b8;
+  margin: 0.75rem 0 0.25rem;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
