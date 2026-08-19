@@ -42,6 +42,14 @@
         <i class="fa-solid fa-calendar-days"></i>
         <span>Roles del mes</span>
       </a>
+
+      @if (esAdmin) {
+        <div class="nav-group">Configuración</div>
+        <a class="nav-link" routerLink="/configuracion" routerLinkActive="active" (click)="cerrarSidebar()">
+          <i class="fa-solid fa-gear"></i>
+          <span>Configuración</span>
+        </a>
+      }
     </nav>
 
     <div class="sidebar-footer">

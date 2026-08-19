@@ -55,6 +55,13 @@
       "descripcion": "Restaurar specs (jasmine/karma) para guard, servicios y componentes clave.",
       "status": "pending",
       "requiere_sdd": true
+    },
+    {
+      "id": "T-09",
+      "titulo": "Modulo de configuracion - gestion de usuarios",
+      "descripcion": "Vista configuracion con listado y CRUD de usuarios (roles, contrasena, activo/inactivo); guard admin, ruta y menu visibles solo para el rol administrador.",
+      "status": "done",
+      "requiere_sdd": false
     }
   ]
 }

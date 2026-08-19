@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ApiService } from '../../Servicios/api/api.service';
 
 @Component({
   selector: 'app-layout',
@@ -11,7 +12,11 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 export class LayoutComponent {
   sidebarOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private api: ApiService) {}
+
+  get esAdmin(): boolean {
+    return this.api.isAdmin();
+  }
 
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;

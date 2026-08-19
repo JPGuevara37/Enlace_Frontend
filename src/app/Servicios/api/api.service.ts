@@ -18,6 +18,7 @@ import { ResetPassword } from '../../modelos/resetPassword.interfase';
 import { IMaterial } from '../../modelos/material.interfase';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
 import { IRolesMes } from '../../modelos/rolesmes.interfase';
+import { IUsuarios, IUsuarioGuardar } from '../../modelos/usuarios.interfase';
 import { RuntimeConfigService } from '../../config/runtime-config.service';
 
 @Injectable({
@@ -79,6 +80,16 @@ export class ApiService {
   logout(){
     localStorage.removeItem('token');
     localStorage.removeItem('tokenExpiration');
+    localStorage.removeItem('role');
+    localStorage.removeItem('cuenta');
+  }
+
+  getCuenta(): string {
+    return localStorage.getItem('cuenta') || '';
+  }
+
+  isAdmin(): boolean {
+    return this.getRole() === 'administrador';
   }
 
   isloggedIn(): boolean {
@@ -329,6 +340,32 @@ export class ApiService {
 
     borrarRolMes(id: string):Observable<IResponse>{
       return this.http.delete<IResponse>(`${this.url}/api/RolesMes/${id}`);
+    }
+
+    // Usuarios (solo administrador)
+    getAllUsuarios():Observable<IUsuarios[]>{
+      let direccion = this.url + "/api/usuarios";
+      return this.http.get<IUsuarios[]>(direccion);
+    }
+
+    getUsuario(id: string):Observable<IUsuarios>{
+      let direccion = this.url + "/api/usuarios/" + id;
+      return this.http.get<IUsuarios>(direccion);
+    }
+
+    postUsuario(form:IUsuarioGuardar):Observable<IResponse>{
+      let direccion = this.url + "/api/usuarios";
+      return this.http.post<IResponse>(direccion, form);
+    }
+
+    putUsuario(id: string, form:IUsuarioGuardar):Observable<IResponse>{
+      let direccion = this.url + "/api/usuarios/" + id;
+      return this.http.put<IResponse>(direccion, form);
+    }
+
+    deleteUsuario(id: string):Observable<IResponse>{
+      let direccion = this.url + "/api/usuarios/" + id;
+      return this.http.delete<IResponse>(direccion);
     }
 
  }

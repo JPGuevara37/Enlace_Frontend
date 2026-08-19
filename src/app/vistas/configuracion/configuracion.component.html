@@ -1,0 +1,132 @@
+<div class="configuracion">
+  <div class="page-head">
+    <h1>Configuración</h1>
+    <p>Gestión de usuarios, roles y accesos al sistema</p>
+  </div>
+
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" [(ngModel)]="filtro" placeholder="Buscar por nombre o usuario..." />
+    </div>
+
+    <button class="btn-add" (click)="abrirNuevo()">
+      <i class="fa-solid fa-user-plus"></i> Nuevo usuario
+    </button>
+  </div>
+
+  <div class="card-table">
+    <div class="table-responsive">
+      <table class="table">
+        <caption>Lista de usuarios del sistema</caption>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Cuenta</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th class="acciones">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of usuariosFiltrados; track u.usuarioId) {
+            <tr>
+              <td>
+                <div class="usuario-cell">
+                  <div class="avatar-mini">{{ iniciales(u) }}</div>
+                  <span>{{ u.nombre }} {{ u.apellido }}</span>
+                  @if (esYo(u)) {
+                    <span class="badge-tu">tú</span>
+                  }
+                </div>
+              </td>
+              <td>{{ u.usuario_Cuenta }}</td>
+              <td>{{ u.email || '—' }}</td>
+              <td>
+                <span class="badge-rol" [class.admin]="u.role === 'administrador'" [class.lidere]="u.role === 'lidere'">
+                  {{ etiquetaRole(u.role) }}
+                </span>
+              </td>
+              <td>
+                <div class="estado-cell">
+                  <label class="switch">
+                    <input type="checkbox" [checked]="u.activo" [disabled]="esYo(u)" (change)="toggleActivo(u)" />
+                    <span class="slider"></span>
+                  </label>
+                  <span class="estado-texto" [class.off]="!u.activo">{{ u.activo ? 'Activo' : 'Inactivo' }}</span>
+                </div>
+              </td>
+              <td class="acciones">
+                <button class="btn-icon" (click)="abrirEditar(u)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                <button class="btn-icon danger" [disabled]="esYo(u)" (click)="borrar(u)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (!usuariosFiltrados.length) {
+      <p class="empty">No hay resultados</p>
+    }
+  </div>
+</div>
+
+@if (mostrarModal) {
+  <div class="modal-backdrop" (click)="cerrarModal()">
+    <div class="card-modal wide" (click)="$event.stopPropagation()">
+      <div class="card-head">
+        <div class="card-titulo">
+          <h3>{{ modoEdicion ? 'Editar usuario' : 'Nuevo usuario' }}</h3>
+          <span>{{ modoEdicion ? 'Actualiza los datos y el acceso' : 'Crea una cuenta para el sistema' }}</span>
+        </div>
+        <button class="close" (click)="cerrarModal()">&times;</button>
+      </div>
+      <div class="card-body form-grid">
+        <div class="field">
+          <label>Nombre</label>
+          <input type="text" [(ngModel)]="formulario.nombre" />
+        </div>
+        <div class="field">
+          <label>Apellido</label>
+          <input type="text" [(ngModel)]="formulario.apellido" />
+        </div>
+        <div class="field">
+          <label>Usuario (cuenta)</label>
+          <input type="text" [(ngModel)]="formulario.usuario_Cuenta" />
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" [(ngModel)]="formulario.email" />
+        </div>
+        <div class="field">
+          <label>Rol</label>
+          <select [(ngModel)]="formulario.role">
+            @for (r of roles; track r) {
+              <option [value]="r">{{ etiquetaRole(r) }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>{{ modoEdicion ? 'Nueva contraseña (opcional)' : 'Contraseña' }}</label>
+          <input type="password" [(ngModel)]="formulario.password" autocomplete="new-password" />
+          @if (modoEdicion) {
+            <small class="hint">Deja en blanco para conservar la actual</small>
+          }
+        </div>
+        <div class="field">
+          <label>Estado</label>
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="formulario.activo" />
+            <span class="slider"></span>
+          </label>
+          <small class="hint">{{ formulario.activo ? 'Activo: puede iniciar sesión' : 'Inactivo: no puede iniciar sesión' }}</small>
+        </div>
+      </div>
+      <div class="card-foot">
+        <button class="btn-ghost" (click)="cerrarModal()">Cancelar</button>
+        <button class="btn-primary" (click)="guardar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+}

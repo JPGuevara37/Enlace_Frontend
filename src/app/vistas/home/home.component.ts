@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ApiService } from '../../Servicios/api/api.service';
 
 interface HomeModule {
   ruta: string;
@@ -24,4 +25,16 @@ export class HomeComponent {
     { ruta: '/recursos', icono: 'fa-box-archive', titulo: 'Recursos', descripcion: 'Inventario de materiales y recursos', color: '#e74a3b' },
     { ruta: '/material', icono: 'fa-folder-open', titulo: 'Material', descripcion: 'Documentos y material de apoyo', color: '#36b9cc' },
   ];
+
+  constructor(private api: ApiService) {
+    if (this.api.isAdmin()) {
+      this.modulos.push({
+        ruta: '/configuracion',
+        icono: 'fa-gear',
+        titulo: 'Configuración',
+        descripcion: 'Gestión de usuarios y roles',
+        color: '#5a6b8c',
+      });
+    }
+  }
 }

@@ -21,8 +21,10 @@ import { EditarRecursosComponent } from './vistas/editar-recursos/editar-recurso
 import { MaterialComponent } from './vistas/material/material.component';
 import { RolesMesComponent } from './vistas/roles-mes/roles-mes.component';
 import { ResetComponent } from './vistas/reset/reset.component';
+import { ConfiguracionComponent } from './vistas/configuracion/configuracion.component';
 
 import { authGuard } from './guards/auth.guard';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -51,6 +53,7 @@ export const routes: Routes = [
       { path: 'nuevo-recursos', component: NuevoRecursosComponent },
       { path: 'material', component: MaterialComponent },
       { path: 'roles-mes', component: RolesMesComponent },
+      { path: 'configuracion', component: ConfiguracionComponent, canActivate: [adminGuard] },
     ],
   },
   { path: '**', redirectTo: 'login' },
