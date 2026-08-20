@@ -246,6 +246,28 @@
   cursor: not-allowed;
 }
 
+.btn-enviar {
+  border: none;
+  background: #eef4ff;
+  color: #3a5bc7;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  margin-left: 0.3rem;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-enviar:hover {
+  background: #dfe9fd;
+}
+
+.btn-enviar:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .empty {
   text-align: center;
   color: #8592a6;

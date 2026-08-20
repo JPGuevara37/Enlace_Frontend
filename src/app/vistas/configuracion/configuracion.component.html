@@ -60,6 +60,9 @@
               <td class="acciones">
                 <button class="btn-icon" (click)="abrirEditar(u)" title="Editar"><i class="fa-solid fa-pen"></i></button>
                 <button class="btn-icon danger" [disabled]="esYo(u)" (click)="borrar(u)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                <button class="btn-enviar" [disabled]="!u.email" (click)="enviarReset(u)" title="Enviar correo para cambiar la contraseña">
+                  <i class="fa-solid fa-envelope"></i> Enviar cambio de contraseña
+                </button>
               </td>
             </tr>
           }

@@ -164,6 +164,17 @@ export class ConfiguracionComponent implements OnInit {
     });
   }
 
+  enviarReset(u: IUsuarios): void {
+    if (!u.email?.trim()) {
+      this.alertas.showError('Este usuario no tiene correo registrado', 'Error');
+      return;
+    }
+    this.api.sendResetPasswordLink(u.email.trim()).subscribe({
+      next: () => this.alertas.showSuccess(`Correo de cambio de contraseña enviado a ${u.email}`, 'Hecho'),
+      error: () => this.alertas.showError('No se pudo enviar el correo', 'Error'),
+    });
+  }
+
   etiquetaRole(role?: string): string {
     switch (role) {
       case 'administrador':

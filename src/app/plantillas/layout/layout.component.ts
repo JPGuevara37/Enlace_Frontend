@@ -17,6 +17,7 @@ import { IPerfilGuardar } from '../../modelos/perfil.interfase';
 export class LayoutComponent implements OnDestroy {
   sidebarOpen = false;
   enConfiguracion = false;
+  menuAbierto = false;
 
   subItems = [
     { ruta: '/configuracion/usuarios', icono: 'fa-users', titulo: 'Usuarios' },
@@ -65,12 +66,29 @@ export class LayoutComponent implements OnDestroy {
     return this.api.getAvatar();
   }
 
+  get cuentaActual(): string {
+    return this.api.getCuenta();
+  }
+
   toggleSidebar(): void {
     this.sidebarOpen = !this.sidebarOpen;
   }
 
   cerrarSidebar(): void {
     this.sidebarOpen = false;
+  }
+
+  toggleMenu(): void {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  cerrarMenu(): void {
+    this.menuAbierto = false;
+  }
+
+  irAPerfil(): void {
+    this.cerrarMenu();
+    this.abrirPerfil();
   }
 
   abrirPerfil(): void {

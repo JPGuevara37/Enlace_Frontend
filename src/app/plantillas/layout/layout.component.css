@@ -40,8 +40,12 @@
   letter-spacing: 0.2px;
 }
 
-.topbar-user {
+.topbar-user-wrap {
+  position: relative;
   margin-left: auto;
+}
+
+.topbar-user {
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -86,6 +90,79 @@
 .user-caret {
   font-size: 0.75rem;
   color: #c6d2ea;
+  transition: transform 0.15s ease;
+}
+
+.user-caret.rotado {
+  transform: rotate(180deg);
+}
+
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+}
+
+.user-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(10, 25, 55, 0.18);
+  z-index: 510;
+  min-width: 230px;
+  padding: 0.4rem;
+  overflow: hidden;
+  animation: aparecer 0.15s ease-out;
+}
+
+.user-menu-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.7rem 0.8rem 0.8rem;
+  border-bottom: 1px solid #eef1f7;
+  margin-bottom: 0.3rem;
+}
+
+.user-menu-nombre {
+  font-weight: 700;
+  color: #2b3a55;
+  font-size: 0.9rem;
+}
+
+.user-menu-cuenta {
+  font-size: 0.78rem;
+  color: #8592a6;
+}
+
+.user-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #2b3a55;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.user-menu-item:hover {
+  background: #f2f5fb;
+}
+
+.user-menu-item.salir {
+  color: #e74a3b;
+}
+
+.user-menu-item.salir:hover {
+  background: #fdecea;
 }
 
 /* Barra lateral principal */
