@@ -53,7 +53,10 @@ export class LoginComponent implements OnInit {
           this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 1000 });
           this.router.navigate(['home']);
         },
-        error: () => {}
+        error: (err) => {
+          const mensaje = err?.error?.message || 'Usuario o contraseña incorrectos';
+          this.toast.error({ detail: 'Acceso denegado', summary: mensaje, duration: 3000 });
+        }
       });
     } else {
       this.validateAllFormFileds(this.loginForm);
