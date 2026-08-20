@@ -4,9 +4,14 @@
       <i class="fa-solid fa-bars"></i>
     </button>
     <span class="topbar-title">Sistema Enlace</span>
-    <div class="topbar-user">
-      <span class="user-initials">{{ iniciales }}</span>
+    <div class="topbar-user" (click)="abrirPerfil()" role="button" tabindex="0" title="Mi perfil">
+      @if (avatarMostrado) {
+        <img class="user-avatar" [src]="avatarMostrado" alt="Avatar" />
+      } @else {
+        <span class="user-initials">{{ iniciales }}</span>
+      }
       <span class="user-name">{{ nombreCompleto }}</span>
+      <i class="fa-solid fa-chevron-down user-caret"></i>
     </div>
   </header>
 
@@ -90,4 +95,86 @@
   <main class="content" [class.with-sub]="enConfiguracion">
     <router-outlet></router-outlet>
   </main>
+
+  @if (mostrarPerfil) {
+    <div class="modal-backdrop" (click)="cerrarPerfil()">
+      <div class="card-modal perfil-card" (click)="$event.stopPropagation()">
+        <div class="card-head">
+          <div class="card-titulo">
+            <h3>Mi perfil</h3>
+            <span>Configuración privada de tu usuario</span>
+          </div>
+          <button class="close" (click)="cerrarPerfil()">&times;</button>
+        </div>
+
+        <div class="card-body">
+          <div class="perfil-avatar">
+            @if (perfilForm.avatar) {
+              <img class="perfil-avatar-img" [src]="perfilForm.avatar" alt="Avatar" />
+            } @else {
+              <span class="perfil-avatar-iniciales">{{ iniciales }}</span>
+            }
+            <button class="btn-avatar" (click)="avatarInput.click()" title="Cambiar foto">
+              <i class="fa-solid fa-camera"></i>
+            </button>
+            @if (perfilForm.avatar) {
+              <button class="btn-avatar quitar" (click)="quitarAvatar()" title="Quitar foto">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            }
+            <input #avatarInput type="file" accept="image/*" hidden (change)="onAvatarSeleccionado($event)" />
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Nombre</label>
+              <input type="text" [(ngModel)]="perfilForm.nombre" />
+            </div>
+            <div class="field">
+              <label>Apellido</label>
+              <input type="text" [(ngModel)]="perfilForm.apellido" />
+            </div>
+            <div class="field">
+              <label>Usuario (cuenta)</label>
+              <input type="text" [(ngModel)]="perfilForm.usuario_Cuenta" />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="text" [(ngModel)]="perfilForm.email" />
+            </div>
+          </div>
+
+          <div class="perfil-acciones">
+            <button class="btn-primary" (click)="guardarPerfil()">
+              <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+            </button>
+          </div>
+
+          <div class="seccion-separador"></div>
+          <h4 class="seccion-titulo">Cambiar contraseña</h4>
+
+          <div class="form-grid">
+            <div class="field">
+              <label>Contraseña actual</label>
+              <input type="password" [(ngModel)]="passwordActual" autocomplete="current-password" />
+            </div>
+            <div class="field">
+              <label>Nueva contraseña</label>
+              <input type="password" [(ngModel)]="passwordNueva" autocomplete="new-password" />
+            </div>
+            <div class="field">
+              <label>Confirmar nueva</label>
+              <input type="password" [(ngModel)]="passwordConfirmar" autocomplete="new-password" />
+            </div>
+          </div>
+
+          <div class="perfil-acciones">
+            <button class="btn-primary" (click)="cambiarPassword()">
+              <i class="fa-solid fa-key"></i> Cambiar contraseña
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </div>

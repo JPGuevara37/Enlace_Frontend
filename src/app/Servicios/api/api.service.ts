@@ -19,6 +19,7 @@ import { IMaterial } from '../../modelos/material.interfase';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
 import { IRolesMes } from '../../modelos/rolesmes.interfase';
 import { IUsuarios, IUsuarioGuardar } from '../../modelos/usuarios.interfase';
+import { IPerfil, IPerfilGuardar, ICambiarPassword } from '../../modelos/perfil.interfase';
 import { RuntimeConfigService } from '../../config/runtime-config.service';
 
 @Injectable({
@@ -84,6 +85,7 @@ export class ApiService {
     localStorage.removeItem('cuenta');
     localStorage.removeItem('nombre');
     localStorage.removeItem('apellido');
+    localStorage.removeItem('avatar');
   }
 
   getCuenta(): string {
@@ -96,6 +98,10 @@ export class ApiService {
 
   getApellido(): string {
     return localStorage.getItem('apellido') || '';
+  }
+
+  getAvatar(): string {
+    return localStorage.getItem('avatar') || '';
   }
 
   getNombreCompleto(): string {
@@ -380,6 +386,19 @@ export class ApiService {
     deleteUsuario(id: string):Observable<IResponse>{
       let direccion = this.url + "/api/usuarios/" + id;
       return this.http.delete<IResponse>(direccion);
+    }
+
+    // Perfil del usuario logueado
+    getPerfil():Observable<IPerfil>{
+      return this.http.get<IPerfil>(this.url + "/api/perfil");
+    }
+
+    putPerfil(form:IPerfilGuardar):Observable<IResponse>{
+      return this.http.put<IResponse>(this.url + "/api/perfil", form);
+    }
+
+    cambiarPassword(form:ICambiarPassword):Observable<IResponse>{
+      return this.http.put<IResponse>(this.url + "/api/perfil/password", form);
     }
 
  }

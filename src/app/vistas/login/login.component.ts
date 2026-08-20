@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
           window.localStorage.setItem('cuenta', this.loginForm.value.Usuario_Cuenta || '');
           window.localStorage.setItem('nombre', res.nombre || '');
           window.localStorage.setItem('apellido', res.apellido || '');
+          window.localStorage.setItem('avatar', res.avatar || '');
           this.loginForm.reset();
           this.toast.success({ detail: 'Acceso permitido', summary: res.message ?? 'Login exitoso', duration: 1000 });
           this.router.navigate(['home']);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../Servicios/api/api.service';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
@@ -26,6 +26,7 @@ export class ConfiguracionComponent implements OnInit {
   constructor(
     private api: ApiService,
     private alertas: AlertasService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -46,7 +47,10 @@ export class ConfiguracionComponent implements OnInit {
 
   cargarUsuarios(): void {
     this.api.getAllUsuarios().subscribe({
-      next: (data) => (this.usuarios = data),
+      next: (data) => {
+        this.usuarios = data;
+        this.cdr.detectChanges();
+      },
       error: () => this.alertas.showError('No se pudieron cargar los usuarios', 'Error'),
     });
   }
