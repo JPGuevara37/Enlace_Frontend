@@ -3,7 +3,23 @@ import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
 
-const CATEGORIAS = ['Clases Enlace', 'Material de apoyo', 'Talleres'];
+interface Tarjeta {
+  nombre: string;
+  icono: string;
+  color: string;
+  descripcion: string;
+  cantidad: number;
+}
+
+const CLASES: Omit<Tarjeta, 'cantidad'>[] = [
+  { nombre: 'Legado', icono: 'fa-solid fa-people-roof', color: '#4e73df', descripcion: 'Material de la clase Legado' },
+  { nombre: 'Aspirantes', icono: 'fa-solid fa-child-reaching', color: '#1cc88a', descripcion: 'Material de la clase Aspirantes' },
+  { nombre: 'Retoñitos', icono: 'fa-solid fa-sprout', color: '#f6c23e', descripcion: 'Material de la clase Retoñitos' },
+  { nombre: 'Pampanitos', icono: 'fa-solid fa-seedling', color: '#e74a3b', descripcion: 'Material de la clase Pampanitos' },
+  { nombre: 'Semillitas', icono: 'fa-solid fa-leaf', color: '#36b9cc', descripcion: 'Material de la clase Semillitas' },
+];
+
+const COLORES_OTROS = ['#6f42c1', '#fd7e14', '#0e9aa7', '#d63384'];
 
 const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
@@ -15,11 +31,10 @@ const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', '
   styleUrls: ['./material.component.css'],
 })
 export class MaterialComponent implements OnInit {
-  categorias = CATEGORIAS;
   meses = MESES;
 
   materiales: IListaMateriales[] = [];
-  categoriaSeleccionada: string | null = null;
+  tarjetaSeleccionada: Tarjeta | null = null;
   puedeSubir = false;
   cargando = true;
 
@@ -61,12 +76,50 @@ export class MaterialComponent implements OnInit {
     });
   }
 
-  get materialesCategoria(): IListaMateriales[] {
-    return this.materiales.filter(m => (m.categoria || '') === this.categoriaSeleccionada);
+  get tarjetas(): Tarjeta[] {
+    const porCategoria = new Map<string, IListaMateriales[]>();
+    this.materiales.forEach(m => {
+      const c = (m.categoria || '').trim() || 'Sin categoría';
+      if (!porCategoria.has(c)) {
+        porCategoria.set(c, []);
+      }
+      porCategoria.get(c)!.push(m);
+    });
+
+    const tarjetas: Tarjeta[] = CLASES.map(clase => ({
+      ...clase,
+      cantidad: porCategoria.get(clase.nombre)?.length ?? 0,
+    }));
+
+    Array.from(porCategoria.keys())
+      .filter(c => !CLASES.some(cl => cl.nombre === c))
+      .sort()
+      .forEach((c, i) => {
+        tarjetas.push({
+          nombre: c,
+          icono: 'fa-solid fa-folder',
+          color: COLORES_OTROS[i % COLORES_OTROS.length],
+          descripcion: 'Materiales variados',
+          cantidad: porCategoria.get(c)!.length,
+        });
+      });
+
+    return tarjetas;
   }
 
-  get esClasesEnlace(): boolean {
-    return this.categoriaSeleccionada === 'Clases Enlace';
+  get materialesCategoria(): IListaMateriales[] {
+    if (!this.tarjetaSeleccionada) {
+      return [];
+    }
+    return this.materiales.filter(m => (m.categoria || '').trim() === this.tarjetaSeleccionada!.nombre);
+  }
+
+  get esClase(): boolean {
+    return !!this.tarjetaSeleccionada && CLASES.some(cl => cl.nombre === this.tarjetaSeleccionada!.nombre);
+  }
+
+  get tieneFechas(): boolean {
+    return this.materialesCategoria.some(m => m.mes != null && m.anno != null);
   }
 
   get gruposClases(): { anno: number; mes: number; dia: number; items: IListaMateriales[] }[] {
@@ -86,6 +139,10 @@ export class MaterialComponent implements OnInit {
 
   nombreMes(mes: number): string {
     return this.meses[mes - 1] || `Mes ${mes}`;
+  }
+
+  tituloGrupo(grupo: { anno: number; mes: number; dia: number }): string {
+    return grupo.mes ? `Día ${grupo.dia} · ${this.nombreMes(grupo.mes)} ${grupo.anno}` : 'Sin fecha';
   }
 
   obtenerDomingos(mes: number, anno: number): number[] {
@@ -120,13 +177,13 @@ export class MaterialComponent implements OnInit {
     this.diaNuevo = this.obtenerDomingos(this.mesNuevo, this.annoNuevo)[0] || 1;
   }
 
-  seleccionarCategoria(categoria: string): void {
-    this.categoriaSeleccionada = categoria;
+  seleccionarTarjeta(tarjeta: Tarjeta): void {
+    this.tarjetaSeleccionada = tarjeta;
     this.mostrarUpload = false;
   }
 
   volver(): void {
-    this.categoriaSeleccionada = null;
+    this.tarjetaSeleccionada = null;
     this.mostrarUpload = false;
   }
 
@@ -144,10 +201,10 @@ export class MaterialComponent implements OnInit {
     if (this.nombreNuevo.trim()) {
       fd.append('nombre', this.nombreNuevo.trim());
     }
-    if (this.categoriaSeleccionada) {
-      fd.append('categoria', this.categoriaSeleccionada);
+    if (this.tarjetaSeleccionada) {
+      fd.append('categoria', this.tarjetaSeleccionada.nombre);
     }
-    if (this.esClasesEnlace) {
+    if (this.esClase) {
       fd.append('mes', String(this.mesNuevo));
       fd.append('anno', String(this.annoNuevo));
       fd.append('dia', String(this.diaNuevo));
@@ -199,7 +256,7 @@ export class MaterialComponent implements OnInit {
     }
     this.editando.nombre = this.editNombre;
     this.editando.descripcion = this.editDescripcion;
-    if (this.esClasesEnlace) {
+    if (this.esClase) {
       this.editando.mes = this.editMes;
       this.editando.anno = this.editAnno;
       this.editando.dia = this.editDia;

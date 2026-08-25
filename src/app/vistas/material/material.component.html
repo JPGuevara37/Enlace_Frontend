@@ -1,31 +1,45 @@
 <div class="material">
-  @if (!categoriaSeleccionada) {
+  @if (!tarjetaSeleccionada) {
     <div class="page-head">
       <h1>Biblioteca de materiales</h1>
-      <p>Selecciona una carpeta</p>
+      <p>Selecciona una clase para ver su material</p>
     </div>
 
-    <div class="folders">
-      <button class="folder" (click)="seleccionarCategoria('Clases Enlace')">
-        <i class="fa-solid fa-folder" style="color:#4e73df"></i>
-        <h3>Clases Enlace</h3>
-        <p>Material de clases por mes y año</p>
-      </button>
-      <button class="folder" (click)="seleccionarCategoria('Material de apoyo')">
-        <i class="fa-solid fa-folder" style="color:#1cc88a"></i>
-        <h3>Material de apoyo</h3>
-        <p>Recursos complementarios</p>
-      </button>
-      <button class="folder" (click)="seleccionarCategoria('Talleres')">
-        <i class="fa-solid fa-folder" style="color:#f6c23e"></i>
-        <h3>Talleres</h3>
-        <p>Material de talleres y capacitaciones</p>
-      </button>
-    </div>
+    @if (cargando) {
+      <p class="empty">Cargando…</p>
+    } @else {
+      <div class="class-grid">
+        @for (t of tarjetas; track t.nombre) {
+          <button class="class-card" (click)="seleccionarTarjeta(t)">
+            <div class="class-body">
+              <div class="class-icon" [style.--c]="t.color">
+                <i class="{{ t.icono }}"></i>
+              </div>
+              <div class="class-info">
+                <h3 class="class-nombre">{{ t.nombre }}</h3>
+                <p class="class-desc">{{ t.descripcion }}</p>
+              </div>
+            </div>
+            <div class="class-foot">
+              <span class="class-count"><b [style.color]="t.color">{{ t.cantidad }}</b> {{ t.cantidad === 1 ? 'material' : 'materiales' }}</span>
+              <i class="fa-solid fa-arrow-right class-go" [style.color]="t.color"></i>
+            </div>
+          </button>
+        }
+      </div>
+    }
   } @else {
     <div class="page-head">
-      <button class="back" (click)="volver()"><i class="fa-solid fa-arrow-left"></i> Carpetas</button>
-      <h1>{{ categoriaSeleccionada }}</h1>
+      <button class="back" (click)="volver()"><i class="fa-solid fa-arrow-left"></i> Clases</button>
+      <div class="head-row">
+        <div class="head-icon" [style.--c]="tarjetaSeleccionada.color">
+          <i class="{{ tarjetaSeleccionada.icono }}"></i>
+        </div>
+        <div>
+          <h1>{{ tarjetaSeleccionada.nombre }}</h1>
+          <p>{{ materialesCategoria.length }} {{ materialesCategoria.length === 1 ? 'material' : 'materiales' }}</p>
+        </div>
+      </div>
     </div>
 
     @if (puedeSubir) {
@@ -39,7 +53,7 @@
             <input type="file" accept=".pdf,application/pdf" (change)="onArchivoSeleccionado($event)" />
           </label>
           <input class="name-input" type="text" [(ngModel)]="nombreNuevo" placeholder="Nombre (opcional)" />
-          @if (esClasesEnlace) {
+          @if (esClase) {
             <select class="select" [(ngModel)]="mesNuevo" (change)="onMesNuevoChange()">
               @for (m of meses; track m; let i = $index) {
                 <option [value]="i + 1">{{ m }}</option>
@@ -60,9 +74,9 @@
 
     @if (cargando) {
       <p class="empty">Cargando…</p>
-    } @else if (esClasesEnlace) {
-      @for (grupo of gruposClases; track grupo.anno + '-' + grupo.mes) {
-        <h2 class="grupo-titulo">Día {{ grupo.dia }} · {{ nombreMes(grupo.mes) }} {{ grupo.anno }}</h2>
+    } @else if (tieneFechas) {
+      @for (grupo of gruposClases; track grupo.anno + '-' + grupo.mes + '-' + grupo.dia) {
+        <h2 class="grupo-titulo">{{ tituloGrupo(grupo) }}</h2>
         <div class="grid">
           @for (m of grupo.items; track m.materialId) {
             <div class="card">
@@ -83,7 +97,7 @@
         </div>
       }
       @if (!materialesCategoria.length) {
-        <p class="empty">No hay material en esta carpeta</p>
+        <p class="empty">No hay material en esta clase</p>
       }
     } @else {
       <div class="grid">
@@ -105,7 +119,7 @@
         }
       </div>
       @if (!materialesCategoria.length) {
-        <p class="empty">No hay material en esta carpeta</p>
+        <p class="empty">No hay material en esta clase</p>
       }
     }
   }
@@ -127,7 +141,7 @@
           <label>Descripción</label>
           <input type="text" [(ngModel)]="editDescripcion" />
         </div>
-        @if (esClasesEnlace) {
+        @if (esClase) {
           <div class="field">
             <label>Mes</label>
             <select [(ngModel)]="editMes">
