@@ -36,14 +36,16 @@ export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
   errorEquipo = false;
 
   maestrosDisplay = 0;
-  asistentesDisplay = 0;
   clasesDisplay = 0;
+  mostrarCookies = true;
+  politicaAbierta = false;
   private statsAnimadas = false;
   private observer?: IntersectionObserver;
 
   constructor(private router: Router, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.mostrarCookies = localStorage.getItem('cookieConsent') !== 'true';
     this.cargarEquipo();
     this.cargarContenido();
     this.cargarClases();
@@ -59,10 +61,6 @@ export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get nroMaestros(): number {
     return this.maestros.length;
-  }
-
-  get nroAsistentes(): number {
-    return this.apoyo.length;
   }
 
   get nroClases(): number {
@@ -96,7 +94,6 @@ export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
       const p = Math.min(1, (now - inicio) / duracion);
       const ease = 1 - Math.pow(1 - p, 3);
       this.maestrosDisplay = Math.round(this.nroMaestros * ease);
-      this.asistentesDisplay = Math.round(this.nroAsistentes * ease);
       this.clasesDisplay = Math.round(this.nroClases * ease);
       this.cdr.detectChanges();
       if (p < 1) {
@@ -168,12 +165,21 @@ export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.profesores.filter(p => !['Líder', 'Asistente'].includes(p.categoria || ''));
   }
 
-  get apoyo(): IListaProfesores[] {
-    return this.profesores.filter(p => (p.categoria || '') === 'Asistente');
-  }
-
   ingresar(): void {
     this.router.navigate(['/login']);
+  }
+
+  aceptarCookies(): void {
+    localStorage.setItem('cookieConsent', 'true');
+    this.mostrarCookies = false;
+  }
+
+  abrirPolitica(): void {
+    this.politicaAbierta = true;
+  }
+
+  cerrarPolitica(): void {
+    this.politicaAbierta = false;
   }
 
   iniciales(nombre: string, apellido: string): string {

@@ -49,10 +49,6 @@
         <span class="stat-num">{{ maestrosDisplay }}</span>
         <span class="stat-label">Maestros</span>
       </div>
-      <div class="stat">
-        <span class="stat-num">{{ asistentesDisplay }}</span>
-        <span class="stat-label">Asistentes</span>
-      </div>
     </div>
   </section>
 
@@ -173,24 +169,7 @@
           </div>
         }
 
-        @if (apoyo.length) {
-          <h3 class="grupo-titulo">Asistentes</h3>
-          <div class="equipo-grid">
-            @for (p of apoyo; track p.profesorId) {
-              <div class="persona-card">
-                @if (p.avatar) {
-                  <img class="persona-foto" [src]="p.avatar" alt="{{ p.nombre }} {{ p.apellido }}" />
-                } @else {
-                  <div class="persona-avatar apoyo">{{ iniciales(p.nombre, p.apellido) }}</div>
-                }
-                <h4>{{ p.nombre }} {{ p.apellido }}</h4>
-                <p>Asistente</p>
-              </div>
-            }
-          </div>
-        }
-
-        @if (!maestros.length && !apoyo.length) {
+        @if (!maestros.length) {
           <p class="cargando">Pronto estaremos presentando a nuestro equipo.</p>
         }
       }
@@ -205,6 +184,46 @@
       </div>
       <p>Bajo el mandato de la Iglesia Bautista Arraigados</p>
       <p class="footer-note">“Instruye al niño en su camino, y aun cuando fuere viejo no se apartará de él.” — Proverbios 22:6</p>
+      <a class="footer-cookies" (click)="abrirPolitica()">Política de cookies</a>
     </div>
   </footer>
+
+  @if (mostrarCookies) {
+    <div class="cookie-banner">
+      <div class="cookie-texto">
+        <i class="fa-solid fa-cookie-bite"></i>
+        <p>Utilizamos cookies para mejorar tu experiencia de navegación. Al continuar, aceptas nuestra política de cookies.</p>
+      </div>
+      <div class="cookie-acciones">
+        <button class="cookie-link" (click)="abrirPolitica()">Política de cookies</button>
+        <button class="cookie-btn" (click)="aceptarCookies()">Aceptar</button>
+      </div>
+    </div>
+  }
+
+  @if (politicaAbierta) {
+    <div class="politica-backdrop" (click)="cerrarPolitica()">
+      <div class="politica-modal" (click)="$event.stopPropagation()">
+        <div class="politica-head">
+          <h3>Política de cookies</h3>
+          <button class="close" (click)="cerrarPolitica()">&times;</button>
+        </div>
+        <div class="politica-body">
+          <p>Este sitio web utiliza cookies propias y de terceros para mejorar tu experiencia de navegación, personalizar el contenido y analizar el uso del sitio.</p>
+          <h4>¿Qué son las cookies?</h4>
+          <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo al visitar un sitio web. Nos permiten reconocerte y recordar tus preferencias.</p>
+          <h4>Tipos de cookies que utilizamos</h4>
+          <p><strong>Cookies esenciales:</strong> necesarias para el correcto funcionamiento del sitio, como el inicio de sesión y la seguridad.</p>
+          <p><strong>Cookies analíticas:</strong> nos ayudan a entender cómo los visitantes usan el sitio para mejorarlo continuamente.</p>
+          <h4>Gestión de cookies</h4>
+          <p>Puedes eliminar o bloquear las cookies desde la configuración de tu navegador. Ten en cuenta que desactivar algunas cookies puede afectar el funcionamiento del sitio.</p>
+          <h4>Contacto</h4>
+          <p>Si tienes dudas sobre esta política, puedes contactarnos a través del Ministerio Infantil Enlace — Iglesia Bautista Arraigados.</p>
+        </div>
+        <div class="politica-foot">
+          <button class="btn-primary" (click)="cerrarPolitica()">Entendido</button>
+        </div>
+      </div>
+    </div>
+  }
 </div>

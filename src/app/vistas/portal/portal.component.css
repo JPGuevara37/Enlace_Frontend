@@ -688,6 +688,164 @@ section {
   color: rgba(255, 255, 255, 0.6) !important;
 }
 
+.footer-cookies {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.82rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.footer-cookies:hover {
+  color: #fff;
+}
+
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: #fff;
+  border-top: 1px solid #e2e8f4;
+  box-shadow: 0 -8px 30px rgba(20, 40, 80, 0.14);
+  padding: 1rem 1.5rem;
+}
+
+.cookie-texto {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 240px;
+}
+
+.cookie-texto i {
+  color: #005a65;
+  font-size: 1.4rem;
+}
+
+.cookie-texto p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #5a6b8c;
+}
+
+.cookie-acciones {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.cookie-link {
+  border: none;
+  background: transparent;
+  color: #005a65;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cookie-btn {
+  border: none;
+  background: linear-gradient(135deg, #005a65, #00414a);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(0, 90, 101, 0.3);
+}
+
+.politica-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 32, 60, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  padding: 1rem;
+}
+
+.politica-modal {
+  background: #fff;
+  border-radius: 18px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(10, 25, 55, 0.4);
+}
+
+.politica-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: linear-gradient(135deg, #003740, #005a65);
+  color: #fff;
+}
+
+.politica-head h3 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.politica-head .close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.politica-body {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  color: #3a4a66;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.politica-body h4 {
+  margin: 1.1rem 0 0.35rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #2b3a55;
+}
+
+.politica-body p {
+  margin: 0.25rem 0;
+}
+
+.politica-foot {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eef1f7;
+}
+
+.politica-foot .btn-primary {
+  border: none;
+  background: linear-gradient(135deg, #005a65, #00414a);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.6rem 1.3rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 @media (max-width: 720px) {
   .nav-links {
     display: none;
