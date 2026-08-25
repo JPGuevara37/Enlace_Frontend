@@ -7,5 +7,6 @@ export interface IRolesMes {
     dia: number;
     estado: string;
     disponible: boolean;
+    respuesta?: string;
     fechaCreacion?: string;
 }

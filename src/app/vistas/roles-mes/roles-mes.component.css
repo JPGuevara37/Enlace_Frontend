@@ -232,6 +232,103 @@
   padding: 0.25rem 0.6rem 0.5rem;
 }
 
+.resp-badge {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  background: #1cc88a;
+  color: #fff;
+}
+
+.resp-badge.rechazada {
+  background: #e74a3b;
+}
+
+.mis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.mi-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mi-clase {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #2b3a55;
+}
+
+.mi-fecha {
+  font-size: 0.85rem;
+  color: #8592a6;
+  text-transform: capitalize;
+}
+
+.mi-respuesta {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.btn-resp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.5px solid #e2e8f4;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #5a6b8c;
+  transition: all 0.15s ease;
+}
+
+.btn-resp.si.activo {
+  background: #1cc88a;
+  border-color: #1cc88a;
+  color: #fff;
+}
+
+.btn-resp.no.activo {
+  background: #e74a3b;
+  border-color: #e74a3b;
+  color: #fff;
+}
+
+.mi-estado {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8592a6;
+}
+
+.mi-estado.aceptada {
+  color: #1f9d55;
+}
+
+.mi-estado.rechazada {
+  color: #e74a3b;
+}
+
+.empty {
+  color: #8592a6;
+  text-align: center;
+  padding: 3rem 0;
+}
+
 .persona {
   display: flex;
   align-items: center;

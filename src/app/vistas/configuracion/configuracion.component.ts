@@ -12,7 +12,7 @@ import { IUsuarios, IUsuarioGuardar } from '../../modelos/usuarios.interfase';
   styleUrls: ['./configuracion.component.css'],
 })
 export class ConfiguracionComponent implements OnInit {
-  roles = ['administrador', 'lidere', 'profes'];
+  roles = ['administrador', 'lidere', 'profes', 'asistente'];
 
   usuarios: IUsuarios[] = [];
   filtro = '';

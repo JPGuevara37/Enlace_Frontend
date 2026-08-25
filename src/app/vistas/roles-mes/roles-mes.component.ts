@@ -34,14 +34,58 @@ export class RolesMesComponent implements OnInit {
   profesoresAbierto = true;
   asistentesAbierto = true;
 
+  esGestor = false;
+  misAsignaciones: IRolesMes[] = [];
+
   constructor(
     private api: ApiService,
     private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
-    this.calcularDomingos();
-    this.cargarDatos();
+    this.esGestor = ['administrador', 'lidere'].includes(this.api.getRole());
+    if (this.esGestor) {
+      this.calcularDomingos();
+      this.cargarDatos();
+    } else {
+      this.cargarMisAsignaciones();
+    }
+  }
+
+  cargarMisAsignaciones(): void {
+    this.api.getAllEdades(1).subscribe(data => {
+      this.edades = data;
+      this.cdr.detectChanges();
+    });
+    this.api.getMisRolesMes().subscribe({
+      next: data => {
+        this.misAsignaciones = data;
+        this.cdr.detectChanges();
+      },
+      error: () => {},
+    });
+  }
+
+  nombreEdad(edadId: string): string {
+    return this.edades.find(e => e.edadId === edadId)?.rangoEdad || 'Clase';
+  }
+
+  formatearFechaRol(rol: IRolesMes): string {
+    const fecha = new Date(rol.anno, rol.mes - 1, rol.dia);
+    return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  }
+
+  responder(rol: IRolesMes, respuesta: string): void {
+    if (!rol.rolMesId) {
+      return;
+    }
+    this.api.responderRolMes(rol.rolMesId, respuesta).subscribe({
+      next: () => {
+        rol.respuesta = respuesta;
+        this.cdr.detectChanges();
+      },
+      error: () => {},
+    });
   }
 
   cargarDatos(): void {

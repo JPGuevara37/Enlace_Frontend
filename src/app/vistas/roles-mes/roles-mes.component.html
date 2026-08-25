@@ -1,98 +1,135 @@
 <div class="roles-mes">
-  <div class="page-head">
-    <h1>Roles del mes</h1>
-    <p>Arrastra una persona a una clase, o haz clic en la persona y luego en la clase</p>
-  </div>
-
-  <div class="toolbar">
-    <select class="select" [(ngModel)]="mes" (change)="cambiarPeriodo()">
-      @for (m of meses; track m; let i = $index) {
-        <option [ngValue]="i + 1">{{ m }}</option>
-      }
-    </select>
-    <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
-    <span class="lbl">Domingo</span>
-    <select class="select" [(ngModel)]="dia" (change)="cargarAsignaciones()">
-      @for (d of domingos; track d) {
-        <option [ngValue]="d">{{ formatearDomingo(d) }}</option>
-      }
-    </select>
-
-    <div class="modo">
-      <button class="chip" [class.active]="modoPropuesta" (click)="modoPropuesta = true">Propuesta</button>
-      <button class="chip" [class.active]="!modoPropuesta" (click)="modoPropuesta = false">Confirmado</button>
+  @if (esGestor) {
+    <div class="page-head">
+      <h1>Roles del mes</h1>
+      <p>Arrastra una persona a una clase, o haz clic en la persona y luego en la clase</p>
     </div>
-  </div>
 
-  <div class="layout">
-    <div class="clases">
-      @for (edad of edades; track edad.edadId) {
-        <div class="clase" (click)="asignarAClase(edad)" (dragover)="onDragOver($event)" (drop)="onDrop($event, edad)">
-          <div class="clase-titulo">{{ edad.rangoEdad }}</div>
-          @if (getAsignaciones(edad.edadId).length) {
-            @for (rol of getAsignaciones(edad.edadId); track rol.rolMesId) {
-              <div class="asignado">
-                <span>{{ getPersona(rol.personaId)?.nombre }} {{ getPersona(rol.personaId)?.apellido }}</span>
-                <span class="rol-badge" [class.asistente]="esAsistente(rol)">{{ esAsistente(rol) ? 'Asistente' : 'Profe' }}</span>
-                <button class="estado" [class.confirmado]="rol.estado === 'Confirmado'" (click)="alternarEstado(rol)">
-                  {{ rol.estado }}
-                </button>
-                <button class="quitar" (click)="quitar(rol)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
-              </div>
+    <div class="toolbar">
+      <select class="select" [(ngModel)]="mes" (change)="cambiarPeriodo()">
+        @for (m of meses; track m; let i = $index) {
+          <option [ngValue]="i + 1">{{ m }}</option>
+        }
+      </select>
+      <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
+      <span class="lbl">Domingo</span>
+      <select class="select" [(ngModel)]="dia" (change)="cargarAsignaciones()">
+        @for (d of domingos; track d) {
+          <option [ngValue]="d">{{ formatearDomingo(d) }}</option>
+        }
+      </select>
+
+      <div class="modo">
+        <button class="chip" [class.active]="modoPropuesta" (click)="modoPropuesta = true">Propuesta</button>
+        <button class="chip" [class.active]="!modoPropuesta" (click)="modoPropuesta = false">Confirmado</button>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="clases">
+        @for (edad of edades; track edad.edadId) {
+          <div class="clase" (click)="asignarAClase(edad)" (dragover)="onDragOver($event)" (drop)="onDrop($event, edad)">
+            <div class="clase-titulo">{{ edad.rangoEdad }}</div>
+            @if (getAsignaciones(edad.edadId).length) {
+              @for (rol of getAsignaciones(edad.edadId); track rol.rolMesId) {
+                <div class="asignado">
+                  <span>{{ getPersona(rol.personaId)?.nombre }} {{ getPersona(rol.personaId)?.apellido }}</span>
+                  <span class="rol-badge" [class.asistente]="esAsistente(rol)">{{ esAsistente(rol) ? 'Asistente' : 'Profe' }}</span>
+                  @if (rol.respuesta) {
+                    <span class="resp-badge" [class.rechazada]="rol.respuesta === 'Rechazada'">
+                      <i class="fa-solid" [class.fa-check]="rol.respuesta === 'Aceptada'" [class.fa-xmark]="rol.respuesta === 'Rechazada'"></i>
+                      {{ rol.respuesta === 'Aceptada' ? 'Sí' : 'No' }}
+                    </span>
+                  }
+                  <button class="estado" [class.confirmado]="rol.estado === 'Confirmado'" (click)="alternarEstado(rol)">
+                    {{ rol.estado }}
+                  </button>
+                  <button class="quitar" (click)="quitar(rol)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              }
+            } @else {
+              <div class="vacio">Arrastra una persona aquí</div>
             }
-          } @else {
-            <div class="vacio">Arrastra una persona aquí</div>
+          </div>
+        }
+      </div>
+
+      <div class="personas">
+        <div class="personas-titulo">Personas</div>
+
+        <button type="button" class="grupo-personas" (click)="profesoresAbierto = !profesoresAbierto">
+          <span class="grupo-titulo">
+            <i class="fa-solid fa-chalkboard-user"></i> Profesores
+            <span class="grupo-count">{{ profesores.length }}</span>
+          </span>
+          <i class="fa-solid" [class.fa-chevron-up]="profesoresAbierto" [class.fa-chevron-down]="!profesoresAbierto"></i>
+        </button>
+        @if (profesoresAbierto) {
+          @for (p of profesores; track p.profesorId) {
+            <div class="persona" [class.seleccionada]="personaSeleccionada?.profesorId === p.profesorId" (click)="seleccionarPersona(p)" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
+              <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
+              <div class="info">
+                <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>
+                <span class="categoria">{{ p.categoria || 'Profesor' }}</span>
+              </div>
+            </div>
           }
-        </div>
-      }
+          @if (!profesores.length) {
+            <div class="vacio-grupo">Sin profesores</div>
+          }
+        }
+
+        <button type="button" class="grupo-personas" (click)="asistentesAbierto = !asistentesAbierto">
+          <span class="grupo-titulo">
+            <i class="fa-solid fa-hands-helping"></i> Asistentes
+            <span class="grupo-count">{{ asistentes.length }}</span>
+          </span>
+          <i class="fa-solid" [class.fa-chevron-up]="asistentesAbierto" [class.fa-chevron-down]="!asistentesAbierto"></i>
+        </button>
+        @if (asistentesAbierto) {
+          @for (p of asistentes; track p.profesorId) {
+            <div class="persona" [class.seleccionada]="personaSeleccionada?.profesorId === p.profesorId" (click)="seleccionarPersona(p)" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
+              <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
+              <div class="info">
+                <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>
+                <span class="categoria">Asistente</span>
+              </div>
+            </div>
+          }
+          @if (!asistentes.length) {
+            <div class="vacio-grupo">Sin asistentes</div>
+          }
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="page-head">
+      <h1>Mis asignaciones</h1>
+      <p>Confirma tu disponibilidad para cada fecha</p>
     </div>
 
-    <div class="personas">
-      <div class="personas-titulo">Personas</div>
-
-      <button type="button" class="grupo-personas" (click)="profesoresAbierto = !profesoresAbierto">
-        <span class="grupo-titulo">
-          <i class="fa-solid fa-chalkboard-user"></i> Profesores
-          <span class="grupo-count">{{ profesores.length }}</span>
-        </span>
-        <i class="fa-solid" [class.fa-chevron-up]="profesoresAbierto" [class.fa-chevron-down]="!profesoresAbierto"></i>
-      </button>
-      @if (profesoresAbierto) {
-        @for (p of profesores; track p.profesorId) {
-          <div class="persona" [class.seleccionada]="personaSeleccionada?.profesorId === p.profesorId" (click)="seleccionarPersona(p)" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
-            <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
-            <div class="info">
-              <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>
-              <span class="categoria">{{ p.categoria || 'Profesor' }}</span>
+    @if (misAsignaciones.length) {
+      <div class="mis-grid">
+        @for (rol of misAsignaciones; track rol.rolMesId) {
+          <div class="mi-card">
+            <div class="mi-clase">{{ nombreEdad(rol.edadId) }}</div>
+            <div class="mi-fecha">{{ formatearFechaRol(rol) }}</div>
+            <div class="mi-respuesta">
+              <button class="btn-resp si" [class.activo]="rol.respuesta === 'Aceptada'" (click)="responder(rol, 'Aceptada')">
+                <i class="fa-solid fa-check"></i> Sí puedo
+              </button>
+              <button class="btn-resp no" [class.activo]="rol.respuesta === 'Rechazada'" (click)="responder(rol, 'Rechazada')">
+                <i class="fa-solid fa-xmark"></i> No puedo
+              </button>
             </div>
+            <span class="mi-estado" [class.rechazada]="rol.respuesta === 'Rechazada'" [class.aceptada]="rol.respuesta === 'Aceptada'">
+              {{ !rol.respuesta ? 'Sin responder' : (rol.respuesta === 'Aceptada' ? 'Confirmado' : 'Rechazado') }}
+            </span>
           </div>
         }
-        @if (!profesores.length) {
-          <div class="vacio-grupo">Sin profesores</div>
-        }
-      }
-
-      <button type="button" class="grupo-personas" (click)="asistentesAbierto = !asistentesAbierto">
-        <span class="grupo-titulo">
-          <i class="fa-solid fa-hands-helping"></i> Asistentes
-          <span class="grupo-count">{{ asistentes.length }}</span>
-        </span>
-        <i class="fa-solid" [class.fa-chevron-up]="asistentesAbierto" [class.fa-chevron-down]="!asistentesAbierto"></i>
-      </button>
-      @if (asistentesAbierto) {
-        @for (p of asistentes; track p.profesorId) {
-          <div class="persona" [class.seleccionada]="personaSeleccionada?.profesorId === p.profesorId" (click)="seleccionarPersona(p)" draggable="true" (dragstart)="onDragStart($event, p)" (dragend)="onDragEnd()">
-            <div class="avatar">{{ (p.nombre?.[0] || '') }}{{ (p.apellido?.[0] || '') }}</div>
-            <div class="info">
-              <span class="nombre">{{ p.nombre }} {{ p.apellido }}</span>
-              <span class="categoria">Asistente</span>
-            </div>
-          </div>
-        }
-        @if (!asistentes.length) {
-          <div class="vacio-grupo">Sin asistentes</div>
-        }
-      }
-    </div>
-  </div>
+      </div>
+    } @else {
+      <p class="empty">No tienes asignaciones aún</p>
+    }
+  }
 </div>
