@@ -36,111 +36,48 @@
   text-decoration: underline;
 }
 
-.head-row {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-top: 0.6rem;
-}
-
-.head-icon {
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--c) 14%, #ffffff);
-  color: var(--c);
-  font-size: 1.5rem;
-}
-
-.class-grid {
+.folders {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1.25rem;
 }
 
-.class-card {
+.folder {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
   background: #ffffff;
-  border: none;
+  border: 1.5px solid #eef1f7;
   border-radius: 16px;
-  overflow: hidden;
+  padding: 1.5rem;
   cursor: pointer;
   text-align: left;
-  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.05);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
 
-.class-card:hover {
+.folder:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 34px rgba(20, 40, 80, 0.12);
+  box-shadow: 0 16px 34px rgba(20, 40, 80, 0.1);
+  border-color: #d9e2f5;
 }
 
-.class-body {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 1.25rem 1.25rem 1rem;
+.folder i {
+  font-size: 2.2rem;
 }
 
-.class-icon {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 14px;
-  background: color-mix(in srgb, var(--c) 14%, #ffffff);
-  color: var(--c);
-  font-size: 1.25rem;
-}
-
-.class-info {
-  min-width: 0;
-}
-
-.class-nombre {
+.folder h3 {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 700;
   color: #2b3a55;
 }
 
-.class-desc {
-  margin: 0.15rem 0 0;
+.folder p {
+  margin: 0;
   font-size: 0.82rem;
   color: #8592a6;
-}
-
-.class-foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 1.25rem;
-  border-top: 1px solid #eef1f7;
-  margin-top: auto;
-}
-
-.class-count {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #8592a6;
-}
-
-.class-count b {
-  font-size: 1.3rem;
-  font-weight: 800;
-  line-height: 1;
-}
-
-.class-go {
-  font-size: 0.95rem;
-  opacity: 0.75;
 }
 
 .btn-add {
