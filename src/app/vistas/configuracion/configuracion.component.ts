@@ -171,7 +171,10 @@ export class ConfiguracionComponent implements OnInit {
     }
     this.api.sendResetPasswordLink(u.email.trim()).subscribe({
       next: () => this.alertas.showSuccess(`Correo de cambio de contraseña enviado a ${u.email}`, 'Hecho'),
-      error: () => this.alertas.showError('No se pudo enviar el correo', 'Error'),
+      error: (err) => {
+        const mensaje = err?.error?.message || 'No se pudo enviar el correo';
+        this.alertas.showError(mensaje, 'Error');
+      },
     });
   }
 
