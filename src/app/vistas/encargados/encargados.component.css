@@ -65,20 +65,20 @@
   align-items: center;
   gap: 0.4rem;
   border: none;
-  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  background: linear-gradient(135deg, #005a65, #00414a);
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
   padding: 0.6rem 1.1rem;
   border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 8px 18px rgba(78, 115, 223, 0.3);
+  box-shadow: 0 8px 18px rgba(0, 90, 101, 0.3);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-add:hover {
   transform: translateY(-1px);
-  box-shadow: 0 12px 24px rgba(78, 115, 223, 0.4);
+  box-shadow: 0 12px 24px rgba(0, 90, 101, 0.4);
 }
 
 .btn-bulk {
@@ -131,7 +131,7 @@
 }
 
 .nombre-link {
-  color: #4e73df;
+  color: #005a65;
   font-weight: 600;
   cursor: pointer;
 }
@@ -208,17 +208,17 @@
 }
 
 ::ng-deep .ngx-pagination a:hover {
-  background: #eef3ff;
-  color: #4e73df;
+  background: #e6f3f4;
+  color: #005a65;
 }
 
 ::ng-deep .ngx-pagination li.current {
-  background: #4e73df;
+  background: #005a65;
   border-radius: 8px;
 }
 
 ::ng-deep .ngx-pagination li.current span {
-  background: #4e73df;
+  background: #005a65;
   color: #fff;
   border-radius: 8px;
 }
@@ -271,7 +271,7 @@
   align-items: center;
   gap: 0.9rem;
   padding: 1.25rem 1.5rem;
-  background: linear-gradient(135deg, #16345f, #4e73df);
+  background: linear-gradient(135deg, #003740, #005a65);
   color: #fff;
 }
 
@@ -328,7 +328,7 @@
 }
 
 .info-row i {
-  color: #4e73df;
+  color: #005a65;
   width: 18px;
   text-align: center;
 }
@@ -372,8 +372,8 @@
 
 .field input:focus,
 .field select:focus {
-  border-color: #4e73df;
-  box-shadow: 0 0 0 3px rgba(78, 115, 223, 0.12);
+  border-color: #005a65;
+  box-shadow: 0 0 0 3px rgba(0, 90, 101, 0.12);
 }
 
 .card-foot {
@@ -386,7 +386,7 @@
 
 .btn-primary {
   border: none;
-  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  background: linear-gradient(135deg, #005a65, #00414a);
   color: #fff;
   font-weight: 700;
   padding: 0.6rem 1.2rem;

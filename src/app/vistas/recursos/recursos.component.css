@@ -22,7 +22,7 @@
 .back {
   border: none;
   background: transparent;
-  color: #4e73df;
+  color: #005a65;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.9rem;
@@ -77,7 +77,7 @@
   align-items: center;
   gap: 0.4rem;
   border: none;
-  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  background: linear-gradient(135deg, #005a65, #00414a);
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
@@ -101,8 +101,8 @@
 }
 
 .btn-ghost:hover {
-  border-color: #4e73df;
-  color: #4e73df;
+  border-color: #005a65;
+  color: #005a65;
 }
 
 .search-box {
@@ -118,7 +118,7 @@
 }
 
 .search-box:focus-within {
-  border-color: #4e73df;
+  border-color: #005a65;
 }
 
 .search-box input {
@@ -314,12 +314,12 @@
 }
 
 .btn.primary {
-  background: #4e73df;
+  background: #005a65;
   color: #fff;
 }
 
 .btn.primary:hover {
-  background: #3a5bc7;
+  background: #00414a;
 }
 
 .btn.icon {

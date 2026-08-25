@@ -15,7 +15,7 @@ interface Tarjeta {
 }
 
 const CLASES: Omit<Tarjeta, 'cantidad'>[] = [
-  { nombre: 'Legado', icono: 'fa-solid fa-people-roof', color: '#4e73df', descripcion: 'Recursos de la clase Legado' },
+  { nombre: 'Legado', icono: 'fa-solid fa-people-roof', color: '#005a65', descripcion: 'Recursos de la clase Legado' },
   { nombre: 'Aspirantes', icono: 'fa-solid fa-child-reaching', color: '#1cc88a', descripcion: 'Recursos de la clase Aspirantes' },
   { nombre: 'Retoñitos', icono: 'fa-solid fa-sprout', color: '#f6c23e', descripcion: 'Recursos de la clase Retoñitos' },
   { nombre: 'Pampanitos', icono: 'fa-solid fa-seedling', color: '#e74a3b', descripcion: 'Recursos de la clase Pampanitos' },

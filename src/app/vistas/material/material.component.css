@@ -22,7 +22,7 @@
 .back {
   border: none;
   background: transparent;
-  color: #4e73df;
+  color: #005a65;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.9rem;
@@ -60,7 +60,7 @@
 .folder:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 34px rgba(20, 40, 80, 0.1);
-  border-color: #d9e2f5;
+  border-color: #cfe1e3;
 }
 
 .folder i {
@@ -85,7 +85,7 @@
   align-items: center;
   gap: 0.4rem;
   border: none;
-  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  background: linear-gradient(135deg, #005a65, #00414a);
   color: #fff;
   font-weight: 700;
   font-size: 0.9rem;
@@ -126,8 +126,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: #eef3ff;
-  color: #4e73df;
+  background: #e6f3f4;
+  color: #005a65;
   font-weight: 600;
   font-size: 0.9rem;
   padding: 0.6rem 1rem;
@@ -161,13 +161,13 @@
 
 .name-input:focus,
 .select:focus {
-  border-color: #4e73df;
+  border-color: #005a65;
 }
 
 .grupo-titulo {
   font-size: 1rem;
   font-weight: 700;
-  color: #4e73df;
+  color: #005a65;
   margin: 1.5rem 0 0.75rem;
   padding-bottom: 0.4rem;
   border-bottom: 1px solid #eef1f7;
@@ -200,7 +200,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.3rem;
-  background: linear-gradient(135deg, #eef3ff, #f6f9ff);
+  background: linear-gradient(135deg, #e6f3f4, #f6f9ff);
   border-bottom: 1px solid #eef1f7;
 }
 
@@ -260,12 +260,12 @@
 }
 
 .btn.primary {
-  background: #4e73df;
+  background: #005a65;
   color: #fff;
 }
 
 .btn.primary:hover {
-  background: #3a5bc7;
+  background: #00414a;
 }
 
 .btn.icon {
@@ -309,7 +309,7 @@
   align-items: center;
   gap: 0.9rem;
   padding: 1.1rem 1.5rem;
-  background: linear-gradient(135deg, #16345f, #4e73df);
+  background: linear-gradient(135deg, #003740, #005a65);
   color: #fff;
 }
 
@@ -363,7 +363,7 @@
 
 .field input:focus,
 .field select:focus {
-  border-color: #4e73df;
+  border-color: #005a65;
 }
 
 .card-foot {
@@ -376,7 +376,7 @@
 
 .btn-primary {
   border: none;
-  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  background: linear-gradient(135deg, #005a65, #00414a);
   color: #fff;
   font-weight: 700;
   padding: 0.6rem 1.2rem;

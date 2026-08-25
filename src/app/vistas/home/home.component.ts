@@ -19,7 +19,7 @@ interface HomeModule {
 })
 export class HomeComponent {
   modulos: HomeModule[] = [
-    { ruta: '/encargados', icono: 'fa-user-group', titulo: 'Padres', descripcion: 'Gestiona los encargados de familia', color: '#4e73df' },
+    { ruta: '/encargados', icono: 'fa-user-group', titulo: 'Padres', descripcion: 'Gestiona los encargados de familia', color: '#005a65' },
     { ruta: '/alumnos', icono: 'fa-children', titulo: 'Alumnos', descripcion: 'Administra los estudiantes del ministerio', color: '#1cc88a' },
     { ruta: '/profesores', icono: 'fa-chalkboard-user', titulo: 'Profesores', descripcion: 'Controla el equipo de maestros', color: '#f6c23e' },
     { ruta: '/recursos', icono: 'fa-box-archive', titulo: 'Recursos', descripcion: 'Inventario de materiales y recursos', color: '#e74a3b' },

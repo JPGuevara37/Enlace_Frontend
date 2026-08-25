@@ -22,7 +22,7 @@
 .back {
   border: none;
   background: transparent;
-  color: #4e73df;
+  color: #005a65;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.9rem;
@@ -48,7 +48,7 @@
   align-items: center;
   gap: 0.9rem;
   padding: 1.1rem 1.5rem;
-  background: linear-gradient(135deg, #16345f, #4e73df);
+  background: linear-gradient(135deg, #003740, #005a65);
   color: #fff;
 }
 
@@ -93,7 +93,7 @@
 
 .field input:focus,
 .field select:focus {
-  border-color: #4e73df;
+  border-color: #005a65;
 }
 
 .card-foot {
@@ -106,7 +106,7 @@
 
 .btn-primary {
   border: none;
-  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  background: linear-gradient(135deg, #005a65, #00414a);
   color: #fff;
   font-weight: 700;
   padding: 0.6rem 1.2rem;

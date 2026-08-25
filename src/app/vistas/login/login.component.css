@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: linear-gradient(135deg, #16345f 0%, #4e73df 55%, #74a0f8 100%);
+  background: linear-gradient(135deg, #003740 0%, #005a65 55%, #0e7c86 100%);
 }
 
 .login-card {
@@ -70,8 +70,8 @@
 
 .field:focus-within {
   background: #ffffff;
-  border-color: #4e73df;
-  box-shadow: 0 0 0 4px rgba(78, 115, 223, 0.12);
+  border-color: #005a65;
+  box-shadow: 0 0 0 4px rgba(0, 90, 101, 0.12);
 }
 
 .field-icon {
@@ -103,7 +103,7 @@
 }
 
 .field-toggle:hover {
-  color: #4e73df;
+  color: #005a65;
 }
 
 .field-error {
@@ -125,14 +125,14 @@
 }
 
 .forgot-link {
-  color: #4e73df;
+  color: #005a65;
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .forgot-link:hover {
-  color: #224abe;
+  color: #00414a;
   text-decoration: underline;
 }
 
@@ -141,18 +141,18 @@
   padding: 0.85rem;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #4e73df 0%, #3a5bc7 100%);
+  background: linear-gradient(135deg, #005a65 0%, #00414a 100%);
   color: #ffffff;
   font-weight: 700;
   font-size: 1rem;
   letter-spacing: 0.3px;
-  box-shadow: 0 10px 22px rgba(78, 115, 223, 0.35);
+  box-shadow: 0 10px 22px rgba(0, 90, 101, 0.35);
   transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
 }
 
 .login-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 14px 28px rgba(78, 115, 223, 0.42);
+  box-shadow: 0 14px 28px rgba(0, 90, 101, 0.42);
 }
 
 .login-btn:disabled {
@@ -169,12 +169,12 @@
 }
 
 .login-signup a {
-  color: #4e73df;
+  color: #005a65;
   font-weight: 700;
 }
 
 .login-signup a:hover {
-  color: #224abe;
+  color: #00414a;
   text-decoration: underline;
 }
 
@@ -200,7 +200,7 @@
 }
 
 .login-back a:hover {
-  color: #4e73df;
+  color: #005a65;
 }
 
 @media (max-width: 480px) {

@@ -69,7 +69,7 @@
 
 .chip.active {
   background: #fff;
-  color: #4e73df;
+  color: #005a65;
   box-shadow: 0 2px 6px rgba(20, 40, 80, 0.08);
 }
 
@@ -88,7 +88,7 @@
 
 .clase {
   background: #fff;
-  border: 2px dashed #d9e2f5;
+  border: 2px dashed #cfe1e3;
   border-radius: 14px;
   padding: 1rem;
   min-height: 120px;
@@ -97,8 +97,8 @@
 }
 
 .clase:hover {
-  border-color: #4e73df;
-  background: #f8faff;
+  border-color: #005a65;
+  background: #f3fafa;
 }
 
 .clase-titulo {
@@ -116,7 +116,7 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  background: #eef3ff;
+  background: #e6f3f4;
   border-radius: 10px;
   padding: 0.5rem 0.7rem;
   font-size: 0.85rem;
@@ -135,7 +135,7 @@
   font-weight: 700;
   padding: 0.15rem 0.45rem;
   border-radius: 6px;
-  background: #4e73df;
+  background: #005a65;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 0.3px;
@@ -204,7 +204,7 @@
 }
 
 .grupo-personas:hover {
-  background: #eef3ff;
+  background: #e6f3f4;
 }
 
 .grupo-titulo {
@@ -214,11 +214,11 @@
 }
 
 .grupo-titulo i {
-  color: #4e73df;
+  color: #005a65;
 }
 
 .grupo-count {
-  background: #4e73df;
+  background: #005a65;
   color: #fff;
   border-radius: 999px;
   font-size: 0.7rem;
@@ -346,8 +346,8 @@
 }
 
 .persona.seleccionada {
-  background: #eef3ff;
-  outline: 2px solid #4e73df;
+  background: #e6f3f4;
+  outline: 2px solid #005a65;
 }
 
 .avatar {
@@ -355,7 +355,7 @@
   height: 36px;
   flex: 0 0 36px;
   border-radius: 50%;
-  background: #4e73df;
+  background: #005a65;
   color: #fff;
   display: flex;
   align-items: center;
