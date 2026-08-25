@@ -1,45 +1,58 @@
-<div class="outer">
-    <div class="container">
-      <div class="row">
-        <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
-          <div class="panel border bg-white">
-            <div class="panel-heading">
-              <img src="assets/enlace_imag.png" id="icon" alt="User Icon" width="200px" />
-            </div>
-            <div class="panel-body p-3">
-              <form [formGroup]="resetPasswordForm" (ngSubmit)="reset()">
-                <div class="form-group pt-3">
-                    <div class="input-field" [class.error]="resetPasswordForm.controls['password'].dirty && resetPasswordForm.hasError('required', 'password')">
-                      <span class="fa fa-user p-2"></span>
-                      <input formControlName="password" type="password" placeholder="Nueva contraseña">
-                    </div>
-                  </div>
-
-                  @if (resetPasswordForm.controls['password'].dirty && resetPasswordForm.hasError('required', 'password')) {
-                    <small class="text-danger">*Nueva contraseña requerida.</small>
-                  }
-                <div class="form-group pt-3">
-                    <div class="input-field" [class.error]="resetPasswordForm.controls['confirmPassword'].dirty && resetPasswordForm.hasError('required','confirmPassword')">
-                      <span class="fa fa-user p-2"></span>
-                      <input formControlName="confirmPassword" type="password" placeholder="Confirmar contraseña">
-                    </div>
-                  </div>
-                  @if (resetPasswordForm.controls['confirmPassword'].dirty && resetPasswordForm.hasError('required','confirmPassword')) {
-                    <small class="text-danger">*Confirmar contraseña requerido.</small>
-                  }
-                  @if (resetPasswordForm.hasError('confirmPasswordValidator','confirmPassword')) {
-                    <small class="text-danger">*Ambas contraseñas tienen que ser iguales.</small>
-                  }
-                <button type="submit" class="btn btn-primary btn-block mt4 w-100">Restablecer</button>
-
-              </form>
-            </div>
-            <div class="mx-3 my-2 py-2 bordert">
-              <div class="text-center py-3">
-            </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<div class="reset-page">
+  <div class="reset-card">
+    <div class="reset-brand">
+      <img src="assets/enlace_imag.png" alt="Ministerio Infantil Enlace" />
     </div>
+
+    <h1 class="reset-title">Restablecer contraseña</h1>
+    <p class="reset-subtitle">Ingresa tu nueva contraseña para continuar</p>
+
+    @if (enlaceInvalido) {
+      <div class="reset-alert">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>El enlace es inválido o incompleto. Solicita nuevamente el correo de restablecimiento.</span>
+      </div>
+      <button type="button" class="reset-btn" (click)="irAlLogin()">Volver al inicio</button>
+    } @else {
+      <form [formGroup]="resetPasswordForm" (ngSubmit)="reset()" novalidate>
+        <div class="field-group">
+          <div class="field" [class.field-error]="resetPasswordForm.controls['password'].touched && resetPasswordForm.hasError('required','password')">
+            <span class="field-icon fa fa-lock"></span>
+            <input formControlName="password" [type]="type" placeholder="Nueva contraseña" autocomplete="new-password" />
+            <button type="button" class="field-toggle" (click)="hideshowPass()" aria-label="Mostrar u ocultar contraseña">
+              <span class="fa {{ eyeIcon }}"></span>
+            </button>
+          </div>
+          @if (resetPasswordForm.controls['password'].touched && resetPasswordForm.hasError('required','password')) {
+            <small class="field-msg">*Nueva contraseña requerida</small>
+          }
+          @if (resetPasswordForm.controls['password'].touched && resetPasswordForm.hasError('minlength','password')) {
+            <small class="field-msg">*La contraseña debe tener al menos 6 caracteres</small>
+          }
+        </div>
+
+        <div class="field-group">
+          <div class="field" [class.field-error]="resetPasswordForm.controls['confirmPassword'].touched && resetPasswordForm.hasError('required','confirmPassword')">
+            <span class="field-icon fa fa-lock"></span>
+            <input formControlName="confirmPassword" [type]="type" placeholder="Confirmar contraseña" autocomplete="new-password" />
+          </div>
+          @if (resetPasswordForm.controls['confirmPassword'].touched && resetPasswordForm.hasError('required','confirmPassword')) {
+            <small class="field-msg">*Confirmar contraseña requerida</small>
+          }
+        </div>
+
+        @if (resetPasswordForm.controls['confirmPassword'].touched && resetPasswordForm.hasError('confirmPasswordValidator','confirmPassword')) {
+          <small class="field-msg match-msg">*Ambas contraseñas tienen que ser iguales</small>
+        }
+
+        <button type="submit" class="reset-btn" [disabled]="enviando">
+          @if (enviando) {
+            <span class="spinner" aria-hidden="true"></span> Restableciendo…
+          } @else {
+            Restablecer
+          }
+        </button>
+      </form>
+    }
   </div>
+</div>
