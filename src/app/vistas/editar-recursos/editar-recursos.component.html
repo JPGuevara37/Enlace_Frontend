@@ -1,54 +1,57 @@
-
-
-<div class="container">
-  <div class="row justify-content-center">
-    <h1>Recursos para clases</h1>
+<div class="page-wrap">
+  <div class="page-head">
+    <button class="back" (click)="salir()"><i class="fa-solid fa-arrow-left"></i> Recursos</button>
+    <h1>Editar recurso</h1>
+    <p>Modifica los datos del recurso y su clase</p>
   </div>
+
+  <form class="card-form" [formGroup]="editarForm" (ngSubmit)="postForm(editarForm.value)">
+    <div class="card-head">
+      <div class="card-titulo"><h3>Datos del recurso</h3></div>
+    </div>
+    <div class="card-body form-grid">
+      <div class="field">
+        <label for="articulo">Artículo</label>
+        <input type="text" id="articulo" placeholder="Nombre del artículo" formControlName="articulo">
+      </div>
+
+      <div class="field">
+        <label for="categoria">Clase</label>
+        <select id="categoria" formControlName="categoria">
+          <option value="">Sin categoría</option>
+          @for (c of clases; track c) {
+            <option [value]="c">{{ c }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="descripcion">Descripción</label>
+        <input type="text" id="descripcion" placeholder="Descripción del recurso" formControlName="descripcion">
+      </div>
+
+      <div class="field">
+        <label for="numero_Locker">Locker</label>
+        <input type="number" id="numero_Locker" placeholder="Número de locker" formControlName="numero_Locker">
+      </div>
+
+      <div class="field">
+        <label for="cantidad">Cantidad</label>
+        <input type="number" id="cantidad" placeholder="Cantidad" formControlName="cantidad">
+      </div>
+
+      <div class="field">
+        <label for="activo">Activo</label>
+        <select id="activo" formControlName="activo">
+          <option [ngValue]="true">Sí</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-foot">
+      <button type="button" class="btn-danger" (click)="delete()"><i class="fa-solid fa-trash"></i> Eliminar</button>
+      <button type="button" class="btn-ghost" (click)="salir()">Atrás</button>
+      <button type="submit" class="btn-primary">Guardar</button>
+    </div>
+  </form>
 </div>
-
-<div class="container">
-    <form [formGroup]="editarForm" (ngSubmit)="postForm(editarForm.value)">
-      <div class="form-group">
-        <label for="articulo">Articulo</label>
-        <input type="text" class="form-control" placeholder="Nombre del Articulo" formControlName="articulo">
-      </div>
-  
-      <div class="form-group">   
-        <label for="descripcion">Descripcion</label>
-        <input type="text" class="form-control" placeholder="Cantidad" formControlName="descripcion">
-      </div>
-  
-      <div class="form-group row">
-        <div class="col">
-          <label for="numero_Locker">Numero de Locker</label>
-          <input type="text" class="form-control" placeholder="Numero de Locker" formControlName="numero_Locker">
-        </div>
-  
-        <div class="col">
-          <label for="cantidad">Cantidad</label>
-          <input type="text" class="form-control" placeholder="Cantidad" formControlName="cantidad">
-        </div>
-
-        <div class="col">
-            <label for="numero_Locker">Locker</label>
-            <input type="text" class="form-control" placeholder="Cantidad" formControlName="numero_Locker">
-          </div>
-      </div>
-
-    <br><br>
-      <!-- Agrega otros campos según sea necesario -->
-  
-      <!-- Botón de envío -->
-      <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary mx-2">Guardar</button>
-        <div>
-          <button type="button" class="btn btn-danger mx-2" (click)="delete()">Eliminar</button>
-        </div>
-        <button type="button" class="btn btn-dark mx-2" (click)="salir()">Atrás</button>
-      </div>
-    </form>
-  </div>
-  
-
-
-

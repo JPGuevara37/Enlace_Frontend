@@ -1,0 +1,131 @@
+.page-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.page-head {
+  margin-bottom: 1.5rem;
+}
+
+.page-head h1 {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #2b3a55;
+  margin: 0.4rem 0 0.25rem;
+}
+
+.page-head p {
+  color: #8592a6;
+  margin: 0;
+}
+
+.back {
+  border: none;
+  background: transparent;
+  color: #4e73df;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.card-form {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
+  overflow: hidden;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.5rem;
+  background: linear-gradient(135deg, #16345f, #4e73df);
+  color: #fff;
+}
+
+.card-titulo h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.card-body {
+  padding: 1.25rem 1.5rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.field label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #5a6b8c;
+}
+
+.field input,
+.field select {
+  border: 1.5px solid #e2e8f4;
+  border-radius: 9px;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.9rem;
+  color: #2b3a55;
+  outline: none;
+  background: #fff;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #4e73df;
+}
+
+.card-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eef1f7;
+}
+
+.btn-primary {
+  border: none;
+  background: linear-gradient(135deg, #4e73df, #3a5bc7);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn-ghost {
+  border: 1.5px solid #e2e8f4;
+  background: #fff;
+  color: #5a6b8c;
+  font-weight: 600;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

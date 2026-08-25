@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { IResponse } from '../../modelos/response.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
-import { IRecursos } from '../../modelos/recursos.interfase';
+
+const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Pampanitos', 'Semillitas'];
 
 @Component({
   selector: 'app-nuevo-recursos',
@@ -15,12 +16,15 @@ import { IRecursos } from '../../modelos/recursos.interfase';
 })
 export class NuevoRecursosComponent implements OnInit {
 
+  clases = CLASES;
+
   nuevoForm = new FormGroup({
     articulo: new FormControl(''),
     cantidad: new FormControl(''),
     numero_Locker: new FormControl(''),
     descripcion: new FormControl(''),
-    activo: new FormControl(''),
+    categoria: new FormControl(''),
+    activo: new FormControl(false),
   });
 
   constructor(private api: ApiService, private router: Router, private alertas: AlertasService) {}
@@ -37,7 +41,15 @@ export class NuevoRecursosComponent implements OnInit {
   }
 
   postForm(form: any) {
-    this.api.postRecurso(form).subscribe(data => {
+    const payload = {
+      articulo: form.articulo,
+      cantidad: form.cantidad ? Number(form.cantidad) : undefined,
+      numero_Locker: form.numero_Locker ? Number(form.numero_Locker) : 0,
+      descripcion: form.descripcion,
+      categoria: form.categoria,
+      activo: !!form.activo,
+    };
+    this.api.postRecurso(payload).subscribe(data => {
       let respuesta: IResponse = data;
       if (respuesta.status == 'ok') {
         this.alertas.showSuccess('Nuevo recurso insertado', 'Hecho');

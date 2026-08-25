@@ -1,63 +1,94 @@
-<div class="container">
-  <div class="d-flex justify-content-between align-items-center flex-wrap mb-3">
-    <h3 class="mb-0">Lista de Recursos</h3>
-    <div class="input-group" style="width: 240px;">
-      <input type="text" [(ngModel)]="filtroNombre" class="form-control" placeholder="Buscar" (keyup.enter)="filtrar()" />
-      <button class="btn btn-primary" (click)="filtrar()">
-        <i class="fas fa-search"></i>
-      </button>
+<div class="recursos">
+  @if (!tarjetaSeleccionada) {
+    <div class="page-head">
+      <h1>Recursos</h1>
+      <p>Selecciona una clase para ver sus recursos</p>
     </div>
-  </div>
 
-  <div class="d-flex mb-3">
-    <div>
-      <button type="button" class="btn btn-primary mb-2" (click)="nuevoRecurso()">
-        <i class="fas fa-chalkboard-teacher"></i> Agregar Recurso
-      </button>
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button class="btn-add" (click)="nuevoRecurso()"><i class="fa-solid fa-plus"></i> Agregar Recurso</button>
+        <button class="btn-ghost" (click)="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
+      </div>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar artículo" (input)="filtrar()" />
+      </div>
     </div>
-    <div id="btnExport" class="ml-2">
-      <button class="btn btn-custom" (click)="exportToExcel()">Exportar a Excel</button>
-    </div>
-  </div>
 
-  <div class="d-flex justify-content-end align-items-center mb-3">
-    <div class="ml-auto" id="navPages">
-      <pagination-controls (pageChange)="pageChanged($event)" [autoHide]="hidePageNumbers" [maxSize]="maxSize"></pagination-controls>
-    </div>
-  </div>
-
-  <div class="table-responsive">
-    <table class="table">
-      <caption>Lista de Encargados</caption>
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Articulo</th>
-          <th scope="col">Locker</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Descripcion</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (recurso of recursos | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage, totalItems: totalItems }; track recurso.recursosId) {
-          <tr>
-            <th scope="row">{{ (currentPage - 1) * itemsPerPage + $index + 1 }}</th>
-            <td><input class="cell-input" [(ngModel)]="recurso.articulo" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
-            <td><input class="cell-input" type="number" [(ngModel)]="recurso.numero_Locker" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
-            <td><input class="cell-input" type="number" [(ngModel)]="recurso.cantidad" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
-            <td><input class="cell-input" [(ngModel)]="recurso.descripcion" (blur)="guardarRecurso(recurso)" (keyup.enter)="guardarRecurso(recurso)" /></td>
-            <td>
-              <button class="btn-delete" (click)="borrarRecurso(recurso)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-            </td>
-          </tr>
+    @if (cargando) {
+      <p class="empty">Cargando…</p>
+    } @else {
+      <div class="class-grid">
+        @for (t of tarjetas; track t.nombre) {
+          <button class="class-card" (click)="seleccionarTarjeta(t)">
+            <div class="class-body">
+              <div class="class-icon" [style.--c]="t.color">
+                <i class="{{ t.icono }}"></i>
+              </div>
+              <div class="class-info">
+                <h3 class="class-nombre">{{ t.nombre }}</h3>
+                <p class="class-desc">{{ t.descripcion }}</p>
+              </div>
+            </div>
+            <div class="class-foot">
+              <span class="class-count"><b [style.color]="t.color">{{ t.cantidad }}</b> {{ t.cantidad === 1 ? 'recurso' : 'recursos' }}</span>
+              <i class="fa-solid fa-arrow-right class-go" [style.color]="t.color"></i>
+            </div>
+          </button>
         }
-      </tbody>
-    </table>
-  </div>
-  <div class="d-flex justify-content-end align-items-center mb-3">
-    <div class="ml-auto" id="navPages">
-      <pagination-controls (pageChange)="pageChanged($event)" [maxSize]="maxSize"></pagination-controls>
+      </div>
+    }
+  } @else {
+    <div class="page-head">
+      <button class="back" (click)="volver()"><i class="fa-solid fa-arrow-left"></i> Clases</button>
+      <div class="head-row">
+        <div class="head-icon" [style.--c]="tarjetaSeleccionada.color">
+          <i class="{{ tarjetaSeleccionada.icono }}"></i>
+        </div>
+        <div>
+          <h1>{{ tarjetaSeleccionada.nombre }}</h1>
+          <p>{{ totalCategoria }} {{ totalCategoria === 1 ? 'recurso' : 'recursos' }}</p>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button class="btn-add" (click)="nuevoRecurso()"><i class="fa-solid fa-plus"></i> Agregar Recurso</button>
+        <button class="btn-ghost" (click)="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
+      </div>
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar artículo" (input)="filtrar()" />
+      </div>
+    </div>
+
+    @if (cargando) {
+      <p class="empty">Cargando…</p>
+    } @else {
+      <div class="grid">
+        @for (r of recursosCategoria; track r.recursosId) {
+          <div class="card">
+            <div class="card-head">
+              <h3 class="title">{{ r.articulo }}</h3>
+              <span class="badge-activo" [class.inactivo]="!r.activo">{{ r.activo ? 'Activo' : 'Inactivo' }}</span>
+            </div>
+            <p class="desc">{{ r.descripcion }}</p>
+            <div class="meta">
+              <span class="chip"><i class="fa-solid fa-box"></i> {{ r.cantidad }}</span>
+              <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ r.numero_Locker }}</span>
+            </div>
+            <div class="actions">
+              <button class="btn primary" (click)="editarRecursos(r.recursosId)"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button class="btn icon danger" (click)="borrarRecurso(r)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </div>
+        }
+      </div>
+      @if (!recursosCategoria.length) {
+        <p class="empty">No hay recursos en esta clase</p>
+      }
+    }
+  }
 </div>

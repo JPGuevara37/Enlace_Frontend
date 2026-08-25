@@ -1,31 +1,43 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { NgxPaginationModule } from 'ngx-pagination';
 import * as XLSX from 'xlsx';
 import { ApiService } from '../../Servicios/api/api.service';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
 
+interface Tarjeta {
+  nombre: string;
+  icono: string;
+  color: string;
+  descripcion: string;
+  cantidad: number;
+}
+
+const CLASES: Omit<Tarjeta, 'cantidad'>[] = [
+  { nombre: 'Legado', icono: 'fa-solid fa-people-roof', color: '#4e73df', descripcion: 'Recursos de la clase Legado' },
+  { nombre: 'Aspirantes', icono: 'fa-solid fa-child-reaching', color: '#1cc88a', descripcion: 'Recursos de la clase Aspirantes' },
+  { nombre: 'Retoñitos', icono: 'fa-solid fa-sprout', color: '#f6c23e', descripcion: 'Recursos de la clase Retoñitos' },
+  { nombre: 'Pampanitos', icono: 'fa-solid fa-seedling', color: '#e74a3b', descripcion: 'Recursos de la clase Pampanitos' },
+  { nombre: 'Semillitas', icono: 'fa-solid fa-leaf', color: '#36b9cc', descripcion: 'Recursos de la clase Semillitas' },
+];
+
+const COLORES_OTROS = ['#6f42c1', '#fd7e14', '#0e9aa7', '#d63384'];
+
 @Component({
   selector: 'app-recursos',
   standalone: true,
-  imports: [FormsModule, NgxPaginationModule],
+  imports: [FormsModule],
   templateUrl: './recursos.component.html',
   styleUrl: './recursos.component.css'
 })
 export class RecursosComponent implements OnInit {
 
   recursos: IListaRecursos[] = [];
+  recursosFiltrados: IListaRecursos[] = [];
   filtroNombre: string = '';
-  itemsPerPage: number = 10;
-  currentPage: number = 1;
-  maxSize: number = 5;
-  totalItems: number = 0;
-  disablePrevious: boolean | undefined;
-  disableNext: boolean | undefined;
-  totalPages: number | undefined;
-  hidePageNumbers: boolean = true;
+  tarjetaSeleccionada: Tarjeta | null = null;
+  cargando = true;
 
   constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
@@ -34,11 +46,73 @@ export class RecursosComponent implements OnInit {
   }
 
   cargarRecursos(): void {
-    this.api.getAllRecursos(1).subscribe(data => {
-      this.recursos = data;
-      this.totalItems = data.length;
-      this.cdr.detectChanges();
+    this.cargando = true;
+    this.api.getAllRecursos(1).subscribe({
+      next: data => {
+        this.recursos = data;
+        this.recursosFiltrados = data;
+        this.cargando = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.cargando = false;
+      },
     });
+  }
+
+  get tarjetas(): Tarjeta[] {
+    const porCategoria = new Map<string, IListaRecursos[]>();
+    this.recursos.forEach(r => {
+      const c = (r.categoria || '').trim() || 'Sin categoría';
+      if (!porCategoria.has(c)) {
+        porCategoria.set(c, []);
+      }
+      porCategoria.get(c)!.push(r);
+    });
+
+    const tarjetas: Tarjeta[] = CLASES.map(clase => ({
+      ...clase,
+      cantidad: porCategoria.get(clase.nombre)?.length ?? 0,
+    }));
+
+    Array.from(porCategoria.keys())
+      .filter(c => !CLASES.some(cl => cl.nombre === c))
+      .sort()
+      .forEach((c, i) => {
+        tarjetas.push({
+          nombre: c,
+          icono: 'fa-solid fa-folder',
+          color: COLORES_OTROS[i % COLORES_OTROS.length],
+          descripcion: 'Recursos variados',
+          cantidad: porCategoria.get(c)!.length,
+        });
+      });
+
+    return tarjetas;
+  }
+
+  get recursosCategoria(): IListaRecursos[] {
+    if (!this.tarjetaSeleccionada) {
+      return [];
+    }
+    return this.recursosFiltrados.filter(r => (r.categoria || '').trim() === this.tarjetaSeleccionada!.nombre);
+  }
+
+  get totalCategoria(): number {
+    if (!this.tarjetaSeleccionada) {
+      return 0;
+    }
+    return this.recursos.filter(r => (r.categoria || '').trim() === this.tarjetaSeleccionada!.nombre).length;
+  }
+
+  seleccionarTarjeta(tarjeta: Tarjeta): void {
+    this.tarjetaSeleccionada = tarjeta;
+    this.filtroNombre = '';
+  }
+
+  volver(): void {
+    this.tarjetaSeleccionada = null;
+    this.filtroNombre = '';
   }
 
   borrarRecurso(recurso: IListaRecursos): void {
@@ -58,26 +132,15 @@ export class RecursosComponent implements OnInit {
     this.router.navigate(['editar-recursos', id]);
   }
 
-  guardarRecurso(recurso: IListaRecursos) {
-    this.api.putRecursos(recurso).subscribe({
-      next: () => this.alertas.showSuccess('Datos guardados', 'Hecho'),
-      error: () => this.alertas.showError('No se pudo guardar', 'Error'),
-    });
-  }
-
   nuevoRecurso() {
     this.router.navigate(['nuevo-recursos']);
   }
 
   filtrar() {
-    this.api.getAllRecursos(1).subscribe(data => {
-      const filtroSinTildes = this.quitarTildes(this.filtroNombre.toLowerCase());
-
-      this.recursos = data.filter(recurso =>
-        this.quitarTildes(recurso.articulo.toLowerCase()).includes(filtroSinTildes)
-      );
-      this.cdr.detectChanges();
-    });
+    const filtroSinTildes = this.quitarTildes(this.filtroNombre.toLowerCase());
+    this.recursosFiltrados = this.recursos.filter(recurso =>
+      this.quitarTildes((recurso.articulo || '').toLowerCase()).includes(filtroSinTildes)
+    );
   }
 
   exportToExcel(): void {
@@ -86,6 +149,7 @@ export class RecursosComponent implements OnInit {
       const formattedDate = currentDate.toISOString().slice(0, 10).replace(/-/g, '');
 
       const dataToExport = this.recursos.map(recurso => ({
+        Clase: recurso.categoria || 'Sin categoría',
         Artículo: recurso.articulo,
         Cantidad: recurso.cantidad,
         Numero_Locker: recurso.numero_Locker,
@@ -101,16 +165,6 @@ export class RecursosComponent implements OnInit {
 
   quitarTildes(texto: string): string {
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  }
-
-  pageChanged(event: any): void {
-    this.currentPage = event;
-    this.deshabilitarBotonesSegunPagina();
-  }
-
-  deshabilitarBotonesSegunPagina(): void {
-    this.disablePrevious = this.currentPage === 1;
-    this.disableNext = this.currentPage === this.totalPages;
   }
 
   salir() {

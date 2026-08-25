@@ -6,6 +6,8 @@ import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IRecursos } from '../../modelos/recursos.interfase';
 
+const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Pampanitos', 'Semillitas'];
+
 @Component({
   selector: 'app-editar-recursos',
   standalone: true,
@@ -14,6 +16,8 @@ import { IRecursos } from '../../modelos/recursos.interfase';
   styleUrl: './editar-recursos.component.css'
 })
 export class EditarRecursosComponent implements OnInit {
+
+  clases = CLASES;
 
   constructor(
     private activerouter: ActivatedRoute,
@@ -25,10 +29,11 @@ export class EditarRecursosComponent implements OnInit {
 
   editarForm = new FormGroup({
     articulo: new FormControl(''),
-    activo: new FormControl(''),
+    activo: new FormControl(false),
     cantidad: new FormControl(''),
     numero_Locker: new FormControl(''),
     descripcion: new FormControl(''),
+    categoria: new FormControl(''),
     recursosId: new FormControl(''),
   });
 
@@ -38,20 +43,31 @@ export class EditarRecursosComponent implements OnInit {
       this.datosRecursos = data;
       this.editarForm.setValue({
         articulo: this.datosRecursos.articulo ?? '',
-        activo: this.datosRecursos.activo?.toString() ?? '',
+        activo: !!this.datosRecursos.activo,
         cantidad: this.datosRecursos.cantidad?.toString() ?? '',
         numero_Locker: this.datosRecursos.numero_Locker?.toString() ?? '',
         descripcion: this.datosRecursos.descripcion ?? '',
+        categoria: this.datosRecursos.categoria ?? '',
         recursosId: this.datosRecursos.recursosId ?? '',
       });
     });
   }
 
   postForm(form: any) {
-    this.api.putRecursos(form).subscribe(data => {
+    const payload = {
+      recursosId: form.recursosId,
+      articulo: form.articulo,
+      cantidad: form.cantidad ? Number(form.cantidad) : undefined,
+      numero_Locker: form.numero_Locker ? Number(form.numero_Locker) : 0,
+      descripcion: form.descripcion,
+      categoria: form.categoria,
+      activo: !!form.activo,
+    };
+    this.api.putRecursos(payload).subscribe(data => {
       let respuesta: IResponse = data;
       if (respuesta.status == 'ok') {
         this.alertas.showSuccess('Datos modificados', 'Hecho');
+        this.router.navigate(['recursos']);
       } else {
         this.alertas.showError(respuesta.result?.error_msj, 'Error');
       }

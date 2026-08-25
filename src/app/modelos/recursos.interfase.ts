@@ -4,5 +4,6 @@ export interface IRecursos {
     numero_Locker?: number;
     cantidad?: number;
     descripcion?: string;
+    categoria?: string;
     activo?: boolean;
 }
