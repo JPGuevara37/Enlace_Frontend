@@ -21,6 +21,8 @@ export class LayoutComponent implements OnDestroy {
 
   subItems = [
     { ruta: '/configuracion/usuarios', icono: 'fa-users', titulo: 'Usuarios' },
+    { ruta: '/configuracion/metas', icono: 'fa-bullseye', titulo: 'Metas del año' },
+    { ruta: '/configuracion/actividades', icono: 'fa-calendar-star', titulo: 'Actividades principales' },
   ];
 
   mostrarPerfil = false;

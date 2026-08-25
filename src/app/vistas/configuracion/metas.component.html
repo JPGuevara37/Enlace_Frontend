@@ -1,0 +1,29 @@
+<div class="pagina">
+  <div class="page-head">
+    <h1>Metas del año</h1>
+    <p>Administra las metas que se muestran en el portal</p>
+  </div>
+
+  <div class="card">
+    <div class="agregar">
+      <input type="text" [(ngModel)]="nuevo" placeholder="Nueva meta del año" (keyup.enter)="agregar()" />
+      <button class="btn-add" (click)="agregar()"><i class="fa-solid fa-plus"></i> Agregar</button>
+    </div>
+
+    @if (cargando) {
+      <p class="empty">Cargando…</p>
+    } @else if (metas.length) {
+      <ul class="lista">
+        @for (m of metas; track m.contenidoId ?? m.detalle; let i = $index) {
+          <li class="item">
+            <span class="num">{{ i + 1 }}</span>
+            <span class="texto">{{ m.detalle }}</span>
+            <button class="btn-quitar" (click)="quitar(m)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="empty">No hay metas registradas</p>
+    }
+  </div>
+</div>

@@ -4,36 +4,6 @@
     <p>Resumen general del ministerio</p>
   </div>
 
-  <div class="domingos-section">
-    <h2 class="section-title">{{ nombreMes(mesActual) }} {{ annoActual }} · Domingos</h2>
-    @if (domingos.length) {
-      <div class="domingos-grid">
-        @for (d of domingos; track d.dia) {
-          <div class="domingo-card">
-            <div class="domingo-fecha">
-              <span class="dia-num">{{ d.fecha.getDate() }}</span>
-              <span class="dia-lbl">{{ nombreDia(d.fecha) }}</span>
-            </div>
-            <div class="domingo-clases">
-              @for (c of d.clases; track c.rangoEdad) {
-                <div class="clase-row">
-                  <span class="clase-nombre">{{ c.rangoEdad }}</span>
-                  <div class="personas">
-                    @for (p of c.personas; track p.nombre) {
-                      <span class="persona-chip" [class.asistente]="p.esAsistente">{{ p.nombre }}</span>
-                    }
-                  </div>
-                </div>
-              }
-            </div>
-          </div>
-        }
-      </div>
-    } @else if (!cargando) {
-      <p class="empty">No hay roles asignados este mes</p>
-    }
-  </div>
-
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-icon" style="--c: #005a65"><i class="fa-solid fa-user-group"></i></div>

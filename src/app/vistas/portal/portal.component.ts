@@ -2,12 +2,15 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
+import { IContenidoPortal } from '../../modelos/contenido-portal.interfase';
+import { IListaEdades } from '../../modelos/listaedades.interfase';
 
-interface Actividad {
-  titulo: string;
-  detalle: string;
-  icono: string;
-}
+const INFO_CLASES: Record<string, { icono: string; color: string }> = {
+  Legado: { icono: 'fa-solid fa-people-roof', color: '#005a65' },
+  Aspirantes: { icono: 'fa-solid fa-child-reaching', color: '#1cc88a' },
+  Retoñitos: { icono: 'fa-solid fa-sprout', color: '#f6c23e' },
+  Semillitas: { icono: 'fa-solid fa-leaf', color: '#36b9cc' },
+};
 
 interface Lider {
   nombre: string;
@@ -24,21 +27,9 @@ interface Lider {
   styleUrls: ['./portal.component.css'],
 })
 export class PortalComponent implements OnInit {
-  metas = [
-    'Continuar con el material propio, estudiando libros enteros de la Biblia.',
-    'Capacitar al equipo de servidores para tratar niños con capacidades especiales y niños en riesgo, además de proveer más técnicas de enseñanza.',
-    'Ofrecer discipulados a aquellos que quieran incorporarse al equipo para enseñar.',
-    'Reunir 4 veces al año al equipo de trabajo completo para capacitación y evaluación.',
-    'Realizar seguimientos individuales (1v1) a cada servidor.',
-    'Realizar reunión de padres al menos una vez al año.',
-    'Entrevistar a familias nuevas para actualizar la base de datos.',
-  ];
-
-  actividades: Actividad[] = [
-    { titulo: 'Escuelita de vacaciones', detalle: '16 al 18 de julio, 2026', icono: 'fa-sun' },
-    { titulo: 'Día del Niño (Evangelístico)', detalle: '13 de septiembre', icono: 'fa-children' },
-    { titulo: 'Fiesta de Navidad', detalle: '13 de diciembre', icono: 'fa-gift' },
-  ];
+  metas: IContenidoPortal[] = [];
+  actividades: IContenidoPortal[] = [];
+  clases: { nombre: string; icono: string; color: string }[] = [];
 
   profesores: IListaProfesores[] = [];
   cargandoEquipo = true;
@@ -48,6 +39,38 @@ export class PortalComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarEquipo();
+    this.cargarContenido();
+    this.cargarClases();
+  }
+
+  cargarClases(): void {
+    this.api.getAllEdades(1).subscribe({
+      next: edades => {
+        this.clases = edades.map(e => {
+          const info = INFO_CLASES[e.rangoEdad] || { icono: 'fa-solid fa-children', color: '#36b9cc' };
+          return { nombre: e.rangoEdad, icono: info.icono, color: info.color };
+        });
+        this.cdr.detectChanges();
+      },
+      error: () => {},
+    });
+  }
+
+  cargarContenido(): void {
+    this.api.getContenidoPortal('meta').subscribe({
+      next: d => {
+        this.metas = d;
+        this.cdr.detectChanges();
+      },
+      error: () => {},
+    });
+    this.api.getContenidoPortal('actividad').subscribe({
+      next: d => {
+        this.actividades = d;
+        this.cdr.detectChanges();
+      },
+      error: () => {},
+    });
   }
 
   cargarEquipo(): void {

@@ -12,14 +12,14 @@ interface Tarjeta {
   color: string;
   descripcion: string;
   cantidad: number;
+  categorias: string[];
 }
 
 const CLASES: Omit<Tarjeta, 'cantidad'>[] = [
-  { nombre: 'Legado', icono: 'fa-solid fa-people-roof', color: '#005a65', descripcion: 'Recursos de la clase Legado' },
-  { nombre: 'Aspirantes', icono: 'fa-solid fa-child-reaching', color: '#1cc88a', descripcion: 'Recursos de la clase Aspirantes' },
-  { nombre: 'Retoñitos', icono: 'fa-solid fa-sprout', color: '#f6c23e', descripcion: 'Recursos de la clase Retoñitos' },
-  { nombre: 'Pampanitos', icono: 'fa-solid fa-seedling', color: '#e74a3b', descripcion: 'Recursos de la clase Pampanitos' },
-  { nombre: 'Semillitas', icono: 'fa-solid fa-leaf', color: '#36b9cc', descripcion: 'Recursos de la clase Semillitas' },
+  { nombre: 'Legado', categorias: ['Legado'], icono: 'fa-solid fa-people-roof', color: '#005a65', descripcion: 'Recursos de la clase Legado' },
+  { nombre: 'Aspirantes', categorias: ['Aspirantes', 'Pampanitos'], icono: 'fa-solid fa-child-reaching', color: '#1cc88a', descripcion: 'Recursos de la clase Aspirantes y Pampanitos' },
+  { nombre: 'Retoñitos', categorias: ['Retoñitos'], icono: 'fa-solid fa-sprout', color: '#f6c23e', descripcion: 'Recursos de la clase Retoñitos' },
+  { nombre: 'Semillitas', categorias: ['Semillitas'], icono: 'fa-solid fa-leaf', color: '#36b9cc', descripcion: 'Recursos de la clase Semillitas' },
 ];
 
 const COLORES_OTROS = ['#6f42c1', '#fd7e14', '#0e9aa7', '#d63384'];
@@ -67,20 +67,25 @@ export class RecursosComponent implements OnInit {
   get tarjetas(): Tarjeta[] {
     const porCategoria = new Map<string, IListaRecursos[]>();
     this.recursos.forEach(r => {
-      const c = (r.categoria || '').trim() || 'Sin categoría';
+      const c = this.categoriaDe(r);
       if (!porCategoria.has(c)) {
         porCategoria.set(c, []);
       }
       porCategoria.get(c)!.push(r);
     });
 
-    const tarjetas: Tarjeta[] = CLASES.map(clase => ({
-      ...clase,
-      cantidad: porCategoria.get(clase.nombre)?.length ?? 0,
-    }));
+    const usadas = new Set<string>();
+    const tarjetas: Tarjeta[] = CLASES.map(clase => {
+      clase.categorias.forEach(c => usadas.add(c));
+      let cantidad = 0;
+      clase.categorias.forEach(c => {
+        cantidad += porCategoria.get(c)?.length ?? 0;
+      });
+      return { ...clase, cantidad };
+    });
 
     Array.from(porCategoria.keys())
-      .filter(c => !CLASES.some(cl => cl.nombre === c))
+      .filter(c => !usadas.has(c))
       .sort()
       .forEach((c, i) => {
         tarjetas.push({
@@ -89,24 +94,29 @@ export class RecursosComponent implements OnInit {
           color: COLORES_OTROS[i % COLORES_OTROS.length],
           descripcion: 'Recursos variados',
           cantidad: porCategoria.get(c)!.length,
+          categorias: [c],
         });
       });
 
     return tarjetas;
   }
 
+  categoriaDe(r: IListaRecursos): string {
+    return (r.categoria || '').trim() || 'Sin categoría';
+  }
+
   get recursosCategoria(): IListaRecursos[] {
     if (!this.tarjetaSeleccionada) {
       return [];
     }
-    return this.recursosFiltrados.filter(r => (r.categoria || '').trim() === this.tarjetaSeleccionada!.nombre);
+    return this.recursosFiltrados.filter(r => this.tarjetaSeleccionada!.categorias.includes(this.categoriaDe(r)));
   }
 
   get totalCategoria(): number {
     if (!this.tarjetaSeleccionada) {
       return 0;
     }
-    return this.recursos.filter(r => (r.categoria || '').trim() === this.tarjetaSeleccionada!.nombre).length;
+    return this.recursos.filter(r => this.tarjetaSeleccionada!.categorias.includes(this.categoriaDe(r))).length;
   }
 
   seleccionarTarjeta(tarjeta: Tarjeta): void {

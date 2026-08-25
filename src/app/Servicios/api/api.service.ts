@@ -20,6 +20,7 @@ import { IListaMateriales } from '../../modelos/IListaMateriales';
 import { IRolesMes } from '../../modelos/rolesmes.interfase';
 import { IUsuarios, IUsuarioGuardar } from '../../modelos/usuarios.interfase';
 import { IPerfil, IPerfilGuardar, ICambiarPassword } from '../../modelos/perfil.interfase';
+import { IContenidoPortal } from '../../modelos/contenido-portal.interfase';
 import { RuntimeConfigService } from '../../config/runtime-config.service';
 
 @Injectable({
@@ -407,6 +408,23 @@ export class ApiService {
 
     cambiarPassword(form:ICambiarPassword):Observable<IResponse>{
       return this.http.put<IResponse>(this.url + "/api/perfil/password", form);
+    }
+
+    // Contenido del portal (metas y actividades)
+    getContenidoPortal(seccion: string):Observable<IContenidoPortal[]>{
+      return this.http.get<IContenidoPortal[]>(`${this.url}/api/ContenidoPortal/${seccion}`).pipe(timeout(30000));
+    }
+
+    crearContenido(item: IContenidoPortal):Observable<IResponse>{
+      return this.http.post<IResponse>(`${this.url}/api/ContenidoPortal`, item);
+    }
+
+    actualizarContenido(id: string, item: IContenidoPortal):Observable<IResponse>{
+      return this.http.put<IResponse>(`${this.url}/api/ContenidoPortal/${id}`, item);
+    }
+
+    borrarContenido(id: string):Observable<IResponse>{
+      return this.http.delete<IResponse>(`${this.url}/api/ContenidoPortal/${id}`);
     }
 
  }

@@ -1,66 +1,36 @@
-@if (esGestor) {
-  <div class="home">
-    <div class="page-head">
-      <h1>Bienvenido</h1>
-      <p>Selecciona un módulo para comenzar a trabajar</p>
-    </div>
-
-    <div class="modules-grid">
-      @for (mod of modulos; track mod.ruta) {
-        <a class="module-card" [routerLink]="mod.ruta">
-          <div class="module-icon" [style.background]="mod.color">
-            <i class="fa-solid" [class]="mod.icono"></i>
-          </div>
-          <div class="module-body">
-            <h3>{{ mod.titulo }}</h3>
-            <p>{{ mod.descripcion }}</p>
-          </div>
-          <i class="fa-solid fa-chevron-right module-arrow"></i>
-        </a>
-      }
-    </div>
+<div class="home">
+  <div class="page-head">
+    <h1>Calendario</h1>
+    <p>Asignaciones del ministerio por domingo</p>
   </div>
-} @else {
-  <div class="home">
-    <div class="page-head">
-      <h1>Mis roles</h1>
-      <p>Revisa tus asignaciones del año y confirma tu disponibilidad</p>
-    </div>
 
-    <div class="filtros">
-      <button class="chip-mes" [class.active]="mesFiltro === 0" (click)="mesFiltro = 0">Todos</button>
-      @for (m of mesesConRoles; track m) {
-        <button class="chip-mes" [class.active]="mesFiltro === m" (click)="mesFiltro = m">{{ nombreMes(m) }}</button>
-      }
-    </div>
-
-    @if (cargando) {
-      <p class="empty">Cargando…</p>
-    } @else if (rolesFiltrados.length) {
-      <div class="roles-grid">
-        @for (rol of rolesFiltrados; track rol.rolMesId) {
-          <div class="rol-card">
-            <div class="rol-top">
-              <div class="rol-clase">{{ nombreEdad(rol.edadId) }}</div>
-              <span class="rol-estado" [class.confirmado]="rol.estado === 'Confirmado'">{{ rol.estado }}</span>
+  <div class="domingos-section">
+    <h2 class="section-title">{{ nombreMes(mesActual) }} {{ annoActual }} · Domingos</h2>
+    @if (domingos.length) {
+      <div class="domingos-grid">
+        @for (d of domingos; track d.dia) {
+          <div class="domingo-card">
+            <div class="domingo-fecha">
+              <span class="dia-num">{{ d.fecha.getDate() }}</span>
+              <span class="dia-lbl">{{ nombreDia(d.fecha) }}</span>
             </div>
-            <div class="rol-fecha">{{ formatearFecha(rol) }}</div>
-            <div class="rol-respuesta">
-              <button class="btn-resp si" [class.activo]="rol.respuesta === 'Aceptada'" (click)="responder(rol, 'Aceptada')">
-                <i class="fa-solid fa-check"></i> Sí puedo
-              </button>
-              <button class="btn-resp no" [class.activo]="rol.respuesta === 'Rechazada'" (click)="responder(rol, 'Rechazada')">
-                <i class="fa-solid fa-xmark"></i> No puedo
-              </button>
+            <div class="domingo-clases">
+              @for (c of d.clases; track c.rangoEdad) {
+                <div class="clase-row">
+                  <span class="clase-nombre">{{ c.rangoEdad }}</span>
+                  <div class="personas">
+                    @for (p of c.personas; track p.nombre) {
+                      <span class="persona-chip" [class.asistente]="p.esAsistente">{{ p.nombre }}</span>
+                    }
+                  </div>
+                </div>
+              }
             </div>
-            <span class="rol-mi-estado" [class.rechazada]="rol.respuesta === 'Rechazada'" [class.aceptada]="rol.respuesta === 'Aceptada'">
-              {{ !rol.respuesta ? 'Sin responder' : (rol.respuesta === 'Aceptada' ? 'Confirmado' : 'Rechazado') }}
-            </span>
           </div>
         }
       </div>
-    } @else {
-      <p class="empty">No tienes roles asignados</p>
+    } @else if (!cargando) {
+      <p class="empty">No hay roles asignados este mes</p>
     }
   </div>
-}
+</div>

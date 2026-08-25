@@ -53,10 +53,10 @@
     <div class="container">
       <h2 class="section-title">Metas del año</h2>
       <div class="metas-grid">
-        @for (m of metas; track m; let i = $index) {
+        @for (m of metas; track m.contenidoId ?? m.detalle; let i = $index) {
           <div class="meta-card">
             <span class="meta-num">{{ i + 1 }}</span>
-            <p>{{ m }}</p>
+            <p>{{ m.detalle }}</p>
           </div>
         }
       </div>
@@ -67,7 +67,7 @@
     <div class="container">
       <h2 class="section-title">Actividades principales</h2>
       <div class="actividades-grid">
-        @for (a of actividades; track a.titulo) {
+        @for (a of actividades; track a.contenidoId ?? a.titulo) {
           <div class="actividad-card">
             <div class="actividad-icon"><i class="fa-solid {{ a.icono }}"></i></div>
             <h3>{{ a.titulo }}</h3>
@@ -78,7 +78,22 @@
     </div>
   </section>
 
-  <section class="section section-alt" id="lideres">
+  <section class="section section-alt" id="clases">
+    <div class="container">
+      <h2 class="section-title">Nuestras clases</h2>
+      <p class="section-subtitle">Los grupos del ministerio por edades</p>
+      <div class="clases-grid">
+        @for (c of clases; track c.nombre) {
+          <div class="clase-card">
+            <div class="clase-icon" [style.background]="c.color"><i class="{{ c.icono }}"></i></div>
+            <h3>{{ c.nombre }}</h3>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lideres">
     <div class="container">
       <h2 class="section-title">Líderes</h2>
       @if (lideres.length) {
@@ -101,7 +116,7 @@
     </div>
   </section>
 
-  <section class="section" id="conozcanos">
+  <section class="section section-alt" id="conozcanos">
     <div class="container">
       <h2 class="section-title">Conózcanos</h2>
       <p class="section-subtitle">El equipo de servidores que entrega su tiempo y amor al ministerio</p>

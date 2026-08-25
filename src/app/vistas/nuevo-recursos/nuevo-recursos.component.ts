@@ -5,7 +5,7 @@ import { IResponse } from '../../modelos/response.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 
-const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Pampanitos', 'Semillitas'];
+const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
 
 @Component({
   selector: 'app-nuevo-recursos',

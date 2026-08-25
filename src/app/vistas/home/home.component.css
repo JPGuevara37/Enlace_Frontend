@@ -1,5 +1,5 @@
 .home {
-  max-width: 1000px;
+  max-width: 1080px;
   margin: 0 auto;
 }
 
@@ -19,194 +19,96 @@
   margin: 0;
 }
 
-.modules-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1.25rem;
-}
-
-.module-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 1.25rem;
-  text-decoration: none;
-  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.module-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 34px rgba(20, 40, 80, 0.12);
-}
-
-.module-icon {
-  width: 52px;
-  height: 52px;
-  flex: 0 0 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 14px;
-  color: #fff;
-  font-size: 1.35rem;
-}
-
-.module-body {
-  flex: 1;
-  min-width: 0;
-}
-
-.module-body h3 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #2b3a55;
-  margin: 0 0 0.15rem;
-}
-
-.module-body p {
-  font-size: 0.82rem;
-  color: #8592a6;
-  margin: 0;
-  line-height: 1.35;
-}
-
-.module-arrow {
-  color: #c3cddd;
-  font-size: 0.9rem;
-}
-
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+.domingos-section {
   margin-bottom: 1.5rem;
 }
 
-.chip-mes {
-  border: 1.5px solid #e2e8f4;
-  background: #fff;
-  color: #5a6b8c;
-  font-weight: 600;
-  font-size: 0.85rem;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.15s ease;
+.section-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #2b3a55;
+  margin: 0 0 0.9rem;
 }
 
-.chip-mes:hover {
-  border-color: #005a65;
-  color: #005a65;
+.domingos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
 }
 
-.chip-mes.active {
-  background: #005a65;
-  border-color: #005a65;
+.domingo-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
+  overflow: hidden;
+}
+
+.domingo-fecha {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  background: linear-gradient(135deg, #003740, #005a65);
   color: #fff;
 }
 
-.roles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.25rem;
+.dia-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
-.rol-card {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
-  padding: 1.25rem;
+.dia-lbl {
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  opacity: 0.9;
+}
+
+.domingo-clases {
+  padding: 0.75rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-.rol-top {
+.clase-row {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.3rem;
 }
 
-.rol-clase {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #2b3a55;
-}
-
-.rol-estado {
-  flex: 0 0 auto;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.3px;
-  padding: 0.25rem 0.6rem;
-  border-radius: 999px;
-  background: #fff3cd;
-  color: #b58a00;
-}
-
-.rol-estado.confirmado {
-  background: #e6f7ea;
-  color: #1f9d55;
-}
-
-.rol-fecha {
-  font-size: 0.85rem;
-  color: #8592a6;
-  text-transform: capitalize;
-}
-
-.rol-respuesta {
-  display: flex;
-  gap: 0.6rem;
-}
-
-.btn-resp {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border: 1.5px solid #e2e8f4;
-  background: #fff;
-  border-radius: 10px;
-  padding: 0.5rem 0.85rem;
-  font-weight: 700;
-  font-size: 0.82rem;
-  cursor: pointer;
-  color: #5a6b8c;
-  transition: all 0.15s ease;
-}
-
-.btn-resp.si.activo {
-  background: #1cc88a;
-  border-color: #1cc88a;
-  color: #fff;
-}
-
-.btn-resp.no.activo {
-  background: #e74a3b;
-  border-color: #e74a3b;
-  color: #fff;
-}
-
-.rol-mi-estado {
+.clase-nombre {
   font-size: 0.78rem;
   font-weight: 700;
   color: #8592a6;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
-.rol-mi-estado.aceptada {
-  color: #1f9d55;
+.personas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
-.rol-mi-estado.rechazada {
-  color: #e74a3b;
+.persona-chip {
+  display: inline-flex;
+  align-items: center;
+  background: #e6f3f4;
+  color: #005a65;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.persona-chip.asistente {
+  background: #e6f7fa;
+  color: #0e9aa7;
 }
 
 .empty {
-  text-align: center;
   color: #8592a6;
-  padding: 3rem 0;
+  text-align: center;
+  padding: 1.5rem 0;
 }

@@ -1,0 +1,146 @@
+.pagina {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.page-head {
+  margin-bottom: 1.25rem;
+}
+
+.page-head h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2b3a55;
+  margin-bottom: 0.2rem;
+}
+
+.page-head p {
+  color: #8592a6;
+  margin: 0;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
+  padding: 1.5rem;
+}
+
+.agregar {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.campo label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #5a6b8c;
+}
+
+.campo input,
+.campo select {
+  border: 1.5px solid #e2e8f4;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.9rem;
+  color: #2b3a55;
+  outline: none;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: #005a65;
+}
+
+.icono-campo {
+  flex: 0 0 150px;
+}
+
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: none;
+  background: linear-gradient(135deg, #005a65, #00414a);
+  color: #fff;
+  font-weight: 700;
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 40px;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #f7f9fc;
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+}
+
+.icono {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #e6f3f4;
+  color: #005a65;
+  font-size: 1.05rem;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.titulo {
+  font-weight: 700;
+  color: #2b3a55;
+  font-size: 0.92rem;
+}
+
+.detalle {
+  color: #8592a6;
+  font-size: 0.82rem;
+}
+
+.btn-quitar {
+  border: none;
+  background: #fdecea;
+  color: #e74a3b;
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+}
+
+.btn-quitar:hover {
+  background: #fbd5d2;
+}
+
+.empty {
+  text-align: center;
+  color: #8592a6;
+  padding: 2rem 0;
+}

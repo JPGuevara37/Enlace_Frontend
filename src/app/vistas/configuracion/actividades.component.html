@@ -1,0 +1,47 @@
+<div class="pagina">
+  <div class="page-head">
+    <h1>Actividades principales</h1>
+    <p>Administra las actividades que se muestran en el portal</p>
+  </div>
+
+  <div class="card">
+    <div class="agregar">
+      <div class="campo">
+        <label>Título</label>
+        <input type="text" [(ngModel)]="form.titulo" placeholder="Nombre de la actividad" />
+      </div>
+      <div class="campo">
+        <label>Fecha</label>
+        <input type="text" [(ngModel)]="form.detalle" placeholder="Ej. 13 de septiembre" />
+      </div>
+      <div class="campo icono-campo">
+        <label>Ícono</label>
+        <select [(ngModel)]="form.icono">
+          @for (i of iconos; track i) {
+            <option [value]="i">{{ i }}</option>
+          }
+        </select>
+      </div>
+      <button class="btn-add" (click)="agregar()"><i class="fa-solid fa-plus"></i> Agregar</button>
+    </div>
+
+    @if (cargando) {
+      <p class="empty">Cargando…</p>
+    } @else if (actividades.length) {
+      <div class="lista">
+        @for (a of actividades; track a.contenidoId ?? a.titulo) {
+          <div class="item">
+            <span class="icono"><i class="fa-solid {{ a.icono }}"></i></span>
+            <div class="info">
+              <span class="titulo">{{ a.titulo }}</span>
+              <span class="detalle">{{ a.detalle }}</span>
+            </div>
+            <button class="btn-quitar" (click)="quitar(a)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="empty">No hay actividades registradas</p>
+    }
+  </div>
+</div>

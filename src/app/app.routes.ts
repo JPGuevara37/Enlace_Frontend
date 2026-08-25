@@ -23,6 +23,8 @@ import { MaterialComponent } from './vistas/material/material.component';
 import { RolesMesComponent } from './vistas/roles-mes/roles-mes.component';
 import { ResetComponent } from './vistas/reset/reset.component';
 import { ConfiguracionComponent } from './vistas/configuracion/configuracion.component';
+import { MetasComponent } from './vistas/configuracion/metas.component';
+import { ActividadesComponent } from './vistas/configuracion/actividades.component';
 
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
@@ -57,6 +59,8 @@ export const routes: Routes = [
       { path: 'configuracion', canActivate: [adminGuard], children: [
         { path: '', pathMatch: 'full', redirectTo: 'usuarios' },
         { path: 'usuarios', component: ConfiguracionComponent },
+        { path: 'metas', component: MetasComponent },
+        { path: 'actividades', component: ActividadesComponent },
       ] },
     ],
   },

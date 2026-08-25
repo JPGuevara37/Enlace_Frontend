@@ -6,7 +6,7 @@ import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IRecursos } from '../../modelos/recursos.interfase';
 
-const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Pampanitos', 'Semillitas'];
+const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
 
 @Component({
   selector: 'app-editar-recursos',
