@@ -45,12 +45,12 @@
         <span>Inicio</span>
       </a>
 
-      @if (esGestor) {
-        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="cerrarSidebar()">
-          <i class="fa-solid fa-chart-pie"></i>
-          <span>Panel</span>
-        </a>
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="cerrarSidebar()">
+        <i class="fa-solid fa-chart-pie"></i>
+        <span>Panel</span>
+      </a>
 
+      @if (esGestor) {
         <div class="nav-group">Personas</div>
         <a class="nav-link" routerLink="/encargados" routerLinkActive="active" (click)="cerrarSidebar()">
           <i class="fa-solid fa-user-group"></i>
@@ -64,12 +64,6 @@
           <i class="fa-solid fa-chalkboard-user"></i>
           <span>Profesores</span>
         </a>
-
-        <div class="nav-group">Asignaciones</div>
-        <a class="nav-link" routerLink="/roles-mes" routerLinkActive="active" (click)="cerrarSidebar()">
-          <i class="fa-solid fa-calendar-days"></i>
-          <span>Roles del mes</span>
-        </a>
       }
 
       <div class="nav-group">Utilidades</div>
@@ -80,6 +74,10 @@
       <a class="nav-link" routerLink="/material" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-folder-open"></i>
         <span>Material</span>
+      </a>
+      <a class="nav-link" routerLink="/roles-mes" routerLinkActive="active" (click)="cerrarSidebar()">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>Roles del mes</span>
       </a>
 
       @if (esAdmin) {
