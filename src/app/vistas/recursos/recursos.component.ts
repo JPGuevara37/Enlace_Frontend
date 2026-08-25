@@ -38,6 +38,7 @@ export class RecursosComponent implements OnInit {
   filtroNombre: string = '';
   tarjetaSeleccionada: Tarjeta | null = null;
   cargando = true;
+  errorCarga = false;
 
   constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
@@ -47,6 +48,7 @@ export class RecursosComponent implements OnInit {
 
   cargarRecursos(): void {
     this.cargando = true;
+    this.errorCarga = false;
     this.api.getAllRecursos(1).subscribe({
       next: data => {
         this.recursos = data;
@@ -56,6 +58,8 @@ export class RecursosComponent implements OnInit {
       },
       error: () => {
         this.cargando = false;
+        this.errorCarga = true;
+        this.cdr.detectChanges();
       },
     });
   }

@@ -337,3 +337,33 @@
   color: #8592a6;
   padding: 3rem 0;
 }
+
+.error-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff5f5;
+  border: 1.5px solid #f1c4c0;
+  color: #c0392b;
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+.error-box i {
+  font-size: 1.4rem;
+}
+
+.error-box strong {
+  font-size: 0.95rem;
+}
+
+.error-box p {
+  margin: 0.2rem 0 0;
+  font-size: 0.82rem;
+  color: #a06a63;
+}
+
+.error-box .btn {
+  margin-left: auto;
+}

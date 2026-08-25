@@ -4,7 +4,7 @@ import { IResponse } from '../../modelos/response.interfase';
 import { IListaEcargados } from '../../modelos/listaencargados.interfase';
 import { IEncargado } from '../../modelos/encargado.interfase';
 import { HttpClient , HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, timeout } from 'rxjs';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
 import { IProfesores } from '../../modelos/profesores.interfase';
 import { IAlumnos } from '../../modelos/alumnos.interfase';
@@ -238,7 +238,7 @@ export class ApiService {
     //Servicio de Recursos
     getAllRecursos(page:number):Observable<IListaRecursos[]>{
       let direccion = this.url + "/api/recursos";
-      return this.http.get<IListaRecursos[]>(direccion);
+      return this.http.get<IListaRecursos[]>(direccion).pipe(timeout(30000));
     }
 
     getSingleRecurso(id: any):Observable<IRecursos>{
@@ -342,7 +342,7 @@ export class ApiService {
    }
 
     resetPassword(resetPasswordObj: ResetPassword){
-      return this.http.post<any>(`${this.url}/api/ResetEmail/reset-password`, resetPasswordObj);
+      return this.http.post<any>(`${this.url}/api/ResetEmail/reset-password`, resetPasswordObj).pipe(timeout(30000));
     }
 
     // Roles del mes

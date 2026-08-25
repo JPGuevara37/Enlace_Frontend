@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
+import { finalize } from 'rxjs';
 import { ApiService } from '../../Servicios/api/api.service';
 import { ResetPassword } from '../../modelos/resetPassword.interfase';
 import { ConfirmPasswordValidator } from '../../../../helpers/confirm-password-validator';
@@ -68,9 +69,9 @@ export class ResetComponent implements OnInit {
     this.resetPasswordObj.emailToken = this.emailToken;
 
     this.api.resetPassword(this.resetPasswordObj)
+      .pipe(finalize(() => this.enviando = false))
       .subscribe({
         next: (res: any) => {
-          this.enviando = false;
           this.toast.success({
             detail: 'Contraseña restablecida',
             summary: res?.message ?? 'Ya puedes iniciar sesión con tu nueva contraseña',
@@ -79,7 +80,6 @@ export class ResetComponent implements OnInit {
           this.router.navigate(['/']);
         },
         error: (err: any) => {
-          this.enviando = false;
           const mensaje = err?.error?.message || 'No se pudo restablecer la contraseña';
           this.toast.error({ detail: 'Error', summary: mensaje, duration: 4000 });
         }

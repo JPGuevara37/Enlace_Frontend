@@ -18,6 +18,15 @@
 
     @if (cargando) {
       <p class="empty">Cargando…</p>
+    } @else if (errorCarga) {
+      <div class="error-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          <strong>No se pudieron cargar los recursos</strong>
+          <p>Verifica la conexión con el servidor e inténtalo de nuevo.</p>
+        </div>
+        <button class="btn primary" (click)="cargarRecursos()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
+      </div>
     } @else {
       <div class="class-grid">
         @for (t of tarjetas; track t.nombre) {
@@ -66,6 +75,15 @@
 
     @if (cargando) {
       <p class="empty">Cargando…</p>
+    } @else if (errorCarga) {
+      <div class="error-box">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          <strong>No se pudieron cargar los recursos</strong>
+          <p>Verifica la conexión con el servidor e inténtalo de nuevo.</p>
+        </div>
+        <button class="btn primary" (click)="cargarRecursos()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
+      </div>
     } @else {
       <div class="grid">
         @for (r of recursosCategoria; track r.recursosId) {
