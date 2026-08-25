@@ -1,13 +1,13 @@
 <div class="page-wrap">
   <div class="page-head">
     <button class="back" (click)="salir()"><i class="fa-solid fa-arrow-left"></i> Recursos</button>
-    <h1>Editar recurso</h1>
-    <p>Modifica los datos del recurso y su clase</p>
+    <h1>Editar material</h1>
+    <p>Modifica los datos del material del pool</p>
   </div>
 
   <form class="card-form" [formGroup]="editarForm" (ngSubmit)="postForm(editarForm.value)">
     <div class="card-head">
-      <div class="card-titulo"><h3>Datos del recurso</h3></div>
+      <div class="card-titulo"><h3>Datos del material</h3></div>
     </div>
     <div class="card-body form-grid">
       <div class="field">
@@ -16,28 +16,13 @@
       </div>
 
       <div class="field">
-        <label for="categoria">Clase</label>
-        <select id="categoria" formControlName="categoria">
-          <option value="">Sin categoría</option>
-          @for (c of clases; track c) {
-            <option [value]="c">{{ c }}</option>
-          }
-        </select>
-      </div>
-
-      <div class="field">
         <label for="descripcion">Descripción</label>
-        <input type="text" id="descripcion" placeholder="Descripción del recurso" formControlName="descripcion">
+        <input type="text" id="descripcion" placeholder="Descripción del material" formControlName="descripcion">
       </div>
 
       <div class="field">
         <label for="numero_Locker">Locker</label>
         <input type="number" id="numero_Locker" placeholder="Número de locker" formControlName="numero_Locker">
-      </div>
-
-      <div class="field">
-        <label for="cantidad">Cantidad</label>
-        <input type="number" id="cantidad" placeholder="Cantidad" formControlName="cantidad">
       </div>
 
       <div class="field">

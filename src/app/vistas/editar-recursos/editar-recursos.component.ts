@@ -6,8 +6,6 @@ import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IRecursos } from '../../modelos/recursos.interfase';
 
-const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
-
 @Component({
   selector: 'app-editar-recursos',
   standalone: true,
@@ -16,8 +14,6 @@ const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
   styleUrl: './editar-recursos.component.css'
 })
 export class EditarRecursosComponent implements OnInit {
-
-  clases = CLASES;
 
   constructor(
     private activerouter: ActivatedRoute,
@@ -30,10 +26,8 @@ export class EditarRecursosComponent implements OnInit {
   editarForm = new FormGroup({
     articulo: new FormControl(''),
     activo: new FormControl(false),
-    cantidad: new FormControl(''),
     numero_Locker: new FormControl(''),
     descripcion: new FormControl(''),
-    categoria: new FormControl(''),
     recursosId: new FormControl(''),
   });
 
@@ -44,10 +38,8 @@ export class EditarRecursosComponent implements OnInit {
       this.editarForm.setValue({
         articulo: this.datosRecursos.articulo ?? '',
         activo: !!this.datosRecursos.activo,
-        cantidad: this.datosRecursos.cantidad?.toString() ?? '',
         numero_Locker: this.datosRecursos.numero_Locker?.toString() ?? '',
         descripcion: this.datosRecursos.descripcion ?? '',
-        categoria: this.datosRecursos.categoria ?? '',
         recursosId: this.datosRecursos.recursosId ?? '',
       });
     });
@@ -57,10 +49,8 @@ export class EditarRecursosComponent implements OnInit {
     const payload = {
       recursosId: form.recursosId,
       articulo: form.articulo,
-      cantidad: form.cantidad ? Number(form.cantidad) : undefined,
       numero_Locker: form.numero_Locker ? Number(form.numero_Locker) : 0,
       descripcion: form.descripcion,
-      categoria: form.categoria,
       activo: !!form.activo,
     };
     this.api.putRecursos(payload).subscribe(data => {

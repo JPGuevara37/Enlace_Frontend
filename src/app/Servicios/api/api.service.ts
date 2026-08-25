@@ -21,6 +21,7 @@ import { IRolesMes } from '../../modelos/rolesmes.interfase';
 import { IUsuarios, IUsuarioGuardar } from '../../modelos/usuarios.interfase';
 import { IPerfil, IPerfilGuardar, ICambiarPassword } from '../../modelos/perfil.interfase';
 import { IContenidoPortal } from '../../modelos/contenido-portal.interfase';
+import { IMaterialClase } from '../../modelos/material-clase.interfase';
 import { RuntimeConfigService } from '../../config/runtime-config.service';
 
 @Injectable({
@@ -425,6 +426,23 @@ export class ApiService {
 
     borrarContenido(id: string):Observable<IResponse>{
       return this.http.delete<IResponse>(`${this.url}/api/ContenidoPortal/${id}`);
+    }
+
+    // Asignaciones de materiales a clases
+    getMaterialesClase():Observable<IMaterialClase[]>{
+      return this.http.get<IMaterialClase[]>(`${this.url}/api/MaterialClase`).pipe(timeout(30000));
+    }
+
+    crearMaterialClase(item: IMaterialClase):Observable<IResponse>{
+      return this.http.post<IResponse>(`${this.url}/api/MaterialClase`, item);
+    }
+
+    actualizarMaterialClase(id: string, item: IMaterialClase):Observable<IResponse>{
+      return this.http.put<IResponse>(`${this.url}/api/MaterialClase/${id}`, item);
+    }
+
+    borrarMaterialClase(id: string):Observable<IResponse>{
+      return this.http.delete<IResponse>(`${this.url}/api/MaterialClase/${id}`);
     }
 
  }

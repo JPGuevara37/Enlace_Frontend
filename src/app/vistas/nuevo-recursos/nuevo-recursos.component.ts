@@ -5,8 +5,6 @@ import { IResponse } from '../../modelos/response.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
 
-const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
-
 @Component({
   selector: 'app-nuevo-recursos',
   standalone: true,
@@ -16,15 +14,11 @@ const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
 })
 export class NuevoRecursosComponent implements OnInit {
 
-  clases = CLASES;
-
   nuevoForm = new FormGroup({
     articulo: new FormControl(''),
-    cantidad: new FormControl(''),
     numero_Locker: new FormControl(''),
     descripcion: new FormControl(''),
-    categoria: new FormControl(''),
-    activo: new FormControl(false),
+    activo: new FormControl(true),
   });
 
   constructor(private api: ApiService, private router: Router, private alertas: AlertasService) {}
@@ -43,16 +37,14 @@ export class NuevoRecursosComponent implements OnInit {
   postForm(form: any) {
     const payload = {
       articulo: form.articulo,
-      cantidad: form.cantidad ? Number(form.cantidad) : undefined,
       numero_Locker: form.numero_Locker ? Number(form.numero_Locker) : 0,
       descripcion: form.descripcion,
-      categoria: form.categoria,
       activo: !!form.activo,
     };
     this.api.postRecurso(payload).subscribe(data => {
       let respuesta: IResponse = data;
       if (respuesta.status == 'ok') {
-        this.alertas.showSuccess('Nuevo recurso insertado', 'Hecho');
+        this.alertas.showSuccess('Nuevo material insertado', 'Hecho');
         this.router.navigate(['recursos']);
       } else {
         this.alertas.showError(respuesta.result?.error_msj, 'Error');

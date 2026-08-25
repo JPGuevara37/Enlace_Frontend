@@ -5,24 +5,16 @@ import * as XLSX from 'xlsx';
 import { ApiService } from '../../Servicios/api/api.service';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaRecursos } from '../../modelos/listarecursos.interfase';
+import { IMaterialClase } from '../../modelos/material-clase.interfase';
 
-interface Tarjeta {
-  nombre: string;
-  icono: string;
-  color: string;
-  descripcion: string;
-  cantidad: number;
-  categorias: string[];
-}
+const CLASES = ['Legado', 'Aspirantes', 'Retoñitos', 'Semillitas'];
 
-const CLASES: Omit<Tarjeta, 'cantidad'>[] = [
-  { nombre: 'Legado', categorias: ['Legado'], icono: 'fa-solid fa-people-roof', color: '#005a65', descripcion: 'Recursos de la clase Legado' },
-  { nombre: 'Aspirantes', categorias: ['Aspirantes', 'Pampanitos'], icono: 'fa-solid fa-child-reaching', color: '#1cc88a', descripcion: 'Recursos de la clase Aspirantes y Pampanitos' },
-  { nombre: 'Retoñitos', categorias: ['Retoñitos'], icono: 'fa-solid fa-sprout', color: '#f6c23e', descripcion: 'Recursos de la clase Retoñitos' },
-  { nombre: 'Semillitas', categorias: ['Semillitas'], icono: 'fa-solid fa-leaf', color: '#36b9cc', descripcion: 'Recursos de la clase Semillitas' },
-];
-
-const COLORES_OTROS = ['#6f42c1', '#fd7e14', '#0e9aa7', '#d63384'];
+const CLASE_INFO: Record<string, { icono: string; color: string }> = {
+  Legado: { icono: 'fa-solid fa-people-roof', color: '#005a65' },
+  Aspirantes: { icono: 'fa-solid fa-child-reaching', color: '#1cc88a' },
+  Retoñitos: { icono: 'fa-solid fa-sprout', color: '#f6c23e' },
+  Semillitas: { icono: 'fa-solid fa-leaf', color: '#36b9cc' },
+};
 
 @Component({
   selector: 'app-recursos',
@@ -33,26 +25,32 @@ const COLORES_OTROS = ['#6f42c1', '#fd7e14', '#0e9aa7', '#d63384'];
 })
 export class RecursosComponent implements OnInit {
 
-  recursos: IListaRecursos[] = [];
-  recursosFiltrados: IListaRecursos[] = [];
-  filtroNombre: string = '';
-  tarjetaSeleccionada: Tarjeta | null = null;
+  materiales: IListaRecursos[] = [];
+  asignaciones: IMaterialClase[] = [];
+  clases = CLASES;
+
+  filtroNombre = '';
   cargando = true;
   errorCarga = false;
+
+  modalAsignacion = false;
+  editandoAsignacion: IMaterialClase | null = null;
+  asignacionRecursoId = '';
+  asignacionClase = 'Legado';
+  asignacionCantidad = 1;
 
   constructor(private api: ApiService, private router: Router, private cdr: ChangeDetectorRef, private alertas: AlertasService) {}
 
   ngOnInit(): void {
-    this.cargarRecursos();
+    this.cargar();
   }
 
-  cargarRecursos(): void {
+  cargar(): void {
     this.cargando = true;
     this.errorCarga = false;
     this.api.getAllRecursos(1).subscribe({
       next: data => {
-        this.recursos = data;
-        this.recursosFiltrados = data;
+        this.materiales = data;
         this.cargando = false;
         this.cdr.detectChanges();
       },
@@ -62,126 +60,141 @@ export class RecursosComponent implements OnInit {
         this.cdr.detectChanges();
       },
     });
+    this.cargarAsignaciones();
   }
 
-  get tarjetas(): Tarjeta[] {
-    const porCategoria = new Map<string, IListaRecursos[]>();
-    this.recursos.forEach(r => {
-      const c = this.categoriaDe(r);
-      if (!porCategoria.has(c)) {
-        porCategoria.set(c, []);
-      }
-      porCategoria.get(c)!.push(r);
+  cargarAsignaciones(): void {
+    this.api.getMaterialesClase().subscribe({
+      next: data => {
+        this.asignaciones = data;
+        this.cdr.detectChanges();
+      },
+      error: () => {},
     });
-
-    const usadas = new Set<string>();
-    const tarjetas: Tarjeta[] = CLASES.map(clase => {
-      clase.categorias.forEach(c => usadas.add(c));
-      let cantidad = 0;
-      clase.categorias.forEach(c => {
-        cantidad += porCategoria.get(c)?.length ?? 0;
-      });
-      return { ...clase, cantidad };
-    });
-
-    Array.from(porCategoria.keys())
-      .filter(c => !usadas.has(c))
-      .sort()
-      .forEach((c, i) => {
-        tarjetas.push({
-          nombre: c,
-          icono: 'fa-solid fa-folder',
-          color: COLORES_OTROS[i % COLORES_OTROS.length],
-          descripcion: 'Recursos variados',
-          cantidad: porCategoria.get(c)!.length,
-          categorias: [c],
-        });
-      });
-
-    return tarjetas;
   }
 
-  categoriaDe(r: IListaRecursos): string {
-    return (r.categoria || '').trim() || 'Sin categoría';
+  get materialesFiltrados(): IListaRecursos[] {
+    const q = this.quitarTildes(this.filtroNombre.trim().toLowerCase());
+    return this.materiales.filter(m => !q || this.quitarTildes((m.articulo || '').toLowerCase()).includes(q));
   }
 
-  get recursosCategoria(): IListaRecursos[] {
-    if (!this.tarjetaSeleccionada) {
-      return [];
+  asignacionesDeClase(clase: string): { asignacion: IMaterialClase; material?: IListaRecursos }[] {
+    return this.asignaciones
+      .filter(a => a.clase === clase)
+      .map(a => ({ asignacion: a, material: this.materiales.find(m => m.recursosId === a.recursoId) }));
+  }
+
+  nombreMaterial(recursoId: string): string {
+    return this.materiales.find(m => m.recursosId === recursoId)?.articulo || '—';
+  }
+
+  infoClase(clase: string): { icono: string; color: string } {
+    return CLASE_INFO[clase] || { icono: 'fa-solid fa-children', color: '#36b9cc' };
+  }
+
+  abrirAsignacion(clase: string, asignacion?: IMaterialClase): void {
+    this.editandoAsignacion = asignacion || null;
+    if (asignacion) {
+      this.asignacionRecursoId = asignacion.recursoId;
+      this.asignacionClase = asignacion.clase;
+      this.asignacionCantidad = asignacion.cantidad;
+    } else {
+      this.asignacionRecursoId = this.materiales[0]?.recursosId || '';
+      this.asignacionClase = clase;
+      this.asignacionCantidad = 1;
     }
-    return this.recursosFiltrados.filter(r => this.tarjetaSeleccionada!.categorias.includes(this.categoriaDe(r)));
+    this.modalAsignacion = true;
   }
 
-  get totalCategoria(): number {
-    if (!this.tarjetaSeleccionada) {
-      return 0;
-    }
-    return this.recursos.filter(r => this.tarjetaSeleccionada!.categorias.includes(this.categoriaDe(r))).length;
+  cerrarAsignacion(): void {
+    this.modalAsignacion = false;
+    this.editandoAsignacion = null;
   }
 
-  seleccionarTarjeta(tarjeta: Tarjeta): void {
-    this.tarjetaSeleccionada = tarjeta;
-    this.filtroNombre = '';
-  }
-
-  volver(): void {
-    this.tarjetaSeleccionada = null;
-    this.filtroNombre = '';
-  }
-
-  borrarRecurso(recurso: IListaRecursos): void {
-    if (!window.confirm('¿Eliminar este recurso?')) {
+  guardarAsignacion(): void {
+    if (!this.asignacionRecursoId) {
       return;
     }
-    this.api.deleteRecurso(recurso as any).subscribe({
+    const item: IMaterialClase = {
+      recursoId: this.asignacionRecursoId,
+      clase: this.asignacionClase,
+      cantidad: Number(this.asignacionCantidad) || 0,
+    };
+    if (this.editandoAsignacion?.materialClaseId) {
+      this.api.actualizarMaterialClase(this.editandoAsignacion.materialClaseId, item).subscribe({
+        next: () => {
+          this.alertas.showSuccess('Asignación actualizada', 'Hecho');
+          this.cerrarAsignacion();
+          this.cargarAsignaciones();
+        },
+        error: () => this.alertas.showError('No se pudo guardar', 'Error'),
+      });
+    } else {
+      this.api.crearMaterialClase(item).subscribe({
+        next: () => {
+          this.alertas.showSuccess('Material asignado', 'Hecho');
+          this.cerrarAsignacion();
+          this.cargarAsignaciones();
+        },
+        error: () => this.alertas.showError('No se pudo asignar', 'Error'),
+      });
+    }
+  }
+
+  quitarAsignacion(a: IMaterialClase): void {
+    if (!a.materialClaseId) {
+      return;
+    }
+    if (!window.confirm('¿Quitar esta asignación?')) {
+      return;
+    }
+    this.api.borrarMaterialClase(a.materialClaseId).subscribe({
       next: () => {
-        this.alertas.showSuccess('Recurso eliminado', 'Hecho');
-        this.cargarRecursos();
+        this.alertas.showSuccess('Asignación eliminada', 'Hecho');
+        this.cargarAsignaciones();
+      },
+      error: () => this.alertas.showError('No se pudo quitar', 'Error'),
+    });
+  }
+
+  nuevoMaterial(): void {
+    this.router.navigate(['nuevo-recursos']);
+  }
+
+  editarMaterial(m: IListaRecursos): void {
+    this.router.navigate(['editar-recursos', m.recursosId]);
+  }
+
+  borrarMaterial(m: IListaRecursos): void {
+    if (!window.confirm(`¿Eliminar el material "${m.articulo}"?`)) {
+      return;
+    }
+    this.api.deleteRecurso(m as any).subscribe({
+      next: () => {
+        this.alertas.showSuccess('Material eliminado', 'Hecho');
+        this.cargar();
       },
       error: () => this.alertas.showError('No se pudo eliminar', 'Error'),
     });
   }
 
-  editarRecursos(id: any) {
-    this.router.navigate(['editar-recursos', id]);
-  }
-
-  nuevoRecurso() {
-    this.router.navigate(['nuevo-recursos']);
-  }
-
-  filtrar() {
-    const filtroSinTildes = this.quitarTildes(this.filtroNombre.toLowerCase());
-    this.recursosFiltrados = this.recursos.filter(recurso =>
-      this.quitarTildes((recurso.articulo || '').toLowerCase()).includes(filtroSinTildes)
-    );
-  }
-
   exportToExcel(): void {
-    if (this.recursos && this.recursos.length > 0) {
+    if (this.materiales && this.materiales.length > 0) {
       const currentDate = new Date();
       const formattedDate = currentDate.toISOString().slice(0, 10).replace(/-/g, '');
-
-      const dataToExport = this.recursos.map(recurso => ({
-        Clase: recurso.categoria || 'Sin categoría',
-        Artículo: recurso.articulo,
-        Cantidad: recurso.cantidad,
-        Numero_Locker: recurso.numero_Locker,
-        Descripción: recurso.descripcion,
+      const dataToExport = this.materiales.map(m => ({
+        Artículo: m.articulo,
+        Locker: m.numero_Locker,
+        Descripción: m.descripcion,
       }));
-
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataToExport);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Recursos');
-      XLSX.writeFile(wb, `recursos_en_lockers${formattedDate}.xlsx`);
+      XLSX.utils.book_append_sheet(wb, ws, 'Materiales');
+      XLSX.writeFile(wb, `materiales${formattedDate}.xlsx`);
     }
   }
 
   quitarTildes(texto: string): string {
     return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  }
-
-  salir() {
-    this.router.navigate(['dashboard']);
   }
 }

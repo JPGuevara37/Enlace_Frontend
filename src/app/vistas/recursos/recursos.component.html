@@ -1,112 +1,123 @@
 <div class="recursos">
-  @if (!tarjetaSeleccionada) {
-    <div class="page-head">
-      <h1>Recursos</h1>
-      <p>Selecciona una clase para ver sus recursos</p>
-    </div>
+  <div class="page-head">
+    <h1>Recursos</h1>
+    <p>Pool de materiales y su asignación a las clases</p>
+  </div>
 
-    <div class="toolbar">
-      <div class="toolbar-left">
-        <button class="btn-add" (click)="nuevoRecurso()"><i class="fa-solid fa-plus"></i> Agregar Recurso</button>
-        <button class="btn-ghost" (click)="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
-      </div>
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar artículo" (input)="filtrar()" />
-      </div>
+  <div class="toolbar">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar material" />
     </div>
+    <div class="toolbar-actions">
+      <button class="btn-add" (click)="nuevoMaterial()"><i class="fa-solid fa-plus"></i> Nuevo material</button>
+      <button class="btn-ghost" (click)="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Exportar</button>
+    </div>
+  </div>
 
+  <section class="seccion">
+    <h2 class="seccion-titulo">Materiales</h2>
     @if (cargando) {
       <p class="empty">Cargando…</p>
     } @else if (errorCarga) {
       <div class="error-box">
         <i class="fa-solid fa-triangle-exclamation"></i>
         <div>
-          <strong>No se pudieron cargar los recursos</strong>
+          <strong>No se pudieron cargar los materiales</strong>
           <p>Verifica la conexión con el servidor e inténtalo de nuevo.</p>
         </div>
-        <button class="btn primary" (click)="cargarRecursos()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
+        <button class="btn primary" (click)="cargar()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
       </div>
-    } @else {
-      <div class="class-grid">
-        @for (t of tarjetas; track t.nombre) {
-          <button class="class-card" (click)="seleccionarTarjeta(t)">
-            <div class="class-body">
-              <div class="class-icon" [style.--c]="t.color">
-                <i class="{{ t.icono }}"></i>
-              </div>
-              <div class="class-info">
-                <h3 class="class-nombre">{{ t.nombre }}</h3>
-                <p class="class-desc">{{ t.descripcion }}</p>
-              </div>
+    } @else if (materialesFiltrados.length) {
+      <div class="materiales-grid">
+        @for (m of materialesFiltrados; track m.recursosId) {
+          <div class="material-card">
+            <div class="material-info">
+              <h3>{{ m.articulo }}</h3>
+              <p class="desc">{{ m.descripcion }}</p>
+              @if (m.numero_Locker) {
+                <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ m.numero_Locker }}</span>
+              }
             </div>
-            <div class="class-foot">
-              <span class="class-count"><b [style.color]="t.color">{{ t.cantidad }}</b> {{ t.cantidad === 1 ? 'recurso' : 'recursos' }}</span>
-              <i class="fa-solid fa-arrow-right class-go" [style.color]="t.color"></i>
-            </div>
-          </button>
-        }
-      </div>
-    }
-  } @else {
-    <div class="page-head">
-      <button class="back" (click)="volver()"><i class="fa-solid fa-arrow-left"></i> Clases</button>
-      <div class="head-row">
-        <div class="head-icon" [style.--c]="tarjetaSeleccionada.color">
-          <i class="{{ tarjetaSeleccionada.icono }}"></i>
-        </div>
-        <div>
-          <h1>{{ tarjetaSeleccionada.nombre }}</h1>
-          <p>{{ totalCategoria }} {{ totalCategoria === 1 ? 'recurso' : 'recursos' }}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="toolbar">
-      <div class="toolbar-left">
-        <button class="btn-add" (click)="nuevoRecurso()"><i class="fa-solid fa-plus"></i> Agregar Recurso</button>
-        <button class="btn-ghost" (click)="exportToExcel()"><i class="fa-solid fa-file-excel"></i> Exportar a Excel</button>
-      </div>
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" [(ngModel)]="filtroNombre" placeholder="Buscar artículo" (input)="filtrar()" />
-      </div>
-    </div>
-
-    @if (cargando) {
-      <p class="empty">Cargando…</p>
-    } @else if (errorCarga) {
-      <div class="error-box">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <div>
-          <strong>No se pudieron cargar los recursos</strong>
-          <p>Verifica la conexión con el servidor e inténtalo de nuevo.</p>
-        </div>
-        <button class="btn primary" (click)="cargarRecursos()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
-      </div>
-    } @else {
-      <div class="grid">
-        @for (r of recursosCategoria; track r.recursosId) {
-          <div class="card">
-            <div class="card-head">
-              <h3 class="title">{{ r.articulo }}</h3>
-              <span class="badge-activo" [class.inactivo]="!r.activo">{{ r.activo ? 'Activo' : 'Inactivo' }}</span>
-            </div>
-            <p class="desc">{{ r.descripcion }}</p>
-            <div class="meta">
-              <span class="chip"><i class="fa-solid fa-box"></i> {{ r.cantidad }}</span>
-              <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ r.numero_Locker }}</span>
-            </div>
-            <div class="actions">
-              <button class="btn primary" (click)="editarRecursos(r.recursosId)"><i class="fa-solid fa-pen"></i> Editar</button>
-              <button class="btn icon danger" (click)="borrarRecurso(r)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+            <div class="material-actions">
+              <button class="btn-icon" (click)="editarMaterial(m)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+              <button class="btn-icon danger" (click)="borrarMaterial(m)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
         }
       </div>
-      @if (!recursosCategoria.length) {
-        <p class="empty">No hay recursos en esta clase</p>
-      }
+    } @else {
+      <p class="empty">No hay materiales</p>
     }
-  }
+  </section>
+
+  <section class="seccion">
+    <h2 class="seccion-titulo">Asignación por clases</h2>
+    <div class="clases-grid">
+      @for (clase of clases; track clase) {
+        <div class="clase-card">
+          <div class="clase-head">
+            <div class="clase-icono" [style.--c]="infoClase(clase).color">
+              <i class="{{ infoClase(clase).icono }}"></i>
+            </div>
+            <h3>{{ clase }}</h3>
+            <button class="btn-add-clase" (click)="abrirAsignacion(clase)" title="Asignar material">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+          <div class="clase-asignaciones">
+            @if (asignacionesDeClase(clase).length) {
+              @for (item of asignacionesDeClase(clase); track item.asignacion.materialClaseId) {
+                <div class="asignacion">
+                  <span class="asignacion-nombre">{{ item.material?.articulo || '—' }}</span>
+                  <span class="asignacion-cantidad">× {{ item.asignacion.cantidad }}</span>
+                  <button class="btn-icon mini" (click)="abrirAsignacion(clase, item.asignacion)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                  <button class="btn-icon mini danger" (click)="quitarAsignacion(item.asignacion)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              }
+            } @else {
+              <div class="sin-asignaciones">Sin materiales asignados</div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
 </div>
+
+@if (modalAsignacion) {
+  <div class="modal-backdrop" (click)="cerrarAsignacion()">
+    <div class="card-modal" (click)="$event.stopPropagation()">
+      <div class="card-head">
+        <div class="card-titulo"><h3>{{ editandoAsignacion ? 'Editar asignación' : 'Asignar material' }}</h3></div>
+        <button class="close" (click)="cerrarAsignacion()">&times;</button>
+      </div>
+      <div class="card-body form-grid">
+        <div class="field">
+          <label>Material</label>
+          <select [(ngModel)]="asignacionRecursoId">
+            @for (m of materiales; track m.recursosId) {
+              <option [value]="m.recursosId">{{ m.articulo }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Clase</label>
+          <select [(ngModel)]="asignacionClase">
+            @for (c of clases; track c) {
+              <option [value]="c">{{ c }}</option>
+            }
+          </select>
+        </div>
+        <div class="field">
+          <label>Cantidad</label>
+          <input type="number" [(ngModel)]="asignacionCantidad" min="0" />
+        </div>
+      </div>
+      <div class="card-foot">
+        <button class="btn-ghost" (click)="cerrarAsignacion()">Cancelar</button>
+        <button class="btn-primary" (click)="guardarAsignacion()">Guardar</button>
+      </div>
+    </div>
+  </div>
+}
