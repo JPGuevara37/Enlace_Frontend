@@ -129,6 +129,54 @@
   text-decoration: underline;
 }
 
+.nombre-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mini-foto {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #e6f3f4;
+}
+
+.mini-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #005a65;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+  flex: 0 0 28px;
+}
+
+.cat-badge {
+  display: inline-block;
+  background: #eef1f7;
+  color: #5a6b8c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+}
+
+.cat-badge.lider {
+  background: #e6f3f4;
+  color: #005a65;
+}
+
+.cat-badge.asistente {
+  background: #e6f7fa;
+  color: #0e9aa7;
+}
+
 .acciones {
   white-space: nowrap;
   text-align: right;

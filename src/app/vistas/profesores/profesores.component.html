@@ -32,6 +32,7 @@
             </th>
             <th>Nombre</th>
             <th>Apellido</th>
+            <th>Categoría</th>
             <th>Email</th>
             <th>Teléfono</th>
             <th></th>
@@ -43,8 +44,18 @@
               <td class="col-check">
                 <input type="checkbox" [checked]="seleccionados.has(p.profesorId)" (change)="toggleSeleccion(p.profesorId)" />
               </td>
-              <td><a class="nombre-link" (click)="verDetalle(p)">{{ p.nombre }}</a></td>
+              <td>
+                <div class="nombre-cell">
+                  @if (p.avatar) {
+                    <img class="mini-foto" [src]="p.avatar" alt="" />
+                  } @else {
+                    <span class="mini-avatar">{{ iniciales(p) }}</span>
+                  }
+                  <a class="nombre-link" (click)="verDetalle(p)">{{ p.nombre }}</a>
+                </div>
+              </td>
               <td>{{ p.apellido }}</td>
+              <td><span class="cat-badge" [class.lider]="p.categoria === 'Líder'" [class.asistente]="p.categoria === 'Asistente'">{{ p.categoria || 'Profesor' }}</span></td>
               <td>{{ p.email }}</td>
               <td>{{ p.telefono }}</td>
               <td class="acciones">
