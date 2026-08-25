@@ -12,6 +12,7 @@
         <a href="#vision">Visión</a>
         <a href="#metas">Metas</a>
         <a href="#actividades">Actividades</a>
+        <a href="#clases">Clases</a>
         <a href="#lideres">Líderes</a>
         <a href="#conozcanos">Conózcanos</a>
       </div>
@@ -20,6 +21,11 @@
   </nav>
 
   <header class="hero" id="inicio">
+    <div class="hero-blobs">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+    </div>
     <div class="hero-content">
       <p class="hero-eyebrow">Iglesia Bautista Arraigados</p>
       <h1>Ministerio Infantil Enlace</h1>
@@ -27,10 +33,31 @@
         Enseñamos a los niños y a sus familias a la luz de las Escrituras, para la gloria de Dios.
       </p>
     </div>
+    <a class="scroll-hint" href="#vision" aria-label="Bajar">
+      <span class="mouse"><span class="wheel"></span></span>
+      <span class="hint-text">Descubre más</span>
+    </a>
   </header>
 
+  <section class="stats-bar reveal">
+    <div class="stats-inner">
+      <div class="stat">
+        <span class="stat-num">{{ clasesDisplay }}</span>
+        <span class="stat-label">Clases</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">{{ maestrosDisplay }}</span>
+        <span class="stat-label">Maestros</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">{{ asistentesDisplay }}</span>
+        <span class="stat-label">Asistentes</span>
+      </div>
+    </div>
+  </section>
+
   <section class="section" id="vision">
-    <div class="container">
+    <div class="container reveal">
       <h2 class="section-title">Nuestra Visión</h2>
       <div class="vision-card">
         <p class="vision-texto">
@@ -50,7 +77,7 @@
   </section>
 
   <section class="section section-alt" id="metas">
-    <div class="container">
+    <div class="container reveal">
       <h2 class="section-title">Metas del año</h2>
       <div class="metas-grid">
         @for (m of metas; track m.contenidoId ?? m.detalle; let i = $index) {
@@ -64,7 +91,7 @@
   </section>
 
   <section class="section" id="actividades">
-    <div class="container">
+    <div class="container reveal">
       <h2 class="section-title">Actividades principales</h2>
       <div class="actividades-grid">
         @for (a of actividades; track a.contenidoId ?? a.titulo) {
@@ -79,7 +106,7 @@
   </section>
 
   <section class="section section-alt" id="clases">
-    <div class="container">
+    <div class="container reveal">
       <h2 class="section-title">Nuestras clases</h2>
       <p class="section-subtitle">Los grupos del ministerio por edades</p>
       <div class="clases-grid">
@@ -94,7 +121,7 @@
   </section>
 
   <section class="section" id="lideres">
-    <div class="container">
+    <div class="container reveal">
       <h2 class="section-title">Líderes</h2>
       @if (lideres.length) {
         <div class="lideres-grid">
@@ -117,7 +144,7 @@
   </section>
 
   <section class="section section-alt" id="conozcanos">
-    <div class="container">
+    <div class="container reveal">
       <h2 class="section-title">Conózcanos</h2>
       <p class="section-subtitle">El equipo de servidores que entrega su tiempo y amor al ministerio</p>
 

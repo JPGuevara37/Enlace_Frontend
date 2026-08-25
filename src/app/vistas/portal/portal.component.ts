@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
@@ -26,7 +26,7 @@ interface Lider {
   templateUrl: './portal.component.html',
   styleUrls: ['./portal.component.css'],
 })
-export class PortalComponent implements OnInit {
+export class PortalComponent implements OnInit, AfterViewInit, OnDestroy {
   metas: IContenidoPortal[] = [];
   actividades: IContenidoPortal[] = [];
   clases: { nombre: string; icono: string; color: string }[] = [];
@@ -35,12 +35,75 @@ export class PortalComponent implements OnInit {
   cargandoEquipo = true;
   errorEquipo = false;
 
+  maestrosDisplay = 0;
+  asistentesDisplay = 0;
+  clasesDisplay = 0;
+  private statsAnimadas = false;
+  private observer?: IntersectionObserver;
+
   constructor(private router: Router, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.cargarEquipo();
     this.cargarContenido();
     this.cargarClases();
+  }
+
+  ngAfterViewInit(): void {
+    this.setupReveal();
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+  }
+
+  get nroMaestros(): number {
+    return this.maestros.length;
+  }
+
+  get nroAsistentes(): number {
+    return this.apoyo.length;
+  }
+
+  get nroClases(): number {
+    return this.clases.length;
+  }
+
+  private setupReveal(): void {
+    if (typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.classList.contains('stats-bar') && !this.statsAnimadas) {
+            this.statsAnimadas = true;
+            this.animarStats();
+          }
+          this.observer!.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => this.observer!.observe(el));
+  }
+
+  private animarStats(): void {
+    const inicio = performance.now();
+    const duracion = 1400;
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - inicio) / duracion);
+      const ease = 1 - Math.pow(1 - p, 3);
+      this.maestrosDisplay = Math.round(this.nroMaestros * ease);
+      this.asistentesDisplay = Math.round(this.nroAsistentes * ease);
+      this.clasesDisplay = Math.round(this.nroClases * ease);
+      this.cdr.detectChanges();
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      }
+    };
+    requestAnimationFrame(tick);
   }
 
   cargarClases(): void {
