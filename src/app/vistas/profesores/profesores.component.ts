@@ -147,6 +147,7 @@ export class ProfesoresComponent implements OnInit {
     reader.onload = () => {
       this.fotoPendiente = reader.result as string;
       this.recortando = true;
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
   }

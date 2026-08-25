@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IResponse } from '../../modelos/response.interfase';
@@ -31,6 +31,7 @@ export class NuevoProfesoresComponent {
     private api: ApiService,
     private router: Router,
     private alertas: AlertasService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   onFotoSeleccionada(event: Event): void {
@@ -43,6 +44,7 @@ export class NuevoProfesoresComponent {
     reader.onload = () => {
       this.fotoPendiente = reader.result as string;
       this.recortando = true;
+      this.cdr.detectChanges();
     };
     reader.readAsDataURL(file);
   }
