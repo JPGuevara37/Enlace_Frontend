@@ -35,9 +35,14 @@
             <div class="material-info">
               <h3>{{ m.articulo }}</h3>
               <p class="desc">{{ m.descripcion }}</p>
-              @if (m.numero_Locker) {
-                <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ m.numero_Locker }}</span>
-              }
+              <div class="chips">
+                @if (m.cantidad != null) {
+                  <span class="chip stock"><i class="fa-solid fa-boxes-stacked"></i> Stock {{ m.cantidad }}</span>
+                }
+                @if (m.numero_Locker) {
+                  <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ m.numero_Locker }}</span>
+                }
+              </div>
             </div>
             <div class="material-actions">
               <button class="btn-icon" (click)="editarMaterial(m)" title="Editar"><i class="fa-solid fa-pen"></i></button>

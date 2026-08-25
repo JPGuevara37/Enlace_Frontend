@@ -16,6 +16,7 @@ export class NuevoRecursosComponent implements OnInit {
 
   nuevoForm = new FormGroup({
     articulo: new FormControl(''),
+    cantidad: new FormControl(''),
     numero_Locker: new FormControl(''),
     descripcion: new FormControl(''),
     activo: new FormControl(true),
@@ -37,6 +38,7 @@ export class NuevoRecursosComponent implements OnInit {
   postForm(form: any) {
     const payload = {
       articulo: form.articulo,
+      cantidad: form.cantidad ? Number(form.cantidad) : undefined,
       numero_Locker: form.numero_Locker ? Number(form.numero_Locker) : 0,
       descripcion: form.descripcion,
       activo: !!form.activo,

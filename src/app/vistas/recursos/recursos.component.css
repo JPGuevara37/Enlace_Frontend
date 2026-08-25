@@ -137,6 +137,17 @@
   border-radius: 999px;
 }
 
+.chip.stock {
+  background: #e6f3f4;
+  color: #005a65;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
 .material-actions {
   display: flex;
   gap: 0.4rem;

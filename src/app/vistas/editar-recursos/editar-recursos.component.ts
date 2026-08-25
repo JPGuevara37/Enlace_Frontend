@@ -26,6 +26,7 @@ export class EditarRecursosComponent implements OnInit {
   editarForm = new FormGroup({
     articulo: new FormControl(''),
     activo: new FormControl(false),
+    cantidad: new FormControl(''),
     numero_Locker: new FormControl(''),
     descripcion: new FormControl(''),
     recursosId: new FormControl(''),
@@ -38,6 +39,7 @@ export class EditarRecursosComponent implements OnInit {
       this.editarForm.setValue({
         articulo: this.datosRecursos.articulo ?? '',
         activo: !!this.datosRecursos.activo,
+        cantidad: this.datosRecursos.cantidad?.toString() ?? '',
         numero_Locker: this.datosRecursos.numero_Locker?.toString() ?? '',
         descripcion: this.datosRecursos.descripcion ?? '',
         recursosId: this.datosRecursos.recursosId ?? '',
@@ -49,6 +51,7 @@ export class EditarRecursosComponent implements OnInit {
     const payload = {
       recursosId: form.recursosId,
       articulo: form.articulo,
+      cantidad: form.cantidad ? Number(form.cantidad) : undefined,
       numero_Locker: form.numero_Locker ? Number(form.numero_Locker) : 0,
       descripcion: form.descripcion,
       activo: !!form.activo,
