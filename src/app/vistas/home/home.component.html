@@ -4,8 +4,17 @@
     <p>Asignaciones del ministerio por domingo</p>
   </div>
 
+  <div class="toolbar">
+    <select class="select" [(ngModel)]="mes" (change)="cambiarPeriodo()">
+      @for (m of meses; track m; let i = $index) {
+        <option [ngValue]="i + 1">{{ m }}</option>
+      }
+    </select>
+    <input class="anno" type="number" [(ngModel)]="anno" (change)="cambiarPeriodo()" />
+  </div>
+
   <div class="domingos-section">
-    <h2 class="section-title">{{ nombreMes(mesActual) }} {{ annoActual }} · Domingos</h2>
+    <h2 class="section-title">{{ nombreMes(mes) }} {{ anno }} · Domingos</h2>
     @if (domingos.length) {
       <div class="domingos-grid">
         @for (d of domingos; track d.dia) {

@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from '../../Servicios/api/api.service';
@@ -11,14 +12,14 @@ const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', '
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   meses = MESES;
-  mesActual = new Date().getMonth() + 1;
-  annoActual = new Date().getFullYear();
+  mes = new Date().getMonth() + 1;
+  anno = new Date().getFullYear();
   cargando = true;
 
   profesoresList: IListaProfesores[] = [];
@@ -31,12 +32,18 @@ export class HomeComponent implements OnInit {
     forkJoin({
       profesores: this.api.getAllProfesores(1).pipe(catchError(() => of([]))),
       edades: this.api.getAllEdades(1).pipe(catchError(() => of([]))),
-      rolesMes: this.api.getRolesMes(this.mesActual, this.annoActual).pipe(catchError(() => of([]))),
-    }).subscribe({
-      next: r => {
-        this.profesoresList = r.profesores;
-        this.edadesList = r.edades;
-        this.construirDomingos(r.rolesMes);
+    }).subscribe(r => {
+      this.profesoresList = r.profesores;
+      this.edadesList = r.edades;
+      this.cargarRoles();
+    });
+  }
+
+  cargarRoles(): void {
+    this.cargando = true;
+    this.api.getRolesMes(this.mes, this.anno).pipe(catchError(() => of([]))).subscribe({
+      next: roles => {
+        this.construirDomingos(roles);
         this.cargando = false;
         this.cdr.detectChanges();
       },
@@ -47,8 +54,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  cambiarPeriodo(): void {
+    this.cargarRoles();
+  }
+
   private construirDomingos(rolesMes: IRolesMes[]): void {
-    const domingos = this.obtenerDomingos(this.mesActual, this.annoActual);
+    const domingos = this.obtenerDomingos(this.mes, this.anno);
     this.domingos = domingos
       .map(dia => {
         const asignaciones = rolesMes.filter(r => Number(r.dia) === dia);
@@ -66,7 +77,7 @@ export class HomeComponent implements OnInit {
             return { rangoEdad: edad.rangoEdad, personas };
           })
           .filter(c => c.personas.length > 0);
-        return { dia, fecha: new Date(this.annoActual, this.mesActual - 1, dia), clases };
+        return { dia, fecha: new Date(this.anno, this.mes - 1, dia), clases };
       })
       .filter(d => d.clases.length > 0);
   }
