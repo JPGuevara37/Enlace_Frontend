@@ -1,0 +1,35 @@
+<div class="recorte-backdrop" (click)="cerrar()">
+  <div class="recorte-modal" (click)="$event.stopPropagation()">
+    <div class="recorte-head">
+      <h3>Ajustar foto</h3>
+      <button type="button" class="close" (click)="cerrar()">&times;</button>
+    </div>
+
+    <div class="recorte-body">
+      <div class="crop-container"
+           (pointerdown)="onPointerDown($event)"
+           (pointermove)="onPointerMove($event)"
+           (pointerup)="onPointerUp()"
+           (pointerleave)="onPointerUp()">
+        <img class="crop-img" [src]="imagen" alt=""
+             [style.width.px]="displayedW"
+             [style.height.px]="displayedH"
+             [style.left.px]="left"
+             [style.top.px]="top" />
+        <div class="crop-guia"></div>
+      </div>
+
+      <div class="zoom-bar">
+        <i class="fa-solid fa-minus"></i>
+        <input type="range" min="1" max="3" step="0.01" [value]="zoom" (input)="onZoomChange($any($event.target).value)" />
+        <i class="fa-solid fa-plus"></i>
+      </div>
+      <p class="hint">Arrastra para centrar y usa el control para acercar o alejar</p>
+    </div>
+
+    <div class="recorte-foot">
+      <button type="button" class="btn-ghost" (click)="cerrar()">Cancelar</button>
+      <button type="button" class="btn-primary" (click)="aplicar()">Aplicar</button>
+    </div>
+  </div>
+</div>

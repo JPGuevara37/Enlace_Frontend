@@ -5,11 +5,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ApiService } from '../../Servicios/api/api.service';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
+import { FotoRecorteComponent } from '../../componentes/foto-recorte/foto-recorte.component';
 
 @Component({
   selector: 'app-profesores',
   standalone: true,
-  imports: [FormsModule, NgxPaginationModule],
+  imports: [FormsModule, NgxPaginationModule, FotoRecorteComponent],
   templateUrl: './profesores.component.html',
   styleUrls: ['./profesores.component.css'],
 })
@@ -22,6 +23,8 @@ export class ProfesoresComponent implements OnInit {
 
   detalle: IListaProfesores | null = null;
   editando: IListaProfesores | null = null;
+  recortando = false;
+  fotoPendiente = '';
 
   itemsPerPage = 10;
   currentPage = 1;
@@ -142,9 +145,21 @@ export class ProfesoresComponent implements OnInit {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      this.editando!.avatar = reader.result as string;
+      this.fotoPendiente = reader.result as string;
+      this.recortando = true;
     };
     reader.readAsDataURL(file);
+  }
+
+  aplicarFoto(dataUrl: string): void {
+    if (this.editando) {
+      this.editando.avatar = dataUrl;
+    }
+    this.recortando = false;
+  }
+
+  cerrarRecorte(): void {
+    this.recortando = false;
   }
 
   cerrarEdicion(): void {

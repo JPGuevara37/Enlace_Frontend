@@ -151,3 +151,7 @@
     </div>
   </div>
 }
+
+@if (recortando) {
+  <app-foto-recorte [imagen]="fotoPendiente" (aplicada)="aplicarFoto($event)" (cerrada)="cerrarRecorte()"></app-foto-recorte>
+}

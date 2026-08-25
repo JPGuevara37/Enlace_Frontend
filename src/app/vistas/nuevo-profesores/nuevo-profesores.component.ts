@@ -4,16 +4,19 @@ import { Router } from '@angular/router';
 import { IResponse } from '../../modelos/response.interfase';
 import { AlertasService } from '../../Servicios/alertas/alertas.service';
 import { ApiService } from '../../Servicios/api/api.service';
+import { FotoRecorteComponent } from '../../componentes/foto-recorte/foto-recorte.component';
 
 @Component({
   selector: 'app-nuevo-profesores',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FotoRecorteComponent],
   templateUrl: './nuevo-profesores.component.html',
   styleUrl: './nuevo-profesores.component.css',
 })
 export class NuevoProfesoresComponent {
   avatarPreview = '';
+  recortando = false;
+  fotoPendiente = '';
 
   nuevoForm = new FormGroup({
     nombre: new FormControl(''),
@@ -38,10 +41,20 @@ export class NuevoProfesoresComponent {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      this.avatarPreview = reader.result as string;
-      this.nuevoForm.patchValue({ avatar: this.avatarPreview });
+      this.fotoPendiente = reader.result as string;
+      this.recortando = true;
     };
     reader.readAsDataURL(file);
+  }
+
+  aplicarFoto(dataUrl: string): void {
+    this.avatarPreview = dataUrl;
+    this.nuevoForm.patchValue({ avatar: dataUrl });
+    this.recortando = false;
+  }
+
+  cerrarRecorte(): void {
+    this.recortando = false;
   }
 
   quitarFoto(): void {
