@@ -52,6 +52,10 @@ export class LayoutComponent implements OnDestroy {
     return this.api.isAdmin();
   }
 
+  get esGestor(): boolean {
+    return ['administrador', 'lidere'].includes(this.api.getRole());
+  }
+
   get iniciales(): string {
     const n = (this.api.getNombre() || '').trim();
     const a = (this.api.getApellido() || '').trim();

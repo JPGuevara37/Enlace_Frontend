@@ -77,3 +77,136 @@
   color: #c3cddd;
   font-size: 0.9rem;
 }
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.chip-mes {
+  border: 1.5px solid #e2e8f4;
+  background: #fff;
+  color: #5a6b8c;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip-mes:hover {
+  border-color: #005a65;
+  color: #005a65;
+}
+
+.chip-mes.active {
+  background: #005a65;
+  border-color: #005a65;
+  color: #fff;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.rol-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(20, 40, 80, 0.06);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.rol-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.rol-clase {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #2b3a55;
+}
+
+.rol-estado {
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #fff3cd;
+  color: #b58a00;
+}
+
+.rol-estado.confirmado {
+  background: #e6f7ea;
+  color: #1f9d55;
+}
+
+.rol-fecha {
+  font-size: 0.85rem;
+  color: #8592a6;
+  text-transform: capitalize;
+}
+
+.rol-respuesta {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.btn-resp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: 1.5px solid #e2e8f4;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5rem 0.85rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: #5a6b8c;
+  transition: all 0.15s ease;
+}
+
+.btn-resp.si.activo {
+  background: #1cc88a;
+  border-color: #1cc88a;
+  color: #fff;
+}
+
+.btn-resp.no.activo {
+  background: #e74a3b;
+  border-color: #e74a3b;
+  color: #fff;
+}
+
+.rol-mi-estado {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8592a6;
+}
+
+.rol-mi-estado.aceptada {
+  color: #1f9d55;
+}
+
+.rol-mi-estado.rechazada {
+  color: #e74a3b;
+}
+
+.empty {
+  text-align: center;
+  color: #8592a6;
+  padding: 3rem 0;
+}

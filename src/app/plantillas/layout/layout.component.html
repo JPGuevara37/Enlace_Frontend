@@ -44,24 +44,33 @@
         <i class="fa-solid fa-house"></i>
         <span>Inicio</span>
       </a>
-      <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="cerrarSidebar()">
-        <i class="fa-solid fa-chart-pie"></i>
-        <span>Panel</span>
-      </a>
 
-      <div class="nav-group">Personas</div>
-      <a class="nav-link" routerLink="/encargados" routerLinkActive="active" (click)="cerrarSidebar()">
-        <i class="fa-solid fa-user-group"></i>
-        <span>Padres</span>
-      </a>
-      <a class="nav-link" routerLink="/alumnos" routerLinkActive="active" (click)="cerrarSidebar()">
-        <i class="fa-solid fa-children"></i>
-        <span>Alumnos</span>
-      </a>
-      <a class="nav-link" routerLink="/profesores" routerLinkActive="active" (click)="cerrarSidebar()">
-        <i class="fa-solid fa-chalkboard-user"></i>
-        <span>Profesores</span>
-      </a>
+      @if (esGestor) {
+        <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" (click)="cerrarSidebar()">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Panel</span>
+        </a>
+
+        <div class="nav-group">Personas</div>
+        <a class="nav-link" routerLink="/encargados" routerLinkActive="active" (click)="cerrarSidebar()">
+          <i class="fa-solid fa-user-group"></i>
+          <span>Padres</span>
+        </a>
+        <a class="nav-link" routerLink="/alumnos" routerLinkActive="active" (click)="cerrarSidebar()">
+          <i class="fa-solid fa-children"></i>
+          <span>Alumnos</span>
+        </a>
+        <a class="nav-link" routerLink="/profesores" routerLinkActive="active" (click)="cerrarSidebar()">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <span>Profesores</span>
+        </a>
+
+        <div class="nav-group">Asignaciones</div>
+        <a class="nav-link" routerLink="/roles-mes" routerLinkActive="active" (click)="cerrarSidebar()">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>Roles del mes</span>
+        </a>
+      }
 
       <div class="nav-group">Utilidades</div>
       <a class="nav-link" routerLink="/recursos" routerLinkActive="active" (click)="cerrarSidebar()">
@@ -71,10 +80,6 @@
       <a class="nav-link" routerLink="/material" routerLinkActive="active" (click)="cerrarSidebar()">
         <i class="fa-solid fa-folder-open"></i>
         <span>Material</span>
-      </a>
-      <a class="nav-link" routerLink="/roles-mes" routerLinkActive="active" (click)="cerrarSidebar()">
-        <i class="fa-solid fa-calendar-days"></i>
-        <span>Roles del mes</span>
       </a>
 
       @if (esAdmin) {
