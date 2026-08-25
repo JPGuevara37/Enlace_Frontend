@@ -186,6 +186,23 @@
   margin-top: 0.25rem;
 }
 
+.login-back {
+  text-align: center;
+  margin: 1.25rem 0 0;
+}
+
+.login-back a {
+  color: #8592a6;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.login-back a:hover {
+  color: #4e73df;
+}
+
 @media (max-width: 480px) {
   .login-card {
     padding: 2rem 1.5rem 1.75rem;

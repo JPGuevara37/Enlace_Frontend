@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { LoginComponent } from './vistas/login/login.component';
+import { PortalComponent } from './vistas/portal/portal.component';
 import { LayoutComponent } from './plantillas/layout/layout.component';
 import { HomeComponent } from './vistas/home/home.component';
 import { DashboardComponent } from './vistas/dashboard/dashboard.component';
@@ -27,7 +28,7 @@ import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', component: PortalComponent },
   { path: 'login', component: LoginComponent },
   { path: 'reset', component: ResetComponent },
   {
