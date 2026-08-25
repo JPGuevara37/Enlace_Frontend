@@ -31,6 +31,9 @@ export class RolesMesComponent implements OnInit {
   personaArrastrada: IListaProfesores | null = null;
   personaSeleccionada: IListaProfesores | null = null;
 
+  profesoresAbierto = true;
+  asistentesAbierto = true;
+
   constructor(
     private api: ApiService,
     private cdr: ChangeDetectorRef,
@@ -210,6 +213,14 @@ export class RolesMesComponent implements OnInit {
 
   getPersona(personaId: string): IListaProfesores | undefined {
     return this.personas.find(p => p.profesorId === personaId);
+  }
+
+  get profesores(): IListaProfesores[] {
+    return this.personas.filter(p => (p.categoria || '') !== 'Equipo de apoyo');
+  }
+
+  get asistentes(): IListaProfesores[] {
+    return this.personas.filter(p => (p.categoria || '') === 'Equipo de apoyo');
   }
 
   quitar(rol: IRolesMes): void {
