@@ -37,8 +37,13 @@
 }
 
 .brand img {
-  height: 42px;
-  width: auto;
+  width: 46px;
+  height: 46px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #fff;
+  padding: 3px;
+  box-shadow: 0 4px 14px rgba(20, 40, 80, 0.18);
 }
 
 .brand-text {
@@ -672,8 +677,13 @@ section {
 }
 
 .footer-brand img {
-  height: 40px;
-  width: auto;
+  width: 44px;
+  height: 44px;
+  object-fit: cover;
+  border-radius: 50%;
+  background: #fff;
+  padding: 3px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .footer p {
