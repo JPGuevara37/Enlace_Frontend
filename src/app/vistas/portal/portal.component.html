@@ -85,15 +85,23 @@
   <section class="section section-alt" id="lideres">
     <div class="container">
       <h2 class="section-title">Líderes</h2>
-      <div class="lideres-grid">
-        @for (l of lideres; track l.nombre) {
-          <div class="lider-card">
-            <div class="lider-avatar">{{ l.iniciales }}</div>
-            <h3>{{ l.nombre }}</h3>
-            <p>{{ l.rol }}</p>
-          </div>
-        }
-      </div>
+      @if (lideres.length) {
+        <div class="lideres-grid">
+          @for (l of lideres; track l.nombre) {
+            <div class="lider-card">
+              @if (l.avatar) {
+                <img class="lider-foto" [src]="l.avatar" alt="{{ l.nombre }}" />
+              } @else {
+                <div class="lider-avatar">{{ l.iniciales }}</div>
+              }
+              <h3>{{ l.nombre }}</h3>
+              <p>{{ l.rol }}</p>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="cargando">Pronto estaremos presentando a nuestros líderes.</p>
+      }
     </div>
   </section>
 
@@ -104,13 +112,22 @@
 
       @if (cargandoEquipo) {
         <p class="cargando">Cargando equipo…</p>
+      } @else if (errorEquipo) {
+        <div class="error-equipo">
+          <p>No se pudo cargar el equipo. Inténtalo de nuevo.</p>
+          <button class="btn-reintentar" (click)="cargarEquipo()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
+        </div>
       } @else {
         @if (maestros.length) {
           <h3 class="grupo-titulo">Maestros</h3>
           <div class="equipo-grid">
             @for (p of maestros; track p.profesorId) {
               <div class="persona-card">
-                <div class="persona-avatar">{{ iniciales(p.nombre, p.apellido) }}</div>
+                @if (p.avatar) {
+                  <img class="persona-foto" [src]="p.avatar" alt="{{ p.nombre }} {{ p.apellido }}" />
+                } @else {
+                  <div class="persona-avatar">{{ iniciales(p.nombre, p.apellido) }}</div>
+                }
                 <h4>{{ p.nombre }} {{ p.apellido }}</h4>
                 <p>{{ p.categoria || 'Maestro' }}</p>
               </div>
@@ -119,13 +136,17 @@
         }
 
         @if (apoyo.length) {
-          <h3 class="grupo-titulo">Equipo de apoyo</h3>
+          <h3 class="grupo-titulo">Asistentes</h3>
           <div class="equipo-grid">
             @for (p of apoyo; track p.profesorId) {
               <div class="persona-card">
-                <div class="persona-avatar apoyo">{{ iniciales(p.nombre, p.apellido) }}</div>
+                @if (p.avatar) {
+                  <img class="persona-foto" [src]="p.avatar" alt="{{ p.nombre }} {{ p.apellido }}" />
+                } @else {
+                  <div class="persona-avatar apoyo">{{ iniciales(p.nombre, p.apellido) }}</div>
+                }
                 <h4>{{ p.nombre }} {{ p.apellido }}</h4>
-                <p>{{ p.categoria || 'Apoyo' }}</p>
+                <p>Asistente</p>
               </div>
             }
           </div>

@@ -198,16 +198,16 @@ export class RolesMesComponent implements OnInit {
       return;
     }
 
-    const esProfesor = (persona.categoria || 'Profesor') !== 'Equipo de apoyo';
+    const esProfesor = (persona.categoria || 'Profesor') !== 'Asistente';
 
     if (esProfesor) {
-      const profes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') !== 'Equipo de apoyo').length;
+      const profes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') !== 'Asistente').length;
       if (profes >= 2) {
         window.alert('Máximo 2 profesores por clase');
         return;
       }
     } else {
-      const asistentes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') === 'Equipo de apoyo').length;
+      const asistentes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') === 'Asistente').length;
       if (asistentes >= 1) {
         window.alert('Máximo 1 asistente por clase');
         return;
@@ -252,7 +252,7 @@ export class RolesMesComponent implements OnInit {
 
   esAsistente(rol: IRolesMes): boolean {
     const p = this.getPersona(rol.personaId);
-    return (p?.categoria || 'Profesor') === 'Equipo de apoyo';
+    return (p?.categoria || 'Profesor') === 'Asistente';
   }
 
   getPersona(personaId: string): IListaProfesores | undefined {
@@ -260,11 +260,11 @@ export class RolesMesComponent implements OnInit {
   }
 
   get profesores(): IListaProfesores[] {
-    return this.personas.filter(p => (p.categoria || '') !== 'Equipo de apoyo');
+    return this.personas.filter(p => (p.categoria || '') !== 'Asistente');
   }
 
   get asistentes(): IListaProfesores[] {
-    return this.personas.filter(p => (p.categoria || '') === 'Equipo de apoyo');
+    return this.personas.filter(p => (p.categoria || '') === 'Asistente');
   }
 
   quitar(rol: IRolesMes): void {

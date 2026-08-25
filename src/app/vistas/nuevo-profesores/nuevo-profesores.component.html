@@ -26,9 +26,23 @@
         <div class="field">
           <label>Categoría</label>
           <select formControlName="categoria">
+            <option value="Líder">Líder</option>
             <option value="Profesor">Profesor</option>
-            <option value="Equipo de apoyo">Equipo de apoyo</option>
+            <option value="Asistente">Asistente</option>
           </select>
+        </div>
+        <div class="field">
+          <label>Foto</label>
+          <div class="foto-field">
+            <img class="foto-preview" [src]="avatarPreview" alt="Foto" />
+            <label class="file-picker">
+              <i class="fa-solid fa-image"></i> Elegir foto
+              <input type="file" accept="image/*" (change)="onFotoSeleccionada($event)" />
+            </label>
+            @if (avatarPreview) {
+              <button type="button" class="btn-ghost" (click)="quitarFoto()">Quitar</button>
+            }
+          </div>
         </div>
       </div>
 

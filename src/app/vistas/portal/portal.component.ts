@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../../Servicios/api/api.service';
 import { IListaProfesores } from '../../modelos/listaprofesores.interfase';
@@ -9,6 +9,13 @@ interface Actividad {
   icono: string;
 }
 
+interface Lider {
+  nombre: string;
+  rol: string;
+  iniciales: string;
+  avatar: string;
+}
+
 @Component({
   selector: 'app-portal',
   standalone: true,
@@ -17,11 +24,6 @@ interface Actividad {
   styleUrls: ['./portal.component.css'],
 })
 export class PortalComponent implements OnInit {
-  lideres = [
-    { nombre: 'José Pablo Guevara Brenes', rol: 'Líder de ministerio', iniciales: 'JG' },
-    { nombre: 'Pri Araya', rol: 'Líder de ministerio', iniciales: 'PA' },
-  ];
-
   metas = [
     'Continuar con el material propio, estudiando libros enteros de la Biblia.',
     'Capacitar al equipo de servidores para tratar niños con capacidades especiales y niños en riesgo, además de proveer más técnicas de enseñanza.',
@@ -38,23 +40,50 @@ export class PortalComponent implements OnInit {
     { titulo: 'Fiesta de Navidad', detalle: '13 de diciembre', icono: 'fa-gift' },
   ];
 
-  maestros: IListaProfesores[] = [];
-  apoyo: IListaProfesores[] = [];
+  profesores: IListaProfesores[] = [];
   cargandoEquipo = true;
+  errorEquipo = false;
 
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(private router: Router, private api: ApiService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    this.cargarEquipo();
+  }
+
+  cargarEquipo(): void {
+    this.cargandoEquipo = true;
+    this.errorEquipo = false;
     this.api.getAllProfesores(1).subscribe({
       next: data => {
-        this.maestros = data.filter(p => (p.categoria || '') !== 'Equipo de apoyo');
-        this.apoyo = data.filter(p => (p.categoria || '') === 'Equipo de apoyo');
+        this.profesores = data;
         this.cargandoEquipo = false;
+        this.cdr.detectChanges();
       },
       error: () => {
         this.cargandoEquipo = false;
+        this.errorEquipo = true;
+        this.cdr.detectChanges();
       },
     });
+  }
+
+  get lideres(): Lider[] {
+    return this.profesores
+      .filter(p => (p.categoria || '') === 'Líder')
+      .map(p => ({
+        nombre: `${p.nombre} ${p.apellido}`.trim(),
+        rol: 'Líder de ministerio',
+        iniciales: this.iniciales(p.nombre, p.apellido),
+        avatar: p.avatar || '',
+      }));
+  }
+
+  get maestros(): IListaProfesores[] {
+    return this.profesores.filter(p => !['Líder', 'Asistente'].includes(p.categoria || ''));
+  }
+
+  get apoyo(): IListaProfesores[] {
+    return this.profesores.filter(p => (p.categoria || '') === 'Asistente');
   }
 
   ingresar(): void {

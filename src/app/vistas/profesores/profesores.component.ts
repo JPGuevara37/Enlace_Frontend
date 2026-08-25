@@ -134,6 +134,19 @@ export class ProfesoresComponent implements OnInit {
     this.editando = { ...profesor, categoria: profesor.categoria || 'Profesor' };
   }
 
+  onFotoSeleccionada(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file || !this.editando) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.editando!.avatar = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
   cerrarEdicion(): void {
     this.editando = null;
   }

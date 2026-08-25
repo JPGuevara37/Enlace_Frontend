@@ -206,7 +206,7 @@ export class ApiService {
   //servicio para Profesores
     getAllProfesores(page:number):Observable<IListaProfesores[]>{
       let direccion = this.url + "/api/profesores";
-      return this.http.get<IListaProfesores[]>(direccion);
+      return this.http.get<IListaProfesores[]>(direccion).pipe(timeout(30000));
     }
 
     getSingleProfesor(id: any):Observable<IEncargado>{

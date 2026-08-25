@@ -327,6 +327,39 @@
   cursor: pointer;
 }
 
+.foto-field {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.foto-preview {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #eef1f7;
+  border: 2px solid #e2e8f4;
+}
+
+.file-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e6f3f4;
+  color: #005a65;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.55rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.file-picker input {
+  display: none;
+}
+
 /* Paginación */
 ::ng-deep .ngx-pagination {
   display: flex;

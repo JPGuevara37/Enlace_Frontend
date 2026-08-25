@@ -114,7 +114,7 @@ export class DashboardComponent implements OnInit {
                 const p = this.profesoresList.find(pp => pp.profesorId === a.personaId);
                 return {
                   nombre: p ? `${p.nombre} ${p.apellido}` : '—',
-                  esAsistente: (p?.categoria || 'Profesor') === 'Equipo de apoyo',
+                  esAsistente: (p?.categoria || 'Profesor') === 'Asistente',
                 };
               });
             return { rangoEdad: edad.rangoEdad, personas };

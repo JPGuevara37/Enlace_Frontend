@@ -114,9 +114,23 @@
         <div class="field">
           <label>Categoría</label>
           <select [(ngModel)]="editando.categoria">
+            <option value="Líder">Líder</option>
             <option value="Profesor">Profesor</option>
-            <option value="Equipo de apoyo">Equipo de apoyo</option>
+            <option value="Asistente">Asistente</option>
           </select>
+        </div>
+        <div class="field">
+          <label>Foto</label>
+          <div class="foto-field">
+            <img class="foto-preview" [src]="editando.avatar || 'assets/enlace_imag.png'" alt="Foto" />
+            <label class="file-picker">
+              <i class="fa-solid fa-image"></i> Elegir foto
+              <input type="file" accept="image/*" (change)="onFotoSeleccionada($event)" />
+            </label>
+            @if (editando.avatar) {
+              <button class="btn-ghost" (click)="editando.avatar = ''">Quitar</button>
+            }
+          </div>
         </div>
       </div>
       <div class="card-foot">

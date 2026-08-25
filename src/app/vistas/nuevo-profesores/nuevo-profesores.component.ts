@@ -13,12 +13,15 @@ import { ApiService } from '../../Servicios/api/api.service';
   styleUrl: './nuevo-profesores.component.css',
 })
 export class NuevoProfesoresComponent {
+  avatarPreview = '';
+
   nuevoForm = new FormGroup({
     nombre: new FormControl(''),
     apellido: new FormControl(''),
     email: new FormControl(''),
     telefono: new FormControl(''),
     categoria: new FormControl('Profesor'),
+    avatar: new FormControl(''),
   });
 
   constructor(
@@ -26,6 +29,25 @@ export class NuevoProfesoresComponent {
     private router: Router,
     private alertas: AlertasService,
   ) {}
+
+  onFotoSeleccionada(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) {
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.avatarPreview = reader.result as string;
+      this.nuevoForm.patchValue({ avatar: this.avatarPreview });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  quitarFoto(): void {
+    this.avatarPreview = '';
+    this.nuevoForm.patchValue({ avatar: '' });
+  }
 
   postForm(form: any) {
     this.api.postProfesor(form).subscribe(data => {

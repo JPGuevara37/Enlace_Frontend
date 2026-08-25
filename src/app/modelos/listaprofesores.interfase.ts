@@ -5,4 +5,5 @@ export interface IListaProfesores {
     email: string;
     telefono: string;
     categoria?: string;
+    avatar?: string;
 }

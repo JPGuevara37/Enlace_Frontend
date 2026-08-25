@@ -4,4 +4,6 @@ export interface IProfesores {
     apellido?: string;
     email?: string;
     telefono?: string;
+    categoria?: string;
+    avatar?: string;
 }
