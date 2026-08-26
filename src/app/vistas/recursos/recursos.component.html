@@ -16,6 +16,39 @@
   </div>
 
   <section class="seccion">
+    <h2 class="seccion-titulo">Asignación por clases</h2>
+    <div class="clases-grid">
+      @for (clase of clases; track clase) {
+        <div class="clase-card">
+          <div class="clase-head">
+            <div class="clase-icono" [style.--c]="infoClase(clase).color">
+              <i class="{{ infoClase(clase).icono }}"></i>
+            </div>
+            <h3>{{ clase }}</h3>
+            <button class="btn-add-clase" (click)="abrirAsignacion(clase)" title="Asignar material">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+          <div class="clase-asignaciones">
+            @if (asignacionesDeClase(clase).length) {
+              @for (item of asignacionesDeClase(clase); track item.asignacion.materialClaseId) {
+                <div class="asignacion">
+                  <span class="asignacion-nombre">{{ item.material?.articulo || '—' }}</span>
+                  <span class="asignacion-cantidad">× {{ item.asignacion.cantidad }}</span>
+                  <button class="btn-icon mini" (click)="abrirAsignacion(clase, item.asignacion)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                  <button class="btn-icon mini danger" (click)="quitarAsignacion(item.asignacion)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+              }
+            } @else {
+              <div class="sin-asignaciones">Sin materiales asignados</div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="seccion">
     <h2 class="seccion-titulo">Materiales</h2>
     @if (cargando) {
       <p class="empty">Cargando…</p>
@@ -54,39 +87,6 @@
     } @else {
       <p class="empty">No hay materiales</p>
     }
-  </section>
-
-  <section class="seccion">
-    <h2 class="seccion-titulo">Asignación por clases</h2>
-    <div class="clases-grid">
-      @for (clase of clases; track clase) {
-        <div class="clase-card">
-          <div class="clase-head">
-            <div class="clase-icono" [style.--c]="infoClase(clase).color">
-              <i class="{{ infoClase(clase).icono }}"></i>
-            </div>
-            <h3>{{ clase }}</h3>
-            <button class="btn-add-clase" (click)="abrirAsignacion(clase)" title="Asignar material">
-              <i class="fa-solid fa-plus"></i>
-            </button>
-          </div>
-          <div class="clase-asignaciones">
-            @if (asignacionesDeClase(clase).length) {
-              @for (item of asignacionesDeClase(clase); track item.asignacion.materialClaseId) {
-                <div class="asignacion">
-                  <span class="asignacion-nombre">{{ item.material?.articulo || '—' }}</span>
-                  <span class="asignacion-cantidad">× {{ item.asignacion.cantidad }}</span>
-                  <button class="btn-icon mini" (click)="abrirAsignacion(clase, item.asignacion)" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                  <button class="btn-icon mini danger" (click)="quitarAsignacion(item.asignacion)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-              }
-            } @else {
-              <div class="sin-asignaciones">Sin materiales asignados</div>
-            }
-          </div>
-        </div>
-      }
-    </div>
   </section>
 </div>
 
