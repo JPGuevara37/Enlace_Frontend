@@ -32,6 +32,7 @@ export class RecursosComponent implements OnInit {
   filtroNombre = '';
   cargando = true;
   errorCarga = false;
+  materialesAbierto = false;
 
   modalAsignacion = false;
   editandoAsignacion: IMaterialClase | null = null;

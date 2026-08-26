@@ -49,43 +49,56 @@
   </section>
 
   <section class="seccion">
-    <h2 class="seccion-titulo">Materiales</h2>
-    @if (cargando) {
-      <p class="empty">Cargando…</p>
-    } @else if (errorCarga) {
-      <div class="error-box">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <div>
-          <strong>No se pudieron cargar los materiales</strong>
-          <p>Verifica la conexión con el servidor e inténtalo de nuevo.</p>
-        </div>
-        <button class="btn primary" (click)="cargar()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
-      </div>
-    } @else if (materialesFiltrados.length) {
-      <div class="materiales-grid">
-        @for (m of materialesFiltrados; track m.recursosId) {
-          <div class="material-card">
-            <div class="material-info">
-              <h3>{{ m.articulo }}</h3>
-              <p class="desc">{{ m.descripcion }}</p>
-              <div class="chips">
-                @if (m.cantidad != null) {
-                  <span class="chip stock"><i class="fa-solid fa-boxes-stacked"></i> Stock {{ m.cantidad }}</span>
-                }
-                @if (m.numero_Locker) {
-                  <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ m.numero_Locker }}</span>
-                }
-              </div>
+    <button class="materiales-toggle" (click)="materialesAbierto = !materialesAbierto">
+      <span class="toggle-izq">
+        <i class="fa-solid fa-box-archive"></i>
+        <span>Materiales ({{ materiales.length }})</span>
+      </span>
+      <i class="fa-solid" [class.fa-chevron-up]="materialesAbierto" [class.fa-chevron-down]="!materialesAbierto"></i>
+    </button>
+
+    @if (materialesAbierto) {
+      <div class="materiales-panel">
+        @if (cargando) {
+          <p class="empty">Cargando…</p>
+        } @else if (errorCarga) {
+          <div class="error-box">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>
+              <strong>No se pudieron cargar los materiales</strong>
+              <p>Verifica la conexión con el servidor e inténtalo de nuevo.</p>
             </div>
-            <div class="material-actions">
-              <button class="btn-icon" (click)="editarMaterial(m)" title="Editar"><i class="fa-solid fa-pen"></i></button>
-              <button class="btn-icon danger" (click)="borrarMaterial(m)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
-            </div>
+            <button class="btn primary" (click)="cargar()"><i class="fa-solid fa-rotate-right"></i> Reintentar</button>
           </div>
+        } @else if (materialesFiltrados.length) {
+          <div class="materiales-lista">
+            @for (m of materialesFiltrados; track m.recursosId) {
+              <div class="material-fila">
+                <div class="material-info">
+                  <span class="articulo">{{ m.articulo }}</span>
+                  @if (m.descripcion) {
+                    <span class="desc">{{ m.descripcion }}</span>
+                  }
+                  <div class="chips">
+                    @if (m.cantidad != null) {
+                      <span class="chip stock"><i class="fa-solid fa-boxes-stacked"></i> Stock {{ m.cantidad }}</span>
+                    }
+                    @if (m.numero_Locker) {
+                      <span class="chip"><i class="fa-solid fa-lock"></i> Locker {{ m.numero_Locker }}</span>
+                    }
+                  </div>
+                </div>
+                <div class="material-actions">
+                  <button class="btn-icon" (click)="editarMaterial(m)" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                  <button class="btn-icon danger" (click)="borrarMaterial(m)" title="Eliminar"><i class="fa-solid fa-trash"></i></button>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <p class="empty">No hay materiales</p>
         }
       </div>
-    } @else {
-      <p class="empty">No hay materiales</p>
     }
   </section>
 </div>
