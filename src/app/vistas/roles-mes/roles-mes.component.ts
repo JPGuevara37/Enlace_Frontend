@@ -259,6 +259,11 @@ export class RolesMesComponent implements OnInit {
     return this.personas.find(p => p.profesorId === personaId);
   }
 
+  iniciales(personaId: string): string {
+    const p = this.getPersona(personaId);
+    return `${p?.nombre?.[0] || ''}${p?.apellido?.[0] || ''}`;
+  }
+
   get profesores(): IListaProfesores[] {
     return this.personas.filter(p => (p.categoria || '') !== 'Asistente');
   }

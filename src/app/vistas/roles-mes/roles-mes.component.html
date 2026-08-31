@@ -33,18 +33,25 @@
             @if (getAsignaciones(edad.edadId).length) {
               @for (rol of getAsignaciones(edad.edadId); track rol.rolMesId) {
                 <div class="asignado">
-                  <span>{{ getPersona(rol.personaId)?.nombre }} {{ getPersona(rol.personaId)?.apellido }}</span>
-                  <span class="rol-badge" [class.asistente]="esAsistente(rol)">{{ esAsistente(rol) ? 'Asistente' : 'Profe' }}</span>
-                  @if (rol.respuesta) {
-                    <span class="resp-badge" [class.rechazada]="rol.respuesta === 'Rechazada'">
-                      <i class="fa-solid" [class.fa-check]="rol.respuesta === 'Aceptada'" [class.fa-xmark]="rol.respuesta === 'Rechazada'"></i>
-                      {{ rol.respuesta === 'Aceptada' ? 'Sí' : 'No' }}
-                    </span>
-                  }
-                  <button class="estado" [class.confirmado]="rol.estado === 'Confirmado'" (click)="alternarEstado(rol)">
-                    {{ rol.estado }}
-                  </button>
-                  <button class="quitar" (click)="quitar(rol)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
+                  <div class="asignado-row">
+                    <span class="avatar-mini">{{ iniciales(rol.personaId) }}</span>
+                    <span class="asignado-nombre">{{ getPersona(rol.personaId)?.nombre }} {{ getPersona(rol.personaId)?.apellido }}</span>
+                    <span class="rol-badge" [class.asistente]="esAsistente(rol)">{{ esAsistente(rol) ? 'Asistente' : 'Profesor' }}</span>
+                  </div>
+                  <div class="asignado-foot">
+                    @if (rol.respuesta) {
+                      <span class="resp-badge" [class.rechazada]="rol.respuesta === 'Rechazada'">
+                        <i class="fa-solid" [class.fa-check]="rol.respuesta === 'Aceptada'" [class.fa-xmark]="rol.respuesta === 'Rechazada'"></i>
+                        {{ rol.respuesta === 'Aceptada' ? 'Aceptó' : 'Rechazó' }}
+                      </span>
+                    }
+                    <span class="spacer"></span>
+                    <button class="estado" [class.confirmado]="rol.estado === 'Confirmado'" (click)="alternarEstado(rol)">
+                      <i class="fa-solid" [class.fa-circle-check]="rol.estado === 'Confirmado'" [class.fa-circle-dot]="rol.estado !== 'Confirmado'"></i>
+                      {{ rol.estado }}
+                    </button>
+                    <button class="quitar" (click)="quitar(rol)" title="Quitar"><i class="fa-solid fa-xmark"></i></button>
+                  </div>
                 </div>
               }
             } @else {
@@ -111,20 +118,33 @@
     @if (misAsignaciones.length) {
       <div class="mis-grid">
         @for (rol of misAsignaciones; track rol.rolMesId) {
-          <div class="mi-card">
-            <div class="mi-clase">{{ nombreEdad(rol.edadId) }}</div>
-            <div class="mi-fecha">{{ formatearFechaRol(rol) }}</div>
-            <div class="mi-respuesta">
-              <button class="btn-resp si" [class.activo]="rol.respuesta === 'Aceptada'" (click)="responder(rol, 'Aceptada')">
-                <i class="fa-solid fa-check"></i> Sí puedo
-              </button>
-              <button class="btn-resp no" [class.activo]="rol.respuesta === 'Rechazada'" (click)="responder(rol, 'Rechazada')">
-                <i class="fa-solid fa-xmark"></i> No puedo
-              </button>
-            </div>
-            <span class="mi-estado" [class.rechazada]="rol.respuesta === 'Rechazada'" [class.aceptada]="rol.respuesta === 'Aceptada'">
-              {{ !rol.respuesta ? 'Sin responder' : (rol.respuesta === 'Aceptada' ? 'Confirmado' : 'Rechazado') }}
-            </span>
+          <div class="mi-card" [class.resuelta]="rol.respuesta">
+            @if (!rol.respuesta) {
+              <div class="mi-clase">{{ nombreEdad(rol.edadId) }}</div>
+              <div class="mi-fecha">{{ formatearFechaRol(rol) }}</div>
+              <div class="mi-respuesta">
+                <button class="btn-resp si" (click)="responder(rol, 'Aceptada')">
+                  <i class="fa-solid fa-check"></i> Sí puedo
+                </button>
+                <button class="btn-resp no" (click)="responder(rol, 'Rechazada')">
+                  <i class="fa-solid fa-xmark"></i> No puedo
+                </button>
+              </div>
+              <span class="mi-hint"><i class="fa-solid fa-circle-dot"></i> Sin responder</span>
+            } @else {
+              <div class="mi-resultado">
+                <div class="mi-resultado-icono" [class.rechazada]="rol.respuesta === 'Rechazada'">
+                  <i class="fa-solid" [class.fa-check]="rol.respuesta === 'Aceptada'" [class.fa-xmark]="rol.respuesta === 'Rechazada'"></i>
+                </div>
+                <div class="mi-resultado-datos">
+                  <span class="mi-clase">{{ nombreEdad(rol.edadId) }}</span>
+                  <span class="mi-fecha">{{ formatearFechaRol(rol) }}</span>
+                </div>
+                <span class="mi-estado" [class.rechazada]="rol.respuesta === 'Rechazada'" [class.aceptada]="rol.respuesta === 'Aceptada'">
+                  {{ rol.respuesta === 'Aceptada' ? 'Confirmado' : 'Rechazado' }}
+                </span>
+              </div>
+            }
           </div>
         }
       </div>

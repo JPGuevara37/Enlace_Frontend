@@ -113,28 +113,61 @@
 }
 
 .asignado {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: #e6f3f4;
+  background: #f7fafc;
+  border: 1px solid #e2e8f4;
+  border-left: 3px solid #005a65;
   border-radius: 10px;
-  padding: 0.5rem 0.7rem;
+  padding: 0.6rem 0.7rem;
   font-size: 0.85rem;
   color: #2b3a55;
-  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.asignado span {
+.asignado:last-child {
+  margin-bottom: 0;
+}
+
+.asignado:hover {
+  box-shadow: 0 4px 12px rgba(20, 40, 80, 0.08);
+}
+
+.asignado-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.asignado-nombre {
   flex: 1;
   font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.avatar-mini {
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #005a65;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.7rem;
+  text-transform: uppercase;
 }
 
 .asignado .rol-badge {
   flex: 0 0 auto;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
-  padding: 0.15rem 0.45rem;
-  border-radius: 6px;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
   background: #005a65;
   color: #fff;
   text-transform: uppercase;
@@ -145,15 +178,32 @@
   background: #36b9cc;
 }
 
+.asignado-foot {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #e2e8f4;
+}
+
+.spacer {
+  flex: 1;
+}
+
 .estado {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   border: none;
   background: #f6c23e;
   color: #5a4a00;
   font-size: 0.7rem;
   font-weight: 700;
-  border-radius: 6px;
-  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  padding: 0.28rem 0.6rem;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .estado.confirmado {
@@ -163,11 +213,23 @@
 
 .quitar {
   border: none;
-  background: transparent;
+  background: #fff;
   color: #e74a3b;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.quitar:hover {
+  background: #e74a3b;
+  color: #fff;
 }
 
 .personas {
@@ -239,8 +301,8 @@
   gap: 0.25rem;
   font-size: 0.68rem;
   font-weight: 700;
-  padding: 0.15rem 0.45rem;
-  border-radius: 6px;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
   background: #1cc88a;
   color: #fff;
 }
@@ -263,6 +325,13 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  transition: all 0.25s ease;
+}
+
+.mi-card.resuelta {
+  padding: 1rem 1.25rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(20, 40, 80, 0.05);
 }
 
 .mi-clase {
@@ -285,11 +354,13 @@
 .btn-resp {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.4rem;
+  flex: 1;
   border: 1.5px solid #e2e8f4;
   background: #fff;
   border-radius: 10px;
-  padding: 0.55rem 0.9rem;
+  padding: 0.6rem 0.9rem;
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
@@ -297,30 +368,87 @@
   transition: all 0.15s ease;
 }
 
-.btn-resp.si.activo {
+.btn-resp.si:hover {
   background: #1cc88a;
   border-color: #1cc88a;
   color: #fff;
 }
 
-.btn-resp.no.activo {
+.btn-resp.no:hover {
   background: #e74a3b;
   border-color: #e74a3b;
   color: #fff;
 }
 
-.mi-estado {
+.mi-hint {
   font-size: 0.78rem;
   font-weight: 700;
   color: #8592a6;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mi-resultado {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.mi-resultado-icono {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #1cc88a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.mi-resultado-icono.rechazada {
+  background: #e74a3b;
+}
+
+.mi-resultado-datos {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.mi-resultado-datos .mi-clase {
+  font-size: 0.95rem;
+}
+
+.mi-resultado-datos .mi-fecha {
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mi-estado {
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8592a6;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: #eef1f7;
 }
 
 .mi-estado.aceptada {
   color: #1f9d55;
+  background: #e6f7ef;
 }
 
 .mi-estado.rechazada {
   color: #e74a3b;
+  background: #fdeceb;
 }
 
 .empty {
