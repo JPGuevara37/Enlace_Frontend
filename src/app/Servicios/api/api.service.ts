@@ -18,6 +18,7 @@ import { ResetPassword } from '../../modelos/resetPassword.interfase';
 import { IMaterial } from '../../modelos/material.interfase';
 import { IListaMateriales } from '../../modelos/IListaMateriales';
 import { IRolesMes } from '../../modelos/rolesmes.interfase';
+import { ICenaSenor } from '../../modelos/cenasenor.interfase';
 import { IUsuarios, IUsuarioGuardar } from '../../modelos/usuarios.interfase';
 import { IPerfil, IPerfilGuardar, ICambiarPassword } from '../../modelos/perfil.interfase';
 import { IContenidoPortal } from '../../modelos/contenido-portal.interfase';
@@ -370,6 +371,19 @@ export class ApiService {
 
     borrarRolMes(id: string):Observable<IResponse>{
       return this.http.delete<IResponse>(`${this.url}/api/RolesMes/${id}`);
+    }
+
+    // Cena del Señor
+    getCenaSenor(mes: number, anno: number):Observable<ICenaSenor | null>{
+      return this.http.get<ICenaSenor | null>(`${this.url}/api/CenaSenor/${mes}/${anno}`);
+    }
+
+    upsertCenaSenor(item: ICenaSenor):Observable<IResponse>{
+      return this.http.put<IResponse>(`${this.url}/api/CenaSenor`, item);
+    }
+
+    borrarCenaSenor(mes: number, anno: number):Observable<IResponse>{
+      return this.http.delete<IResponse>(`${this.url}/api/CenaSenor/${mes}/${anno}`);
     }
 
     // Usuarios (solo administrador)

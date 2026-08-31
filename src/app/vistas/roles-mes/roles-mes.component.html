@@ -19,6 +19,14 @@
         }
       </select>
 
+      <span class="lbl">Cena del Señor</span>
+      <select class="select" [(ngModel)]="cenaSenorSel" (change)="guardarCenaSenor()">
+        <option value="">Sin definir</option>
+        @for (d of domingos; track d) {
+          <option [value]="d">{{ formatearDomingo(d) }}</option>
+        }
+      </select>
+
       <div class="modo">
         <button class="chip" [class.active]="modoPropuesta" (click)="modoPropuesta = true">Propuesta</button>
         <button class="chip" [class.active]="!modoPropuesta" (click)="modoPropuesta = false">Confirmado</button>
@@ -27,12 +35,17 @@
 
     <div class="layout">
       <div class="clases">
-        @for (edad of edades; track edad.edadId) {
-          <div class="clase" (click)="asignarAClase(edad)" (dragover)="onDragOver($event)" (drop)="onDrop($event, edad)">
-            <div class="clase-titulo">{{ edad.rangoEdad }}</div>
-            @if (getAsignaciones(edad.edadId).length) {
-              @for (rol of getAsignaciones(edad.edadId); track rol.rolMesId) {
-                <div class="asignado">
+        @for (slot of slots; track slot.key) {
+          <div class="clase" [class.cena]="slot.esCena" (click)="asignarAClick(slot)" (dragover)="onDragOver($event)" (drop)="onDrop($event, slot)">
+            <div class="clase-titulo">
+              @if (slot.esCena) {
+                <i class="fa-solid fa-wine-glass"></i>
+              }
+              {{ slot.titulo }}
+            </div>
+            @if (slot.asignaciones.length) {
+              @for (rol of slot.asignaciones; track rol.rolMesId) {
+                <div class="asignado" [class.asistente]="esAsistente(rol)">
                   <div class="asignado-row">
                     <span class="avatar-mini">{{ iniciales(rol.personaId) }}</span>
                     <span class="asignado-nombre">{{ getPersona(rol.personaId)?.nombre }} {{ getPersona(rol.personaId)?.apellido }}</span>
@@ -120,7 +133,7 @@
         @for (rol of misAsignaciones; track rol.rolMesId) {
           <div class="mi-card" [class.resuelta]="rol.respuesta">
             @if (!rol.respuesta) {
-              <div class="mi-clase">{{ nombreEdad(rol.edadId) }}</div>
+              <div class="mi-clase">{{ nombreClase(rol) }}</div>
               <div class="mi-fecha">{{ formatearFechaRol(rol) }}</div>
               <div class="mi-respuesta">
                 <button class="btn-resp si" (click)="responder(rol, 'Aceptada')">
@@ -137,7 +150,7 @@
                   <i class="fa-solid" [class.fa-check]="rol.respuesta === 'Aceptada'" [class.fa-xmark]="rol.respuesta === 'Rechazada'"></i>
                 </div>
                 <div class="mi-resultado-datos">
-                  <span class="mi-clase">{{ nombreEdad(rol.edadId) }}</span>
+                  <span class="mi-clase">{{ nombreClase(rol) }}</span>
                   <span class="mi-fecha">{{ formatearFechaRol(rol) }}</span>
                 </div>
                 <span class="mi-estado" [class.rechazada]="rol.respuesta === 'Rechazada'" [class.aceptada]="rol.respuesta === 'Aceptada'">

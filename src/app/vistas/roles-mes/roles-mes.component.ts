@@ -8,6 +8,13 @@ import { IRolesMes } from '../../modelos/rolesmes.interfase';
 
 const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
+interface SlotClase {
+  key: string;
+  titulo: string;
+  esCena: boolean;
+  asignaciones: IRolesMes[];
+}
+
 @Component({
   selector: 'app-roles-mes',
   standalone: true,
@@ -30,6 +37,9 @@ export class RolesMesComponent implements OnInit {
 
   personaArrastrada: IListaProfesores | null = null;
   personaSeleccionada: IListaProfesores | null = null;
+
+  cenaSenorDia: number | null = null;
+  cenaSenorSel = '';
 
   profesoresAbierto = true;
   asistentesAbierto = true;
@@ -70,6 +80,13 @@ export class RolesMesComponent implements OnInit {
     return this.edades.find(e => e.edadId === edadId)?.rangoEdad || 'Clase';
   }
 
+  nombreClase(rol: IRolesMes): string {
+    if (rol.tipo === 'CenaSenor') {
+      return 'Cena del Señor';
+    }
+    return this.nombreEdad(rol.edadId ?? '');
+  }
+
   formatearFechaRol(rol: IRolesMes): string {
     const fecha = new Date(rol.anno, rol.mes - 1, rol.dia);
     return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -98,6 +115,42 @@ export class RolesMesComponent implements OnInit {
       this.cdr.detectChanges();
     });
     this.cargarAsignaciones();
+    this.cargarCenaSenor();
+  }
+
+  cargarCenaSenor(): void {
+    this.api.getCenaSenor(this.mes, this.anno).subscribe({
+      next: data => {
+        this.cenaSenorDia = data?.dia ?? null;
+        this.cenaSenorSel = this.cenaSenorDia != null ? String(this.cenaSenorDia) : '';
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.cenaSenorDia = null;
+        this.cenaSenorSel = '';
+      },
+    });
+  }
+
+  guardarCenaSenor(): void {
+    const dia = this.cenaSenorSel === '' ? null : Number(this.cenaSenorSel);
+    if (dia == null || isNaN(dia)) {
+      this.api.borrarCenaSenor(this.mes, this.anno).subscribe({
+        next: () => {
+          this.cenaSenorDia = null;
+          this.cdr.detectChanges();
+        },
+        error: () => {},
+      });
+      return;
+    }
+    this.api.upsertCenaSenor({ mes: this.mes, anno: this.anno, dia }).subscribe({
+      next: () => {
+        this.cenaSenorDia = dia;
+        this.cdr.detectChanges();
+      },
+      error: () => {},
+    });
   }
 
   cargarAsignaciones(): void {
@@ -115,6 +168,7 @@ export class RolesMesComponent implements OnInit {
   cambiarPeriodo(): void {
     this.calcularDomingos();
     this.cargarAsignaciones();
+    this.cargarCenaSenor();
   }
 
   calcularDomingos(): void {
@@ -166,10 +220,10 @@ export class RolesMesComponent implements OnInit {
     }
   }
 
-  onDrop(event: DragEvent, edad: IListaEdades): void {
+  onDrop(event: DragEvent, slot: SlotClase): void {
     event.preventDefault();
     if (this.personaArrastrada) {
-      this.asignarPersona(this.personaArrastrada, edad);
+      this.asignarASlot(this.personaArrastrada, slot);
       this.personaArrastrada = null;
     }
   }
@@ -180,19 +234,36 @@ export class RolesMesComponent implements OnInit {
       this.personaSeleccionada = null;
     } else {
       this.personaSeleccionada = persona;
+      this.scrollAClases();
     }
   }
 
-  asignarAClase(edad: IListaEdades): void {
+  private scrollAClases(): void {
+    setTimeout(() => {
+      document.querySelector('.roles-mes .clases')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
+
+  asignarAClick(slot: SlotClase): void {
     if (!this.personaSeleccionada) {
       return;
     }
-    this.asignarPersona(this.personaSeleccionada, edad);
+    this.asignarASlot(this.personaSeleccionada, slot);
     this.personaSeleccionada = null;
   }
 
-  asignarPersona(persona: IListaProfesores, edad: IListaEdades): void {
-    const asignadas = this.getAsignaciones(edad.edadId);
+  asignarASlot(persona: IListaProfesores, slot: SlotClase): void {
+    if (slot.esCena) {
+      this.asignar(persona, null, 'CenaSenor');
+    } else {
+      this.asignar(persona, slot.key, 'Clase');
+    }
+  }
+
+  private asignar(persona: IListaProfesores, edadId: string | null, tipo: string): void {
+    const asignadas = this.asignaciones.filter(a =>
+      this.mismoSlot(a, edadId, tipo) && Number(a.dia) === Number(this.dia)
+    );
 
     if (asignadas.some(a => a.personaId === persona.profesorId)) {
       return;
@@ -203,13 +274,13 @@ export class RolesMesComponent implements OnInit {
     if (esProfesor) {
       const profes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') !== 'Asistente').length;
       if (profes >= 2) {
-        window.alert('Máximo 2 profesores por clase');
+        window.alert('Máximo 2 profesores por actividad');
         return;
       }
     } else {
       const asistentes = asignadas.filter(a => (this.getPersona(a.personaId)?.categoria || 'Profesor') === 'Asistente').length;
       if (asistentes >= 1) {
-        window.alert('Máximo 1 asistente por clase');
+        window.alert('Máximo 1 asistente por actividad');
         return;
       }
     }
@@ -219,24 +290,25 @@ export class RolesMesComponent implements OnInit {
 
     const repetido = this.asignaciones.some(a =>
       a.personaId === persona.profesorId &&
-      a.edadId === edad.edadId &&
+      this.mismoSlot(a, edadId, tipo) &&
       ((a.mes === prev.mes && a.anno === prev.anno && Number(a.dia) === prev.dia) ||
        (a.mes === next.mes && a.anno === next.anno && Number(a.dia) === next.dia))
     );
 
     if (repetido) {
-      const confirmar = window.confirm('Este profesor ya tiene esta clase en un domingo consecutivo. ¿Asignarlo de todos modos?');
+      const confirmar = window.confirm('Este profesor ya tiene esta actividad en un domingo consecutivo. ¿Asignarlo de todos modos?');
       if (!confirmar) {
         return;
       }
     }
 
     const nuevo: IRolesMes = {
-      edadId: edad.edadId,
+      edadId: edadId,
       personaId: persona.profesorId,
       mes: this.mes,
       anno: this.anno,
       dia: this.dia,
+      tipo: tipo,
       estado: this.modoPropuesta ? 'Propuesta' : 'Confirmado',
       disponible: true,
     };
@@ -246,8 +318,40 @@ export class RolesMesComponent implements OnInit {
     });
   }
 
+  private mismoSlot(a: IRolesMes, edadId: string | null, tipo: string): boolean {
+    return tipo === 'CenaSenor'
+      ? a.tipo === 'CenaSenor'
+      : (a.tipo !== 'CenaSenor' && a.edadId === edadId);
+  }
+
+  esDomingoCenaSenor(): boolean {
+    return this.cenaSenorDia != null && Number(this.cenaSenorDia) === Number(this.dia);
+  }
+
+  get slots(): SlotClase[] {
+    const lista: SlotClase[] = this.edades.map(e => ({
+      key: e.edadId,
+      titulo: e.rangoEdad,
+      esCena: false,
+      asignaciones: this.getAsignaciones(e.edadId),
+    }));
+    if (this.esDomingoCenaSenor()) {
+      lista.unshift({
+        key: 'cena',
+        titulo: 'Cena del Señor',
+        esCena: true,
+        asignaciones: this.getAsignacionesCena(),
+      });
+    }
+    return lista;
+  }
+
   getAsignaciones(edadId: string): IRolesMes[] {
-    return this.asignaciones.filter(a => a.edadId === edadId && Number(a.dia) === Number(this.dia));
+    return this.asignaciones.filter(a => a.edadId === edadId && a.tipo !== 'CenaSenor' && Number(a.dia) === Number(this.dia));
+  }
+
+  getAsignacionesCena(): IRolesMes[] {
+    return this.asignaciones.filter(a => a.tipo === 'CenaSenor' && Number(a.dia) === Number(this.dia));
   }
 
   esAsistente(rol: IRolesMes): boolean {
