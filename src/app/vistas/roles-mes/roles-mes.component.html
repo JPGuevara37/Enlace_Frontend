@@ -131,33 +131,18 @@
     @if (misAsignaciones.length) {
       <div class="mis-grid">
         @for (rol of misAsignaciones; track rol.rolMesId) {
-          <div class="mi-card" [class.resuelta]="rol.respuesta">
-            @if (!rol.respuesta) {
-              <div class="mi-clase">{{ nombreClase(rol) }}</div>
-              <div class="mi-fecha">{{ formatearFechaRol(rol) }}</div>
-              <div class="mi-respuesta">
-                <button class="btn-resp si" (click)="responder(rol, 'Aceptada')">
-                  <i class="fa-solid fa-check"></i> Sí puedo
-                </button>
-                <button class="btn-resp no" (click)="responder(rol, 'Rechazada')">
-                  <i class="fa-solid fa-xmark"></i> No puedo
-                </button>
-              </div>
-              <span class="mi-hint"><i class="fa-solid fa-circle-dot"></i> Sin responder</span>
-            } @else {
-              <div class="mi-resultado">
-                <div class="mi-resultado-icono" [class.rechazada]="rol.respuesta === 'Rechazada'">
-                  <i class="fa-solid" [class.fa-check]="rol.respuesta === 'Aceptada'" [class.fa-xmark]="rol.respuesta === 'Rechazada'"></i>
-                </div>
-                <div class="mi-resultado-datos">
-                  <span class="mi-clase">{{ nombreClase(rol) }}</span>
-                  <span class="mi-fecha">{{ formatearFechaRol(rol) }}</span>
-                </div>
-                <span class="mi-estado" [class.rechazada]="rol.respuesta === 'Rechazada'" [class.aceptada]="rol.respuesta === 'Aceptada'">
-                  {{ rol.respuesta === 'Aceptada' ? 'Confirmado' : 'Rechazado' }}
-                </span>
-              </div>
-            }
+          <div class="mi-card">
+            <div class="mi-clase">{{ nombreClase(rol) }}</div>
+            <div class="mi-fecha">{{ formatearFechaRol(rol) }}</div>
+            <div class="mi-respuesta">
+              <button class="btn-resp si" (click)="abrirConfirmacion(rol, 'Aceptada')">
+                <i class="fa-solid fa-check"></i> Sí puedo
+              </button>
+              <button class="btn-resp no" (click)="abrirConfirmacion(rol, 'Rechazada')">
+                <i class="fa-solid fa-xmark"></i> No puedo
+              </button>
+            </div>
+            <span class="mi-hint"><i class="fa-solid fa-circle-dot"></i> Sin responder</span>
           </div>
         }
       </div>
@@ -166,3 +151,36 @@
     }
   }
 </div>
+
+@if (modalRespuesta) {
+  <div class="modal-backdrop" (click)="cerrarConfirmacion()">
+    <div class="card-modal" (click)="$event.stopPropagation()">
+      <div class="card-head">
+        <div class="card-titulo">
+          <h3>{{ modalRespuesta.tipo === 'Aceptada' ? 'Confirmar asistencia' : 'No podrás asistir' }}</h3>
+          <span>{{ nombreClase(modalRespuesta.rol) }} · {{ formatearFechaRol(modalRespuesta.rol) }}</span>
+        </div>
+        <button class="close" (click)="cerrarConfirmacion()">&times;</button>
+      </div>
+      <div class="card-body">
+        @if (modalRespuesta.tipo === 'Aceptada') {
+          <p class="confirm-texto">
+            Confirmas que <strong>sí podrás</strong> participar en esta actividad. Se notificará al líder.
+          </p>
+        } @else {
+          <p class="confirm-texto">Indícanos por qué no podrás asistir (opcional). Se notificará al líder.</p>
+          <div class="field">
+            <label>Motivo</label>
+            <textarea [(ngModel)]="modalRespuesta.motivo" rows="3" placeholder="Escribe un motivo (opcional)"></textarea>
+          </div>
+        }
+      </div>
+      <div class="card-foot">
+        <button class="btn-ghost" (click)="cerrarConfirmacion()">Cancelar</button>
+        <button class="btn-primary" [class.danger]="modalRespuesta.tipo === 'Rechazada'" (click)="confirmarRespuesta()">
+          {{ modalRespuesta.tipo === 'Aceptada' ? 'Confirmar' : 'Enviar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

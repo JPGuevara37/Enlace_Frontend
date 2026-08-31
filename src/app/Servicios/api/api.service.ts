@@ -357,8 +357,8 @@ export class ApiService {
       return this.http.get<IRolesMes[]>(`${this.url}/api/RolesMes/mias`);
     }
 
-    responderRolMes(id: string, respuesta: string):Observable<IResponse>{
-      return this.http.put<IResponse>(`${this.url}/api/RolesMes/${id}/respuesta`, { respuesta });
+    responderRolMes(id: string, respuesta: string, motivo?: string):Observable<IResponse>{
+      return this.http.put<IResponse>(`${this.url}/api/RolesMes/${id}/respuesta`, { respuesta, motivo });
     }
 
     crearRolMes(rol: IRolesMes):Observable<IResponse>{

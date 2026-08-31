@@ -47,6 +47,8 @@ export class RolesMesComponent implements OnInit {
   esGestor = false;
   misAsignaciones: IRolesMes[] = [];
 
+  modalRespuesta: { rol: IRolesMes; tipo: 'Aceptada' | 'Rechazada'; motivo: string } | null = null;
+
   constructor(
     private api: ApiService,
     private cdr: ChangeDetectorRef,
@@ -69,7 +71,7 @@ export class RolesMesComponent implements OnInit {
     });
     this.api.getMisRolesMes().subscribe({
       next: data => {
-        this.misAsignaciones = data;
+        this.misAsignaciones = data.filter(r => !r.respuesta);
         this.cdr.detectChanges();
       },
       error: () => {},
@@ -92,17 +94,34 @@ export class RolesMesComponent implements OnInit {
     return fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   }
 
-  responder(rol: IRolesMes, respuesta: string): void {
+  responder(rol: IRolesMes, respuesta: string, motivo?: string): void {
     if (!rol.rolMesId) {
       return;
     }
-    this.api.responderRolMes(rol.rolMesId, respuesta).subscribe({
+    this.api.responderRolMes(rol.rolMesId, respuesta, motivo).subscribe({
       next: () => {
-        rol.respuesta = respuesta;
+        this.misAsignaciones = this.misAsignaciones.filter(r => r.rolMesId !== rol.rolMesId);
         this.cdr.detectChanges();
       },
       error: () => {},
     });
+  }
+
+  abrirConfirmacion(rol: IRolesMes, tipo: 'Aceptada' | 'Rechazada'): void {
+    this.modalRespuesta = { rol, tipo, motivo: '' };
+  }
+
+  cerrarConfirmacion(): void {
+    this.modalRespuesta = null;
+  }
+
+  confirmarRespuesta(): void {
+    if (!this.modalRespuesta) {
+      return;
+    }
+    const { rol, tipo, motivo } = this.modalRespuesta;
+    this.responder(rol, tipo, tipo === 'Rechazada' ? motivo : undefined);
+    this.modalRespuesta = null;
   }
 
   cargarDatos(): void {
