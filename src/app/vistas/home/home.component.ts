@@ -59,10 +59,11 @@ export class HomeComponent implements OnInit {
   }
 
   private construirDomingos(rolesMes: IRolesMes[]): void {
+    const confirmados = rolesMes.filter(r => r.respuesta === 'Aceptada');
     const domingos = this.obtenerDomingos(this.mes, this.anno);
     this.domingos = domingos
       .map(dia => {
-        const asignaciones = rolesMes.filter(r => Number(r.dia) === dia);
+        const asignaciones = confirmados.filter(r => Number(r.dia) === dia);
         const clases = this.edadesList
           .map(edad => {
             const personas = asignaciones
