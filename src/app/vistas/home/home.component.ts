@@ -78,6 +78,20 @@ export class HomeComponent implements OnInit {
             return { rangoEdad: edad.rangoEdad, personas };
           })
           .filter(c => c.personas.length > 0);
+
+        const cena = asignaciones
+          .filter(a => a.tipo === 'CenaSenor')
+          .map(a => {
+            const p = this.profesoresList.find(pp => pp.profesorId === a.personaId);
+            return {
+              nombre: p ? `${p.nombre} ${p.apellido}` : '—',
+              esAsistente: (p?.categoria || 'Profesor') === 'Asistente',
+            };
+          });
+        if (cena.length) {
+          clases.unshift({ rangoEdad: 'Cena del Señor', personas: cena });
+        }
+
         return { dia, fecha: new Date(this.anno, this.mes - 1, dia), clases };
       })
       .filter(d => d.clases.length > 0);
